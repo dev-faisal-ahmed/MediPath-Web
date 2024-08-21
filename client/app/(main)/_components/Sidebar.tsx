@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { links } from '@/app/_data';
 import { isActive } from '@/app/_helpers';
-import { TLoggedUser } from '@/app/_utils/types/common';
+import { TLoggedUser } from '@/app/_utils/types';
 import { usePathname } from 'next/navigation';
 import { ProfileIcon } from '@/components/shared/ProfileIcon';
 import { Logo } from '@/components/shared/Logo';
