@@ -13,9 +13,9 @@ type TProps = {
   user: TLoggedUser;
 };
 
-export const Sidebar = ({user}: TProps) => {
+export const Sidebar = ({ user }: TProps) => {
   const pathName = usePathname();
-  
+
   return (
     <aside className='hidden min-h-screen min-w-[240px] flex-col border-r bg-card py-6 md:flex'>
       <Logo className='mx-4 pt-2' />
@@ -25,7 +25,7 @@ export const Sidebar = ({user}: TProps) => {
             key={url}
             href={url}
             className={cn(
-              'flex items-center gap-3 border-r-[3px] px-4 py-1 text-base duration-300 hover:bg-primary hover:text-white border-transparent',
+              'flex items-center gap-3 border-r-[3px] border-transparent px-4 py-1 text-base duration-300 hover:bg-primary hover:text-white',
               isActive(url, pathName) &&
                 'border-primary font-semibold text-primary',
             )}

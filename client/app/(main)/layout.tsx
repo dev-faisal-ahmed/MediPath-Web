@@ -11,9 +11,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
       <Sidebar user={user!} />
       <section className='grid h-screen grid-rows-[auto_1fr]'>
         <TopBar user={user} />
-        <main className='h-full overflow-y-auto px-5 pb-6'>
-          {children}
-        </main>
+        <main className='h-full overflow-y-auto px-5 pb-6'>{children}</main>
         <MobileBar />
       </section>
     </main>
