@@ -1,44 +1,26 @@
+'use client';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { Control } from 'react-hook-form';
+import { forwardRef, InputHTMLAttributes } from 'react';
 
-type TProps = {
-  control: Control<any>;
-  name: string;
+type TProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
-  placeholder?: string;
-  type?: 'text' | 'number';
-  defaultValue?: string;
-  required?: boolean;
-  className?: string;
-  inputClassName?: string;
+  containerClass?: string;
 };
 
-export const CustomInput = ({
-  label,
-  name,
-  placeholder,
-  type,
-  defaultValue,
-  required,
-  className,
-  inputClassName,
-  control,
-}: TProps) => {
-  return (
-    <div className={cn('flex flex-col gap-1', className)}>
-      <Label className='text-base font-semibold' htmlFor={name}>
-        {label}
-      </Label>
-      <Input
-        className={inputClassName}
-        type={type}
-        placeholder={placeholder}
-        defaultValue={defaultValue}
-        {...control.register(name)}
-        required={required}
-      />
-    </div>
-  );
-};
+export const CustomInput = forwardRef<HTMLInputElement, TProps>(
+  ({ label, name, placeholder, type, containerClass }, ...props) => {
+    return (
+      <div className={cn('flex flex-col gap-2', containerClass)}>
+        <Label className='font-semibold' htmlFor={name}>
+          {label}
+        </Label>
+        <Input name={name} placeholder={placeholder} type={type} {...props} />
+      </div>
+    );
+  },
+);
+
+CustomInput.displayName = 'Input';

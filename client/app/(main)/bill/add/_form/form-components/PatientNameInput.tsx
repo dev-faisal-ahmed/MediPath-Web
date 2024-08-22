@@ -34,8 +34,8 @@ export const PatientNameInput = ({
   };
 
   return (
-    <div ref={containerRef} className='relative flex flex-col gap-1'>
-      <Label className='text-base font-semibold'>Patient Name</Label>
+    <div ref={containerRef} className='relative flex flex-col gap-2'>
+      <Label className='font-semibold'>Patient Name</Label>
       <Input
         ref={inputRef}
         name='name'

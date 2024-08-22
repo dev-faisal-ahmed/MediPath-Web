@@ -3,6 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { useAddBill } from './useAddBill';
 import { PatientNameInput } from './form-components/PatientNameInput';
+import { Input } from '@/components/ui/input';
+import { CustomInput } from '@/components/shared/form/CustomInput';
 
 export const AddBillForm = () => {
   const { handlers, states } = useAddBill();
@@ -18,6 +20,12 @@ export const AddBillForm = () => {
           patient={patient}
           onPatientNameChange={onPatientNameChange}
           onPatientSelect={onPatientSelect}
+        />
+        <CustomInput
+          label='Age'
+          name='age'
+          placeholder='Input age'
+          type='number'
         />
         <div className='mt-6 sm:col-span-2 md:col-span-3'>
           <Button className='ml-auto block'>Generate Bill</Button>
