@@ -1,13 +1,13 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { TPatient } from '@/app/_utils/types';
+import { TDoctor, TPatient } from '@/app/_utils/types';
 
 const allPatients: TPatient[] = [
   {
     name: 'Mr. X',
     age: '23',
-    ageTitle: 'year',
+    ageTitle: 'day',
     gender: 'Male',
     phone: '018********',
     address: 'Mirpur, Dhaka',
@@ -30,15 +30,39 @@ const allPatients: TPatient[] = [
   },
 ];
 
+const allDoctors: TDoctor[] = [
+  { name: 'Dr. Rahim', phone: '012******' },
+  { name: 'Dr. Karim', phone: '013******' },
+  { name: 'Dr. Jahir', phone: '014******' },
+  { name: 'Dr. Faruk', phone: '015******' },
+  { name: 'Dr. Kalam', phone: '016******' },
+  { name: 'Dr. Amir', phone: '017******' },
+  { name: 'Dr. Amin', phone: '018******' },
+];
+
+const allAgents: TDoctor[] = [
+  { name: 'Dr. Rahim', phone: '012******' },
+  { name: 'Dr. Karim', phone: '013******' },
+  { name: 'Dr. Jahir', phone: '014******' },
+  { name: 'Dr. Faruk', phone: '015******' },
+  { name: 'Dr. Kalam', phone: '016******' },
+  { name: 'Dr. Amir', phone: '017******' },
+  { name: 'Dr. Amin', phone: '018******' },
+];
+
 export const useAddBill = () => {
   // states
-  const [patient, setPatient] = useState<TPatient>();
   const [patients, setPatients] = useState<TPatient[]>([]);
+  const [patient, setPatient] = useState<TPatient>();
+  const [doctors, setDoctors] = useState<TDoctor[]>(allDoctors);
 
+  // handlers
   const onPatientNameChange = (key: string) => {
+    if (!key) return setPatients([]);
+
     const matchedPatients = allPatients.reduce(
       (matched: TPatient[], patient) => {
-        if (key && patient.name.toLowerCase().includes(key.toLowerCase()))
+        if (patient.name.toLowerCase().includes(key.toLowerCase()))
           matched.push(patient);
         return matched;
       },
@@ -52,18 +76,46 @@ export const useAddBill = () => {
     setPatient(patient);
   };
 
+  const onDoctorNameChange = (key: string) => {
+    if (!key) return setDoctors(allDoctors);
+
+    const matchedDoctors = allDoctors.reduce((matched: TDoctor[], doctor) => {
+      if (doctor.name.toLowerCase().includes(key.toLowerCase()))
+        matched.push(doctor);
+      return matched;
+    }, []);
+
+    setDoctors(matchedDoctors);
+  };
+
   const onAddBill = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLInputElement & {
       name: { value: string };
+      age: { value: string };
+      ageTitle: { value: string };
+      phone: { value: string };
+      address: { value: string };
+      doctor: { value: string };
     };
-    const name = form.name.value.trim();
 
-    console.log({ name });
+    const name = form.name.value.trim();
+    const age = form.age.value;
+    const ageTitle = form.ageTitle.value;
+    const phone = form.phone.value;
+    const address = form.address.value;
+    const doctor = form.doctor.value;
+
+    console.log({ name, age, ageTitle, phone, address, doctor });
   };
 
   return {
-    handlers: { onAddBill, onPatientNameChange, onPatientSelect },
-    states: { patients, patient },
+    handlers: {
+      onAddBill,
+      onPatientNameChange,
+      onPatientSelect,
+      onDoctorNameChange,
+    },
+    states: { patients, patient, doctors },
   };
 };

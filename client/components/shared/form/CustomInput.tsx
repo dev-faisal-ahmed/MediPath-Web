@@ -1,9 +1,9 @@
 'use client';
 
+import { forwardRef, InputHTMLAttributes } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { forwardRef, InputHTMLAttributes } from 'react';
 
 type TProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -11,13 +11,13 @@ type TProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 export const CustomInput = forwardRef<HTMLInputElement, TProps>(
-  ({ label, name, placeholder, type, containerClass }, ...props) => {
+  ({ label, name, containerClass, ...props }, ref) => {
     return (
       <div className={cn('flex flex-col gap-2', containerClass)}>
         <Label className='font-semibold' htmlFor={name}>
           {label}
         </Label>
-        <Input name={name} placeholder={placeholder} type={type} {...props} />
+        <Input ref={ref} name={name} {...props} />
       </div>
     );
   },

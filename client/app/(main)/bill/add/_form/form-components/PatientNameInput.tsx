@@ -35,7 +35,7 @@ export const PatientNameInput = ({
 
   return (
     <div ref={containerRef} className='relative flex flex-col gap-2'>
-      <Label className='font-semibold'>Patient Name</Label>
+      <Label className='font-semibold'>Patient&apos;s Name</Label>
       <Input
         ref={inputRef}
         name='name'
@@ -47,7 +47,7 @@ export const PatientNameInput = ({
         <div
           ref={innerRef}
           style={{ width, maxHeight: 270 }}
-          className='absolute top-16 mt-3 flex flex-col gap-1 overflow-y-auto rounded-md border bg-white py-3'
+          className='absolute top-16 z-20 mt-3 flex flex-col gap-1 overflow-y-auto rounded-md border bg-white py-3'
         >
           {patients.map((patient, index) => (
             <div
