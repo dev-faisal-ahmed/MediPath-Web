@@ -41,20 +41,19 @@ const allDoctors: TDoctor[] = [
 ];
 
 const allAgents: TDoctor[] = [
-  { name: 'Dr. Rahim', phone: '012******' },
-  { name: 'Dr. Karim', phone: '013******' },
-  { name: 'Dr. Jahir', phone: '014******' },
-  { name: 'Dr. Faruk', phone: '015******' },
-  { name: 'Dr. Kalam', phone: '016******' },
-  { name: 'Dr. Amir', phone: '017******' },
-  { name: 'Dr. Amin', phone: '018******' },
+  { name: 'Agent Rahim', phone: '012******' },
+  { name: 'Rabiul Karim', phone: '013******' },
+  { name: 'Jahir Raihan', phone: '014******' },
+  { name: 'Babu Mia', phone: '015******' },
+  { name: 'Abdul Barik', phone: '016******' },
+  { name: 'Rahim Miya', phone: '017******' },
+  { name: 'Rakibul Hasan', phone: '018******' },
 ];
 
 export const useAddBill = () => {
   // states
   const [patients, setPatients] = useState<TPatient[]>([]);
   const [patient, setPatient] = useState<TPatient>();
-  const [doctors, setDoctors] = useState<TDoctor[]>(allDoctors);
 
   // handlers
   const onPatientNameChange = (key: string) => {
@@ -76,18 +75,6 @@ export const useAddBill = () => {
     setPatient(patient);
   };
 
-  const onDoctorNameChange = (key: string) => {
-    if (!key) return setDoctors(allDoctors);
-
-    const matchedDoctors = allDoctors.reduce((matched: TDoctor[], doctor) => {
-      if (doctor.name.toLowerCase().includes(key.toLowerCase()))
-        matched.push(doctor);
-      return matched;
-    }, []);
-
-    setDoctors(matchedDoctors);
-  };
-
   const onAddBill = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLInputElement & {
@@ -97,6 +84,7 @@ export const useAddBill = () => {
       phone: { value: string };
       address: { value: string };
       doctor: { value: string };
+      agent: { value: string };
     };
 
     const name = form.name.value.trim();
@@ -105,8 +93,9 @@ export const useAddBill = () => {
     const phone = form.phone.value;
     const address = form.address.value;
     const doctor = form.doctor.value;
+    const agent = form.agent.value;
 
-    console.log({ name, age, ageTitle, phone, address, doctor });
+    console.log({ name, age, ageTitle, phone, address, doctor, agent });
   };
 
   return {
@@ -114,8 +103,8 @@ export const useAddBill = () => {
       onAddBill,
       onPatientNameChange,
       onPatientSelect,
-      onDoctorNameChange,
     },
-    states: { patients, patient, doctors },
+    states: { patients, patient },
+    data: { allDoctors, allAgents },
   };
 };

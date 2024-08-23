@@ -7,16 +7,13 @@ import { PatientAgeInput } from './form-components/PatientAgeInput';
 import { CustomInput } from '@/components/shared/form/CustomInput';
 import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
 import { SelectDoctor } from './form-components/SelectDoctor';
+import { SelectAgent } from './form-components/SelectAgent';
 
 export const AddBillForm = () => {
-  const { handlers, states } = useAddBill();
-  const {
-    onAddBill,
-    onPatientNameChange,
-    onPatientSelect,
-    onDoctorNameChange,
-  } = handlers;
-  const { patient, patients, doctors } = states;
+  const { handlers, states, data } = useAddBill();
+  const { onAddBill, onPatientNameChange, onPatientSelect } = handlers;
+  const { patient, patients } = states;
+  const { allDoctors, allAgents } = data;
 
   return (
     <form onSubmit={onAddBill}>
@@ -45,10 +42,8 @@ export const AddBillForm = () => {
         />
       </div>
       <div className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-        <SelectDoctor
-          doctors={doctors}
-          onDoctorNameChange={onDoctorNameChange}
-        />
+        <SelectDoctor doctors={allDoctors} />
+        <SelectAgent agents={allAgents} />
       </div>
 
       <Button className='ml-auto block'>Generate Bill</Button>
