@@ -9,6 +9,7 @@ export type TAgeTitle = 'year' | 'month' | 'day' | 'hour';
 export type TGender = 'Male' | 'Female' | 'Other';
 
 export type TPatient = {
+  _id: string;
   name: string;
   age: string;
   ageTitle: TAgeTitle;
@@ -18,11 +19,19 @@ export type TPatient = {
 };
 
 export type TDoctor = {
+  _id: string;
   name: string;
   phone: string;
 };
 
 export type TAgent = {
+  _id: string;
   name: string;
   phone: string;
+};
+
+export type TService = {
+  _id: string;
+  name: string;
+  price: number;
 };

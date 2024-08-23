@@ -1,10 +1,11 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { TDoctor, TPatient } from '@/app/_utils/types';
+import { TAgent, TDoctor, TPatient, TService } from '@/app/_utils/types';
 
 const allPatients: TPatient[] = [
   {
+    _id: 'P-1',
     name: 'Mr. X',
     age: '23',
     ageTitle: 'day',
@@ -13,6 +14,7 @@ const allPatients: TPatient[] = [
     address: 'Mirpur, Dhaka',
   },
   {
+    _id: 'P-2',
     name: 'Mr. Y',
     age: '27',
     ageTitle: 'year',
@@ -21,6 +23,7 @@ const allPatients: TPatient[] = [
     address: 'Mohammadpur, Dhaka',
   },
   {
+    _id: 'P-3',
     name: 'Mrs. Z',
     age: '16',
     ageTitle: 'year',
@@ -31,28 +34,37 @@ const allPatients: TPatient[] = [
 ];
 
 const allDoctors: TDoctor[] = [
-  { name: 'Dr. Rahim', phone: '012******' },
-  { name: 'Dr. Karim', phone: '013******' },
-  { name: 'Dr. Jahir', phone: '014******' },
-  { name: 'Dr. Faruk', phone: '015******' },
-  { name: 'Dr. Kalam', phone: '016******' },
-  { name: 'Dr. Amir', phone: '017******' },
-  { name: 'Dr. Amin', phone: '018******' },
+  { _id: 'D-1', name: 'Dr. Karim', phone: '013******' },
+  { _id: 'D-2', name: 'Dr. Jahir', phone: '014******' },
+  { _id: 'D-3', name: 'Dr. Faruk', phone: '015******' },
+  { _id: 'D-4', name: 'Dr. Rahim', phone: '012******' },
+  { _id: 'D-5', name: 'Dr. Kalam', phone: '016******' },
+  { _id: 'D6', name: 'Dr. Amir', phone: '017******' },
+  { _id: 'D7', name: 'Dr. Amin', phone: '018******' },
 ];
 
-const allAgents: TDoctor[] = [
-  { name: 'Agent Rahim', phone: '012******' },
-  { name: 'Rabiul Karim', phone: '013******' },
-  { name: 'Jahir Raihan', phone: '014******' },
-  { name: 'Babu Mia', phone: '015******' },
-  { name: 'Abdul Barik', phone: '016******' },
-  { name: 'Rahim Miya', phone: '017******' },
-  { name: 'Rakibul Hasan', phone: '018******' },
+const allAgents: TAgent[] = [
+  { _id: 'A-1', name: 'Agent Rahim', phone: '012******' },
+  { _id: 'A-2', name: 'Rabiul Karim', phone: '013******' },
+  { _id: 'A-3', name: 'Jahir Raihan', phone: '014******' },
+  { _id: 'A-4', name: 'Babu Mia', phone: '015******' },
+  { _id: 'A-5', name: 'Abdul Barik', phone: '016******' },
+  { _id: 'A-6', name: 'Rahim Miya', phone: '017******' },
+  { _id: 'A-7', name: 'Rakibul Hasan', phone: '018******' },
+];
+
+const allServices: TService[] = [
+  { _id: 'S-1', name: 'CBC', price: 500 },
+  { _id: 'S-2', name: 'Blood Test', price: 300 },
+  { _id: 'S-3', name: 'Urine Test', price: 200 },
+  { _id: 'S-4', name: 'BT/CT', price: 250 },
 ];
 
 export const useAddBill = () => {
   // states
   const [patients, setPatients] = useState<TPatient[]>([]);
+  const [services, setServices] = useState<TService[]>([]);
+  const [servicesList, setServicesList] = useState<TService[]>([]);
   const [patient, setPatient] = useState<TPatient>();
 
   // handlers
@@ -73,6 +85,31 @@ export const useAddBill = () => {
 
   const onPatientSelect = (patient: TPatient) => {
     setPatient(patient);
+  };
+
+  const onServiceAdd = (service: TService) => {
+    setServices((prevServices) => [...prevServices, service]);
+  };
+
+  const onServiceFilter = (key: string) => {
+    if (!key) return setServicesList([]);
+
+    const matchedServices = allServices.reduce(
+      (matched: TService[], service) => {
+        if (service.name.toLowerCase().includes(key.toLowerCase()))
+          matched.push(service);
+        return matched;
+      },
+      [],
+    );
+
+    setServicesList(matchedServices);
+  };
+
+  const onServiceRemove = (serviceId: string) => {
+    setServices((prevServices) =>
+      prevServices.filter((service) => service._id !== serviceId),
+    );
   };
 
   const onAddBill = (event: FormEvent<HTMLFormElement>) => {
@@ -103,8 +140,11 @@ export const useAddBill = () => {
       onAddBill,
       onPatientNameChange,
       onPatientSelect,
+      onServiceFilter,
+      onServiceAdd,
+      onServiceRemove,
     },
-    states: { patients, patient },
+    states: { patients, patient, services, servicesList },
     data: { allDoctors, allAgents },
   };
 };

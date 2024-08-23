@@ -21,7 +21,7 @@ export const SelectDoctor = ({ doctors }: TProps) => {
         </select.SelectTrigger>
         <select.SelectContent style={{ maxHeight: 270 }}>
           {doctors.map((doctor) => (
-            <select.SelectItem key={doctor.phone} value={doctor.phone}>
+            <select.SelectItem key={doctor._id} value={doctor._id}>
               <span className='font-semibold'>{doctor.name}</span>
             </select.SelectItem>
           ))}
