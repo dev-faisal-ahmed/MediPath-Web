@@ -9,6 +9,14 @@ import { SelectDoctor } from './form-components/SelectDoctor';
 import { SelectAgent } from './form-components/SelectAgent';
 import { useAddBill } from './useAddBill';
 import { SelectService } from './form-components/SelectService';
+import { TService } from '@/app/_utils/types';
+
+const getTotalCost = (services: TService[]) => {
+  return services.reduce((total, service) => {
+    total += service.price;
+    return total;
+  }, 0);
+};
 
 export const AddBillForm = () => {
   const { handlers, states, data } = useAddBill();
@@ -26,7 +34,21 @@ export const AddBillForm = () => {
   return (
     <div className='mx-auto max-w-[650px]'>
       <form className='' onSubmit={onAddBill}>
-        <h3 className='mb-8 text-xl font-semibold'>Add Bill</h3>
+        <div className='mb-8 flex items-center justify-between gap-6'>
+          <h3 className='text-xl font-semibold'>Add Bill</h3>
+          <h3 className='text-lg font-semibold'>
+            Total : ৳ {getTotalCost(services)}
+          </h3>
+        </div>
+        <div className='mb-6 grid gap-6 md:grid-cols-2'>
+          <SelectService
+            serviceList={servicesList}
+            services={services}
+            onServiceAdd={onServiceAdd}
+            onServiceRemove={onServiceRemove}
+            onServiceFilter={onServiceFilter}
+          />
+        </div>
         <div className='grid gap-6 md:grid-cols-2'>
           <PatientNameInput
             patients={patients}
@@ -50,15 +72,7 @@ export const AddBillForm = () => {
             rows={4}
           />
         </div>
-        <div className='mt-6 grid gap-6 md:grid-cols-2'>
-          <SelectService
-            serviceList={servicesList}
-            services={services}
-            onServiceAdd={onServiceAdd}
-            onServiceRemove={onServiceRemove}
-            onServiceFilter={onServiceFilter}
-          />
-        </div>
+
         <div className='mt-6 grid gap-6 md:grid-cols-2'>
           <SelectDoctor doctors={allDoctors} />
           <SelectAgent agents={allAgents} />

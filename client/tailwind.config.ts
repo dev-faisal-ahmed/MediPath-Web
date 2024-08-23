@@ -28,6 +28,8 @@ const config = {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
           50: '#ecfdf5',
+          100: '#abeacb',
+          200: '#09a33f',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',

@@ -58,13 +58,16 @@ const allServices: TService[] = [
   { _id: 'S-2', name: 'Blood Test', price: 300 },
   { _id: 'S-3', name: 'Urine Test', price: 200 },
   { _id: 'S-4', name: 'BT/CT', price: 250 },
+  { _id: 'S-5', name: 'Glucose Level', price: 80 },
+  { _id: 'S-6', name: 'STD', price: 150 },
+  { _id: 'S-7', name: 'PT_HD', price: 230 },
 ];
 
 export const useAddBill = () => {
   // states
   const [patients, setPatients] = useState<TPatient[]>([]);
   const [services, setServices] = useState<TService[]>([]);
-  const [servicesList, setServicesList] = useState<TService[]>([]);
+  const [servicesList, setServicesList] = useState<TService[]>(allServices);
   const [patient, setPatient] = useState<TPatient>();
 
   // handlers
@@ -92,7 +95,7 @@ export const useAddBill = () => {
   };
 
   const onServiceFilter = (key: string) => {
-    if (!key) return setServicesList([]);
+    if (!key) return setServicesList(allServices);
 
     const matchedServices = allServices.reduce(
       (matched: TService[], service) => {
