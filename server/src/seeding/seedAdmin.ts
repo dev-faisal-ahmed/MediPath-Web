@@ -7,7 +7,7 @@ export const seedAdmin = async () => {
   try {
     await mongoose.connect(MONGO_URI!);
     const password = await encryptPassword(ADMIN_PASSWORD);
-    await User.create({ userId: ADMIN_ID, password });
+    await User.create({ userId: ADMIN_ID, password, name: 'Saidur Rahman' });
 
     console.log('************* START *************');
     console.log('UserId :', ADMIN_ID);

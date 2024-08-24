@@ -9,3 +9,4 @@ export const PORT = process.env.PORT;
 export const SALT = Number(process.env.SALT);
 export const ADMIN_ID = process.env.ADMIN_ID;
 export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+export const TOKEN_SECRET = process.env.TOKEN_SECRET;

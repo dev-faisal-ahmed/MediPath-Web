@@ -1,18 +1,18 @@
-export type TMeta = {
+export interface IMeta {
   page: number;
   limit: number;
   total: number;
   totalPages: number;
-};
+}
 
-export type TSuccessResponse = {
+export interface ISuccessResponse {
   message: string;
-  meta?: TMeta;
+  meta?: IMeta;
   data: unknown;
-};
+}
 
-export type TErrorResponse = {
+export interface IErrorResponse {
   status: number;
   message: string;
   error: unknown;
-};
+}
