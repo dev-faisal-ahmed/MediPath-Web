@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authGuard } from '../../middlewares/authGuard';
+import { authGuard } from '../../middlewares';
 import { agentController } from './controllers';
 
 export const agentRouter = Router();

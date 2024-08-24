@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { doctorController } from './controllers';
-import { authGuard } from '../../middlewares/authGuard';
+import { authGuard } from '../../middlewares';
 
 export const doctorRouter = Router();
 export const doctorsRouter = Router();
