@@ -14,3 +14,8 @@ export const generateAccessToken = (payload: IPayload) => {
   const token = jwt.sign(payload, TOKEN_SECRET);
   return { token };
 };
+
+export const verifyAccessToken = (token: string) => {
+  const decodedData = jwt.verify(token, TOKEN_SECRET);
+  return decodedData as IPayload;
+};
