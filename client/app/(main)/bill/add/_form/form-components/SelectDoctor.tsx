@@ -10,7 +10,7 @@ type TProps = {
 
 export const SelectDoctor = ({ doctors }: TProps) => {
   return (
-    <div className='relative flex flex-col gap-2'>
+    <div className='relative flex w-full flex-col gap-2'>
       <Label className='font-semibold'>Doctor</Label>
       <select.Select name='doctor'>
         <select.SelectTrigger>

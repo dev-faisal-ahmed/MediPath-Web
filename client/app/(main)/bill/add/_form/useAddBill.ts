@@ -8,27 +8,27 @@ const allPatients: TPatient[] = [
     _id: 'P-1',
     name: 'Mr. X',
     age: '23',
-    ageTitle: 'day',
+    ageTitle: 'Day',
     gender: 'Male',
-    phone: '018********',
+    phone: '0181212',
     address: 'Mirpur, Dhaka',
   },
   {
     _id: 'P-2',
     name: 'Mr. Y',
     age: '27',
-    ageTitle: 'year',
+    ageTitle: 'Year',
     gender: 'Male',
-    phone: '018********',
+    phone: '0182332',
     address: 'Mohammadpur, Dhaka',
   },
   {
     _id: 'P-3',
     name: 'Mrs. Z',
     age: '16',
-    ageTitle: 'year',
+    ageTitle: 'Year',
     gender: 'Female',
-    phone: '019*****',
+    phone: '01932234',
     address: 'Shapahar, Naogaon',
   },
 ];
@@ -69,6 +69,7 @@ export const useAddBill = () => {
   const [services, setServices] = useState<TService[]>([]);
   const [servicesList, setServicesList] = useState<TService[]>(allServices);
   const [patient, setPatient] = useState<TPatient>();
+  const [discount, setDiscount] = useState<number>();
 
   // handlers
   const onPatientNameChange = (key: string) => {
@@ -138,6 +139,10 @@ export const useAddBill = () => {
     console.log({ name, age, ageTitle, phone, address, doctor, agent });
   };
 
+  const onDiscountChange = (discount: string) => {
+    setDiscount(Number(discount));
+  };
+
   return {
     handlers: {
       onAddBill,
@@ -146,8 +151,9 @@ export const useAddBill = () => {
       onServiceFilter,
       onServiceAdd,
       onServiceRemove,
+      onDiscountChange,
     },
-    states: { patients, patient, services, servicesList },
+    states: { patients, patient, services, servicesList, discount },
     data: { allDoctors, allAgents },
   };
 };

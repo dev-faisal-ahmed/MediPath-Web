@@ -10,6 +10,7 @@ import { SelectAgent } from './form-components/SelectAgent';
 import { useAddBill } from './useAddBill';
 import { SelectService } from './form-components/SelectService';
 import { TService } from '@/app/_utils/types';
+import { SelectGender } from './form-components/SelectGender';
 
 const getTotalCost = (services: TService[]) => {
   return services.reduce((total, service) => {
@@ -27,8 +28,9 @@ export const AddBillForm = () => {
     onServiceFilter,
     onServiceAdd,
     onServiceRemove,
+    onDiscountChange,
   } = handlers;
-  const { patient, patients, services, servicesList } = states;
+  const { patient, patients, services, servicesList, discount } = states;
   const { allDoctors, allAgents } = data;
 
   return (
@@ -37,19 +39,19 @@ export const AddBillForm = () => {
         <div className='mb-8 flex items-center justify-between gap-6'>
           <h3 className='text-xl font-semibold'>Add Bill</h3>
           <h3 className='text-lg font-semibold'>
-            Total : ৳ {getTotalCost(services)}
+            Total : ৳ {getTotalCost(services) - (discount || 0)}
           </h3>
         </div>
-        <div className='mb-6 grid gap-6 md:grid-cols-2'>
-          <SelectService
-            serviceList={servicesList}
-            services={services}
-            onServiceAdd={onServiceAdd}
-            onServiceRemove={onServiceRemove}
-            onServiceFilter={onServiceFilter}
-          />
-        </div>
-        <div className='grid gap-6 md:grid-cols-2'>
+
+        <SelectService
+          serviceList={servicesList}
+          services={services}
+          onServiceAdd={onServiceAdd}
+          onServiceRemove={onServiceRemove}
+          onServiceFilter={onServiceFilter}
+        />
+
+        <div className='mt-6 flex gap-6'>
           <PatientNameInput
             patients={patients}
             patient={patient}
@@ -57,26 +59,40 @@ export const AddBillForm = () => {
             onPatientSelect={onPatientSelect}
           />
           <PatientAgeInput age={patient?.age} ageTitle={patient?.ageTitle} />
+        </div>
+
+        <div className='mt-6 flex gap-6'>
           <CustomInput
-            containerClass='md:col-span-2'
+            containerClass='w-full'
             label='Phone'
             name='phone'
             type='number'
+            defaultValue={patient?.phone}
             placeholder="Input Patient's Phone Number"
           />
-          <CustomTextarea
-            containerClass='md:col-span-2'
-            placeholder='Add Address'
-            label='Address'
-            name='address'
-            rows={4}
-          />
+          <SelectGender />
         </div>
 
-        <div className='mt-6 grid gap-6 md:grid-cols-2'>
+        <CustomTextarea
+          containerClass='mt-6'
+          placeholder='Add Address'
+          label='Address'
+          name='address'
+          rows={4}
+        />
+
+        <div className='my-6 flex gap-6'>
           <SelectDoctor doctors={allDoctors} />
           <SelectAgent agents={allAgents} />
         </div>
+
+        <CustomInput
+          containerClass='md:col-span-2'
+          label='Discount'
+          placeholder='Enter Amount'
+          type='number'
+          onChange={(e) => onDiscountChange(e.target.value)}
+        />
 
         <Button className='mt-6 block w-full'>Generate Bill</Button>
       </form>

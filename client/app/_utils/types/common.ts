@@ -5,7 +5,7 @@ export type TLoggedUser = {
   imageUrl: string;
 };
 
-export type TAgeTitle = 'year' | 'month' | 'day' | 'hour';
+export type TAgeTitle = 'Year' | 'Month' | 'Day' | 'Hour';
 export type TGender = 'Male' | 'Female' | 'Other';
 
 export type TPatient = {
