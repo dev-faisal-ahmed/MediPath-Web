@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
 import { PropsWithChildren } from 'react';
-import './globals.css';
-import { cn } from '@/lib/utils';
+import { Toaster } from 'sonner';
+import { Poppins } from 'next/font/google';
 import { ReduxProvider } from './_redux/ReduxProvider';
+import { cn } from '@/lib/utils';
+import './globals.css';
 
 const font = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'] });
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang='en'>
       <body className={cn(font.className, 'bg-primary-50 text-sm')}>
         <ReduxProvider>{children}</ReduxProvider>
+        <Toaster richColors duration={6000} />
       </body>
     </html>
   );

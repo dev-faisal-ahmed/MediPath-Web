@@ -30,6 +30,7 @@ const config = {
           50: '#ecfdf5',
           100: '#abeacb',
           200: '#09a33f',
+          red: '#D30304',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',

@@ -3,8 +3,10 @@ import { getUserAction } from '../_actions';
 import { Sidebar } from './_components/Sidebar';
 import { TopBar } from './_components/Topbar';
 import { MobileBar } from './_components/MobileBar';
+import { authGuardAction } from '../_actions/authGuardAction';
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
+  await authGuardAction();
   const user = await getUserAction();
   return (
     <main className='grid md:grid-cols-[auto_1fr]'>

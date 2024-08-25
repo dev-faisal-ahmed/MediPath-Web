@@ -1,16 +1,16 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
 import { PatientNameInput } from './form-components/PatientNameInput';
 import { PatientAgeInput } from './form-components/PatientAgeInput';
 import { CustomInput } from '@/components/shared/form/CustomInput';
-import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
+import { SelectGender } from './form-components/SelectGender';
 import { SelectDoctor } from './form-components/SelectDoctor';
 import { SelectAgent } from './form-components/SelectAgent';
-import { useAddBill } from './useAddBill';
 import { SelectService } from './form-components/SelectService';
 import { TService } from '@/app/_utils/types';
-import { SelectGender } from './form-components/SelectGender';
+import { useAddBill } from './useAddBill';
 
 const getTotalCost = (services: TService[]) => {
   return services.reduce((total, service) => {

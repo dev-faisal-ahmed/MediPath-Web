@@ -2,17 +2,19 @@
 
 import * as drop from '@/components/ui/dropdown-menu';
 import { Button } from '../ui/button';
+import { logoutAction } from '@/app/_actions';
+import { toast } from 'sonner';
 
 type TProps = {
   size?: number;
-  imageUrl?: string;
   name: string;
   extend?: boolean;
 };
 
-export const ProfileIcon = ({ name, size = 40, imageUrl, extend }: TProps) => {
-  const onLogout = () => {
-    //
+export const ProfileIcon = ({ name, size = 40, extend }: TProps) => {
+  const onLogout = async () => {
+    await logoutAction();
+    toast.success('Logged Out');
   };
 
   return (
