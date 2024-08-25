@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
 type TProps = {
-  patients: TPatient[];
+  patients: TPatient[] | undefined;
   patient: TPatient | undefined;
   onPatientNameChange: (key: string) => void;
   onPatientSelect: (patent: TPatient) => void;
@@ -44,7 +44,7 @@ export const PatientNameInput = ({
         autoComplete='off'
         required
       />
-      {patients.length > 0 && (
+      {patients && patients.length > 0 && (
         <div
           ref={innerRef}
           style={{ width, maxHeight: 270 }}

@@ -2,50 +2,22 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { TPatient, TService } from '@/app/_utils/types';
-import { useGetDoctorsQuery } from '@/app/_redux/services';
+import { useGetDoctorsQuery, useGetPatientsQuery } from '@/app/_redux/services';
 import { useGetAgentQuery } from '@/app/_redux/services';
 import { useGetServicesQuery } from '@/app/_redux/services';
-
-const allPatients: TPatient[] = [
-  {
-    _id: 'P-1',
-    name: 'Mr. X',
-    age: '23',
-    ageTitle: 'Day',
-    gender: 'Male',
-    phone: '0181212',
-    address: 'Mirpur, Dhaka',
-  },
-  {
-    _id: 'P-2',
-    name: 'Mr. Y',
-    age: '27',
-    ageTitle: 'Year',
-    gender: 'Male',
-    phone: '0182332',
-    address: 'Mohammadpur, Dhaka',
-  },
-  {
-    _id: 'P-3',
-    name: 'Mrs. Z',
-    age: '16',
-    ageTitle: 'Year',
-    gender: 'Female',
-    phone: '01932234',
-    address: 'Shapahar, Naogaon',
-  },
-];
 
 export const useAddBill = () => {
   // data from redux
   const { data: agentData, isLoading: isAgentLoading } = useGetAgentQuery(null);
+  const { data: patientData, isLoading: isPatientLoading } =
+    useGetPatientsQuery(null);
   const { data: doctorData, isLoading: isDoctorLoading } =
     useGetDoctorsQuery(null);
   const { data: servicesData, isLoading: isServicesLoading } =
     useGetServicesQuery(null);
 
   // states
-  const [patients, setPatients] = useState<TPatient[]>([]);
+  const [patients, setPatients] = useState<TPatient[] | undefined>();
   const [services, setServices] = useState<TService[]>([]);
   const [servicesList, setServicesList] = useState<TService[] | undefined>(
     servicesData?.data,
@@ -62,7 +34,7 @@ export const useAddBill = () => {
   const onPatientNameChange = (key: string) => {
     if (!key) return setPatients([]);
 
-    const matchedPatients = allPatients.reduce(
+    const matchedPatients = patientData?.data?.reduce(
       (matched: TPatient[], patient) => {
         if (patient.name.toLowerCase().includes(key.toLowerCase()))
           matched.push(patient);
@@ -147,7 +119,12 @@ export const useAddBill = () => {
       servicesList,
       discount,
     },
-    loading: { isDoctorLoading, isAgentLoading, isServicesLoading },
+    loading: {
+      isDoctorLoading,
+      isAgentLoading,
+      isServicesLoading,
+      isPatientLoading,
+    },
     data: { allDoctors: doctorData?.data, allAgents: agentData?.data },
   };
 };

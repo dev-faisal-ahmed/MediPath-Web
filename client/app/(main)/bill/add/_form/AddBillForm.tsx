@@ -33,9 +33,20 @@ export const AddBillForm = () => {
   } = handlers;
   const { patient, patients, services, servicesList, discount } = states;
   const { allDoctors, allAgents } = data;
-  const { isDoctorLoading } = loading;
+  const {
+    isDoctorLoading,
+    isAgentLoading,
+    isPatientLoading,
+    isServicesLoading,
+  } = loading;
 
-  if (isDoctorLoading) return <Loader className='mt-12' />;
+  if (
+    isDoctorLoading ||
+    isAgentLoading ||
+    isPatientLoading ||
+    isServicesLoading
+  )
+    return <Loader className='mt-12' />;
 
   return (
     <div className='mx-auto max-w-[650px]'>
