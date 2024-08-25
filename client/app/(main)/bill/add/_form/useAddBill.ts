@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { TPatient, TService } from '@/app/_utils/types';
 import { useGetDoctorsQuery, useGetPatientsQuery } from '@/app/_redux/services';
 import { useGetAgentQuery } from '@/app/_redux/services';
@@ -75,6 +75,19 @@ export const useAddBill = () => {
     );
   };
 
+  const onDiscountChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const discount = Number(event.target.value);
+    console.log(discount);
+    if (isNaN(discount)) {
+      return;
+    }
+
+    if (discount < 0) {
+      return;
+    }
+    setDiscount(discount);
+  };
+
   const onAddBill = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLInputElement & {
@@ -96,10 +109,6 @@ export const useAddBill = () => {
     const agent = form.agent.value;
 
     console.log({ name, age, ageTitle, phone, address, doctor, agent });
-  };
-
-  const onDiscountChange = (discount: string) => {
-    setDiscount(Number(discount));
   };
 
   return {

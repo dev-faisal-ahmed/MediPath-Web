@@ -21,7 +21,7 @@ export const PatientAgeInput = ({ age, ageTitle }: TProps) => {
           placeholder='Input Age'
           type='number'
         />
-        <select.Select defaultValue={ageTitle}>
+        <select.Select name='ageTitle' defaultValue={ageTitle}>
           <select.SelectTrigger className='w-fit rounded-none border-b-0 border-l border-r-0 border-t-0 border-input outline-none focus:ring-0'>
             <select.SelectValue placeholder='Pick Age Title' />
           </select.SelectTrigger>
