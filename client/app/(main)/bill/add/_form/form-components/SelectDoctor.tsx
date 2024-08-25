@@ -5,7 +5,7 @@ import { TDoctor } from '@/app/_utils/types';
 import { Label } from '@/components/ui/label';
 
 type TProps = {
-  doctors: TDoctor[];
+  doctors: TDoctor[] | undefined;
 };
 
 export const SelectDoctor = ({ doctors }: TProps) => {
@@ -20,11 +20,17 @@ export const SelectDoctor = ({ doctors }: TProps) => {
           />
         </select.SelectTrigger>
         <select.SelectContent style={{ maxHeight: 270 }}>
-          {doctors.map((doctor) => (
-            <select.SelectItem key={doctor._id} value={doctor._id}>
-              <span className='font-semibold'>{doctor.name}</span>
-            </select.SelectItem>
-          ))}
+          {doctors ? (
+            <>
+              {doctors.map((doctor) => (
+                <select.SelectItem key={doctor._id} value={doctor._id}>
+                  <span className='font-semibold'>{doctor.name}</span>
+                </select.SelectItem>
+              ))}
+            </>
+          ) : (
+            <p className='p-1 text-muted-foreground'>No doctor found!</p>
+          )}
         </select.SelectContent>
       </select.Select>
     </div>

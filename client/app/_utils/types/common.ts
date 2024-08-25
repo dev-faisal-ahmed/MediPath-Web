@@ -35,3 +35,10 @@ export type TService = {
   name: string;
   price: number;
 };
+
+export type TServerResponse<TData> = {
+  ok: boolean;
+  message: string;
+  data?: TData;
+  error: any;
+};

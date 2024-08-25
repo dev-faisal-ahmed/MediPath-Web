@@ -11,7 +11,7 @@ import { IoSearch } from 'react-icons/io5';
 
 type TProps = {
   services: TService[];
-  serviceList: TService[];
+  serviceList: TService[] | undefined;
   onServiceAdd: (service: TService) => void;
   onServiceRemove: (serviceId: string) => void;
   onServiceFilter: (key: string) => void;
@@ -63,7 +63,7 @@ export const SelectService = ({
               >
                 {name}
                 <div
-                  className='bg-primary-200 absolute -right-2 -top-2 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full border text-white'
+                  className='absolute -right-2 -top-2 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full border bg-primary-200 text-white'
                   onClick={() => onServiceRemove(_id)}
                 >
                   <IoCloseOutline size={20} />
@@ -90,21 +90,27 @@ export const SelectService = ({
               />
             </div>
             <div className='overflow-y-auto' style={{ maxHeight: 220 }}>
-              {serviceList.map((service) => (
-                <div
-                  className='hover:bg-primary-100 grid cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-md p-2'
-                  key={service._id}
-                  onClick={() => handleToggle(service)}
-                >
-                  <p>Service Name : </p>
-                  <p className='font-semibold'>{service.name}</p>
-                  <div className='row-span-3'>
-                    {isSelected(service, services) && <FaCheck />}
-                  </div>
-                  <p>Price</p>
-                  <p className='font-semibold'>{service.price}</p>
-                </div>
-              ))}
+              {serviceList ? (
+                <>
+                  {serviceList.map((service) => (
+                    <div
+                      className='grid cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-md p-2 hover:bg-primary-100'
+                      key={service._id}
+                      onClick={() => handleToggle(service)}
+                    >
+                      <p>Service Name : </p>
+                      <p className='font-semibold'>{service.name}</p>
+                      <div className='row-span-3'>
+                        {isSelected(service, services) && <FaCheck />}
+                      </div>
+                      <p>Price</p>
+                      <p className='font-semibold'>{service.price}</p>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <p className='p-1 text-muted-foreground'>No Services Found</p>
+              )}
             </div>
           </drop.DropdownMenuContent>
         </drop.DropdownMenu>

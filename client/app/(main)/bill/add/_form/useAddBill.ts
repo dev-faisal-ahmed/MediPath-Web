@@ -1,7 +1,10 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
-import { TAgent, TDoctor, TPatient, TService } from '@/app/_utils/types';
+import { FormEvent, useEffect, useState } from 'react';
+import { TPatient, TService } from '@/app/_utils/types';
+import { useGetDoctorsQuery } from '@/app/_redux/services';
+import { useGetAgentQuery } from '@/app/_redux/services';
+import { useGetServicesQuery } from '@/app/_redux/services';
 
 const allPatients: TPatient[] = [
   {
@@ -33,43 +36,27 @@ const allPatients: TPatient[] = [
   },
 ];
 
-const allDoctors: TDoctor[] = [
-  { _id: 'D-1', name: 'Dr. Karim', phone: '013******' },
-  { _id: 'D-2', name: 'Dr. Jahir', phone: '014******' },
-  { _id: 'D-3', name: 'Dr. Faruk', phone: '015******' },
-  { _id: 'D-4', name: 'Dr. Rahim', phone: '012******' },
-  { _id: 'D-5', name: 'Dr. Kalam', phone: '016******' },
-  { _id: 'D6', name: 'Dr. Amir', phone: '017******' },
-  { _id: 'D7', name: 'Dr. Amin', phone: '018******' },
-];
-
-const allAgents: TAgent[] = [
-  { _id: 'A-1', name: 'Agent Rahim', phone: '012******' },
-  { _id: 'A-2', name: 'Rabiul Karim', phone: '013******' },
-  { _id: 'A-3', name: 'Jahir Raihan', phone: '014******' },
-  { _id: 'A-4', name: 'Babu Mia', phone: '015******' },
-  { _id: 'A-5', name: 'Abdul Barik', phone: '016******' },
-  { _id: 'A-6', name: 'Rahim Miya', phone: '017******' },
-  { _id: 'A-7', name: 'Rakibul Hasan', phone: '018******' },
-];
-
-const allServices: TService[] = [
-  { _id: 'S-1', name: 'CBC', price: 500 },
-  { _id: 'S-2', name: 'Blood Test', price: 300 },
-  { _id: 'S-3', name: 'Urine Test', price: 200 },
-  { _id: 'S-4', name: 'BT/CT', price: 250 },
-  { _id: 'S-5', name: 'Glucose Level', price: 80 },
-  { _id: 'S-6', name: 'STD', price: 150 },
-  { _id: 'S-7', name: 'PT_HD', price: 230 },
-];
-
 export const useAddBill = () => {
+  // data from redux
+  const { data: agentData, isLoading: isAgentLoading } = useGetAgentQuery(null);
+  const { data: doctorData, isLoading: isDoctorLoading } =
+    useGetDoctorsQuery(null);
+  const { data: servicesData, isLoading: isServicesLoading } =
+    useGetServicesQuery(null);
+
   // states
   const [patients, setPatients] = useState<TPatient[]>([]);
   const [services, setServices] = useState<TService[]>([]);
-  const [servicesList, setServicesList] = useState<TService[]>(allServices);
+  const [servicesList, setServicesList] = useState<TService[] | undefined>(
+    servicesData?.data,
+  );
   const [patient, setPatient] = useState<TPatient>();
   const [discount, setDiscount] = useState<number>();
+
+  // side effect
+  useEffect(() => {
+    setServicesList(servicesData?.data);
+  }, [servicesData?.data]);
 
   // handlers
   const onPatientNameChange = (key: string) => {
@@ -96,9 +83,9 @@ export const useAddBill = () => {
   };
 
   const onServiceFilter = (key: string) => {
-    if (!key) return setServicesList(allServices);
+    if (!key) return setServicesList(servicesData?.data);
 
-    const matchedServices = allServices.reduce(
+    const matchedServices = servicesData?.data?.reduce(
       (matched: TService[], service) => {
         if (service.name.toLowerCase().includes(key.toLowerCase()))
           matched.push(service);
@@ -153,7 +140,14 @@ export const useAddBill = () => {
       onServiceRemove,
       onDiscountChange,
     },
-    states: { patients, patient, services, servicesList, discount },
-    data: { allDoctors, allAgents },
+    states: {
+      patients,
+      patient,
+      services,
+      servicesList,
+      discount,
+    },
+    loading: { isDoctorLoading, isAgentLoading, isServicesLoading },
+    data: { allDoctors: doctorData?.data, allAgents: agentData?.data },
   };
 };

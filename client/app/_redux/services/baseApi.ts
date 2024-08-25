@@ -1,10 +1,21 @@
-import { axiosBaseQuery } from '@/app/_axios/axiosBaseQuery';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getAccessTokenAction } from '@/app/_actions';
 import { serverAddress } from '@/app/_data';
-import { createApi } from '@reduxjs/toolkit/query/react';
+
+const baseQuey = fetchBaseQuery({
+  baseUrl: `${serverAddress}`,
+  prepareHeaders: async (headers) => {
+    const token = await getAccessTokenAction();
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
 
 export const baseApi = createApi({
   reducerPath: 'api',
-  baseQuery: axiosBaseQuery({ baseUrl: serverAddress }),
+  baseQuery: baseQuey,
   endpoints: () => ({}),
-  tagTypes: ['doctors'],
+  tagTypes: ['doctors', 'agents', 'services'],
 });

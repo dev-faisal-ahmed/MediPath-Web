@@ -1,12 +1,13 @@
+import { TDoctor, TServerResponse } from '@/app/_utils/types';
 import { baseApi } from './baseApi';
 
-const doctors = 'doctors';
+const doctors = '/doctors';
+
 export const doctorApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // get doctors
-    getDoctors: builder.query<any, undefined>({
+    getDoctors: builder.query<TServerResponse<TDoctor[]>, null>({
       query: () => `${doctors}`,
-      providesTags: ['doctors'],
     }),
   }),
 });

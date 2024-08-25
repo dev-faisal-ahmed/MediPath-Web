@@ -11,6 +11,7 @@ import { SelectAgent } from './form-components/SelectAgent';
 import { SelectService } from './form-components/SelectService';
 import { TService } from '@/app/_utils/types';
 import { useAddBill } from './useAddBill';
+import { Loader } from '@/components/shared/Loader';
 
 const getTotalCost = (services: TService[]) => {
   return services.reduce((total, service) => {
@@ -20,7 +21,7 @@ const getTotalCost = (services: TService[]) => {
 };
 
 export const AddBillForm = () => {
-  const { handlers, states, data } = useAddBill();
+  const { handlers, states, data, loading } = useAddBill();
   const {
     onAddBill,
     onPatientNameChange,
@@ -32,6 +33,9 @@ export const AddBillForm = () => {
   } = handlers;
   const { patient, patients, services, servicesList, discount } = states;
   const { allDoctors, allAgents } = data;
+  const { isDoctorLoading } = loading;
+
+  if (isDoctorLoading) return <Loader className='mt-12' />;
 
   return (
     <div className='mx-auto max-w-[650px]'>

@@ -5,7 +5,7 @@ import { TAgent } from '@/app/_utils/types';
 import { Label } from '@/components/ui/label';
 
 type TProps = {
-  agents: TAgent[];
+  agents: TAgent[] | undefined;
 };
 
 export const SelectAgent = ({ agents }: TProps) => {
@@ -20,11 +20,17 @@ export const SelectAgent = ({ agents }: TProps) => {
           />
         </select.SelectTrigger>
         <select.SelectContent style={{ maxHeight: 270 }}>
-          {agents.map((agent) => (
-            <select.SelectItem key={agent._id} value={agent._id}>
-              <span className='font-semibold'>{agent.name}</span>
-            </select.SelectItem>
-          ))}
+          {agents ? (
+            <>
+              {agents.map((agent) => (
+                <select.SelectItem key={agent._id} value={agent._id}>
+                  <span className='font-semibold'>{agent.name}</span>
+                </select.SelectItem>
+              ))}
+            </>
+          ) : (
+            <p className='p-1 text-muted-foreground'>No Agent Found</p>
+          )}
         </select.SelectContent>
       </select.Select>
     </div>
