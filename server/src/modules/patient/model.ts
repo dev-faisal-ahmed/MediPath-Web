@@ -9,6 +9,7 @@ const patientSchema = new Schema<IPatient>(
     age: { type: Number, required: true },
     ageTitle: { type: String, enum: ageTitles, default: 'Year' },
     address: { type: String, required: true },
+    gender: { type: String },
   },
   { timestamps: true },
 );

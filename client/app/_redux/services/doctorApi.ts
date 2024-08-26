@@ -3,7 +3,7 @@ import { baseApi } from './baseApi';
 
 const doctors = '/doctors';
 
-export const doctorApi = baseApi.injectEndpoints({
+const doctorApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // get doctors
     getDoctors: builder.query<TServerResponse<TDoctor[]>, null>({

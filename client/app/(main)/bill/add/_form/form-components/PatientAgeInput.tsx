@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 type TProps = {
-  age: string | undefined;
+  age: number | undefined;
   ageTitle: string | undefined;
 };
 
@@ -20,6 +20,7 @@ export const PatientAgeInput = ({ age, ageTitle }: TProps) => {
           name='age'
           placeholder='Input Age'
           type='number'
+          required
         />
         <select.Select name='ageTitle' defaultValue={ageTitle}>
           <select.SelectTrigger className='w-fit rounded-none border-b-0 border-l border-r-0 border-t-0 border-input outline-none focus:ring-0'>

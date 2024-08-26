@@ -11,7 +11,7 @@ export const SelectGender = ({ defaultValue }: TProps) => {
   return (
     <div className='flex w-full flex-col gap-2'>
       <Label className='font-semibold'>Gender</Label>
-      <select.Select>
+      <select.Select name='gender'>
         <select.SelectTrigger>
           <select.SelectValue
             defaultValue={defaultValue}

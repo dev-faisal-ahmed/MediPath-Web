@@ -1,7 +1,6 @@
 import { z } from 'zod';
-import { ageTitles } from '../patient/constants';
+import { ageTitles, genders } from '../patient/constants';
 import { enumGenerator } from '../../helpers';
-import { agentRouter } from '../agent/router';
 
 // sub schemas
 const patientSubSchema = z.object({
@@ -19,7 +18,11 @@ const patientSubSchema = z.object({
     .min(0, { message: 'Age can not be negative' }),
   ageTitle: enumGenerator(
     ageTitles,
-    `AgeTitle is required and it has to be ${agentRouter}`,
+    `AgeTitle is required and it has to be ${ageTitles}`,
+  ),
+  gender: enumGenerator(
+    genders,
+    `Gender is required and it has to be ${genders}`,
   ),
 });
 

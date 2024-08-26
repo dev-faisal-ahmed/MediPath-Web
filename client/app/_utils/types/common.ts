@@ -11,7 +11,7 @@ export type TGender = 'Male' | 'Female' | 'Other';
 export type TPatient = {
   _id: string;
   name: string;
-  age: string;
+  age: number;
   ageTitle: TAgeTitle;
   gender: TGender;
   phone: string;

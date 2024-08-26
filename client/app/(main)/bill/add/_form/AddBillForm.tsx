@@ -1,18 +1,17 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
 import { PatientNameInput } from './form-components/PatientNameInput';
 import { PatientAgeInput } from './form-components/PatientAgeInput';
 import { CustomInput } from '@/components/shared/form/CustomInput';
+import { SelectService } from './form-components/SelectService';
 import { SelectGender } from './form-components/SelectGender';
 import { SelectDoctor } from './form-components/SelectDoctor';
 import { SelectAgent } from './form-components/SelectAgent';
-import { SelectService } from './form-components/SelectService';
+import { Loader } from '@/components/shared/Loader';
+import { Button } from '@/components/ui/button';
 import { TService } from '@/app/_utils/types';
 import { useAddBill } from './useAddBill';
-import { Loader } from '@/components/shared/Loader';
-import { ChangeEvent } from 'react';
 
 const getTotalCost = (services: TService[]) => {
   return services.reduce((total, service) => {
@@ -23,6 +22,9 @@ const getTotalCost = (services: TService[]) => {
 
 export const AddBillForm = () => {
   const { handlers, states, data, loading } = useAddBill();
+  const { patient, patients, services, servicesList, discount } = states;
+  const { allDoctors, allAgents } = data;
+
   const {
     onAddBill,
     onPatientNameChange,
@@ -32,13 +34,13 @@ export const AddBillForm = () => {
     onServiceRemove,
     onDiscountChange,
   } = handlers;
-  const { patient, patients, services, servicesList, discount } = states;
-  const { allDoctors, allAgents } = data;
+
   const {
     isDoctorLoading,
     isAgentLoading,
     isPatientLoading,
     isServicesLoading,
+    isBillLoading,
   } = loading;
 
   if (
@@ -88,6 +90,7 @@ export const AddBillForm = () => {
             type='number'
             defaultValue={patient?.phone}
             placeholder="Input Patient's Phone Number"
+            required
           />
           <SelectGender defaultValue={patient?.gender} />
         </div>
@@ -99,6 +102,7 @@ export const AddBillForm = () => {
           label='Address'
           name='address'
           rows={4}
+          required
         />
 
         <div className='my-6 flex gap-6'>
@@ -108,6 +112,7 @@ export const AddBillForm = () => {
 
         <CustomInput
           containerClass='md:col-span-2'
+          name='discount'
           label='Discount'
           placeholder='Enter Amount'
           type='number'
@@ -115,7 +120,9 @@ export const AddBillForm = () => {
           onChange={onDiscountChange}
         />
 
-        <Button className='mt-6 block w-full'>Generate Bill</Button>
+        <Button disabled={isBillLoading} className='mt-6 block w-full'>
+          Generate Bill
+        </Button>
       </form>
     </div>
   );

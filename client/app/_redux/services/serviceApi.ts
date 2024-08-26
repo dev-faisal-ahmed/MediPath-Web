@@ -3,7 +3,7 @@ import { TServerResponse, TService } from '@/app/_utils/types';
 
 const services = '/services';
 
-export const serviceApi = baseApi.injectEndpoints({
+const serviceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // get services
     getServices: builder.query<TServerResponse<TService[]>, null>({

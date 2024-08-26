@@ -1,10 +1,16 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { TPatient, TService } from '@/app/_utils/types';
-import { useGetDoctorsQuery, useGetPatientsQuery } from '@/app/_redux/services';
+import { TAgeTitle, TGender, TPatient, TService } from '@/app/_utils/types';
 import { useGetAgentQuery } from '@/app/_redux/services';
+import { useGetDoctorsQuery } from '@/app/_redux/services';
+import { useGetPatientsQuery } from '@/app/_redux/services';
 import { useGetServicesQuery } from '@/app/_redux/services';
+import { useGenerateBillMutation } from '@/app/_redux/services';
+import { removeEmptyProperty } from '@/app/_helpers';
+import { TGenerateBillPayload } from '@/app/_redux/services';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export const useAddBill = () => {
   // data from redux
@@ -15,6 +21,13 @@ export const useAddBill = () => {
     useGetDoctorsQuery(null);
   const { data: servicesData, isLoading: isServicesLoading } =
     useGetServicesQuery(null);
+
+  // redux mutation
+  const [generateBill, { isLoading: isBillLoading }] =
+    useGenerateBillMutation();
+
+  // router
+  const router = useRouter();
 
   // states
   const [patients, setPatients] = useState<TPatient[] | undefined>();
@@ -77,19 +90,19 @@ export const useAddBill = () => {
 
   const onDiscountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const discount = Number(event.target.value);
-    console.log(discount);
     if (isNaN(discount)) {
       return;
     }
 
     if (discount < 0) {
-      return;
+      return setDiscount(-discount);
     }
     setDiscount(discount);
   };
 
-  const onAddBill = (event: FormEvent<HTMLFormElement>) => {
+  const onAddBill = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const form = event.target as HTMLInputElement & {
       name: { value: string };
       age: { value: string };
@@ -98,17 +111,53 @@ export const useAddBill = () => {
       address: { value: string };
       doctor: { value: string };
       agent: { value: string };
+      gender: { value: string };
+      discount: { value: string };
     };
 
     const name = form.name.value.trim();
-    const age = form.age.value;
-    const ageTitle = form.ageTitle.value;
+    const age = Number(form.age.value);
+    const ageTitle = form.ageTitle.value || 'Year';
     const phone = form.phone.value;
-    const address = form.address.value;
+    const address = form.address.value.trim();
     const doctor = form.doctor.value;
     const agent = form.agent.value;
+    const gender = form.gender.value;
+    const discount = Number(form.discount.value);
 
-    console.log({ name, age, ageTitle, phone, address, doctor, agent });
+    const id = toast.loading('Generating the bill ...!');
+    try {
+      // validation
+      if (!gender) throw new Error('Select gender');
+      if (services.length === 0) throw new Error('Please select any service');
+
+      let payload: Record<string, any> = {
+        patientInfo: {
+          name,
+          age,
+          ageTitle: ageTitle as TAgeTitle,
+          address,
+          gender: gender as TGender,
+          phone,
+        },
+        doctorRefId: doctor,
+        agentRefId: agent,
+        discount: Number(discount),
+        services: services.map(({ name, price }) => ({ name, price })),
+      };
+
+      payload = removeEmptyProperty(payload);
+
+      const response = await generateBill(
+        payload as TGenerateBillPayload,
+      ).unwrap();
+
+      toast.success(response.message, { id });
+      router.push(`/bill/${response?.data?.billId}`);
+    } catch (error: any) {
+      if (error instanceof Error) toast.error(error.message, { id });
+      else toast.error(error.data?.message || 'Something went wrong', { id });
+    }
   };
 
   return {
@@ -133,6 +182,7 @@ export const useAddBill = () => {
       isAgentLoading,
       isServicesLoading,
       isPatientLoading,
+      isBillLoading,
     },
     data: { allDoctors: doctorData?.data, allAgents: agentData?.data },
   };
