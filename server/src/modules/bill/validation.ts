@@ -53,7 +53,7 @@ export const generateBillValidationSchema = z.object({
     .number()
     .min(0, { message: 'Discount amount can not be negative' })
     .optional(),
-  pay: z
+  paid: z
     .number({ required_error: 'Payment is required' })
     .min(0, { message: 'Payment can not be negative' }),
 });

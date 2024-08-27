@@ -113,7 +113,7 @@ export const AddBillForm = () => {
             onChange={onDiscountChange}
           />
           <CustomInput
-            name='pay'
+            name='paid'
             label='Payment'
             placeholder='Enter Amount'
             type='number'

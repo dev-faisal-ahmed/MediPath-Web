@@ -32,7 +32,7 @@ const billSchema = new Schema<IBill>(
     agentRefId: { type: Schema.Types.ObjectId, ref: 'agent' },
     services: { type: [serviceSubSchema], required: true },
     price: { type: Number, required: true, min: 0 },
-    pay: { type: Number, required: true, min: 0 },
+    paid: { type: Number, required: true, min: 0 },
     discount: { type: Number, default: 0, min: 0 },
     date: { type: Date, default: new Date() },
   },

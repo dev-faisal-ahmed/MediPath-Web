@@ -12,5 +12,5 @@ export interface IBill {
   price: number;
   discount: number;
   date: Date;
-  pay: number;
+  paid: number;
 }

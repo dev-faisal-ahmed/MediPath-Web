@@ -121,7 +121,7 @@ export const useAddBill = () => {
       agent: { value: string };
       gender: { value: string };
       discount: { value: string };
-      pay: { value: string };
+      paid: { value: string };
     };
 
     const name = form.name.value.trim();
@@ -133,7 +133,7 @@ export const useAddBill = () => {
     const agent = form.agent.value;
     const gender = form.gender.value;
     const discount = Number(form.discount.value);
-    const pay = Number(form.pay.value);
+    const paid = Number(form.paid.value);
 
     const id = toast.loading('Generating the bill ...!');
     try {
@@ -142,7 +142,7 @@ export const useAddBill = () => {
       if (services.length === 0) throw new Error('Please select any service');
 
       const price = getTotalCost(services);
-      if (pay > price - (discount ? discount : 0))
+      if (paid > price - (discount ? discount : 0))
         throw new Error('Can not pay more than you need to');
 
       let payload: Record<string, any> = {
@@ -157,7 +157,7 @@ export const useAddBill = () => {
         doctorRefId: doctor,
         agentRefId: agent,
         discount: Number(discount),
-        pay,
+        paid,
         services: services.map(({ name, price }) => ({ name, price })),
       };
 
