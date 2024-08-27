@@ -4,8 +4,7 @@ import { Bill } from '../model';
 
 export const getBillById = catchAsync(async (req, res) => {
   const { billId } = req.params;
-  const bill = await Bill.findOne({ _id: billId })
-    .populate('patientId')
+  const bill = await Bill.findOne({ billId })
     .populate('doctorRefId')
     .populate('agentRefId');
 

@@ -1,53 +1,40 @@
-import mongoose from 'mongoose';
 import { Bill } from '../model';
-import { Patient } from '../../patient/model';
 import { AppError } from '../../../utils';
 import { catchAsync } from '../../../middlewares';
 import { sendSuccessResponse } from '../../../helpers';
 import { generateBillValidationSchema } from '../validation';
 
+const totalDigit = 5;
+
 export const generateBill = catchAsync(async (req, res) => {
   // validation
   const payload = await generateBillValidationSchema.parseAsync(req.body);
-  const session = await mongoose.startSession();
 
-  try {
-    session.startTransaction();
-    // creating patient
-    let patient = await Patient.findOne({ phone: payload.patientInfo.phone });
-    if (!patient) {
-      [patient] = await Patient.create([payload.patientInfo], { session });
-      if (!patient) throw new AppError('Failed to add patient', 400);
-    }
+  // generating total price
+  const price = payload.services.reduce((total, service) => {
+    total += service.price;
+    return total;
+  }, 0);
 
-    // generating total price
-    const price = payload.services.reduce((total, service) => {
-      total += service.price;
-      return total;
-    }, 0);
+  const userNamePart = payload.patientInfo.name.slice(0, 2).toUpperCase();
 
-    // creating bill
-    const [bill] = await Bill.create(
-      [{ ...payload, patientId: patient._id, price }],
-      { session },
-    );
+  const billCount = await Bill.countDocuments({
+    billId: { $regex: userNamePart, $options: 'i' },
+  });
 
-    if (!bill) throw new AppError('Failed to generate bill', 400);
+  // generating billId
+  let billId = userNamePart + '-';
+  const remaining = totalDigit - billCount.toString().length;
+  for (let i = 1; i <= remaining; i++) billId += '0';
+  billId += (billCount + 1).toString();
 
-    await session.commitTransaction();
-    await session.endSession();
+  // creating bill
+  const bill = await Bill.create({ ...payload, price, billId });
+  if (!bill) throw new AppError('Failed to generate bill', 400);
 
-    // sending response
-    return sendSuccessResponse(res, {
-      message: 'Bill Generated Successfully',
-      data: { billId: bill._id },
-    });
-  } catch (error) {
-    await session.abortTransaction();
-    await session.endSession();
-
-    if (error instanceof AppError)
-      throw new AppError(error.message, error.status);
-    throw new Error(error?.message);
-  }
+  // sending response
+  return sendSuccessResponse(res, {
+    message: 'Bill Generated Successfully',
+    data: { billId },
+  });
 });
