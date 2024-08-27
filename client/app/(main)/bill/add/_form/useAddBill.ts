@@ -11,6 +11,14 @@ import { removeEmptyProperty } from '@/app/_helpers';
 import { TGenerateBillPayload } from '@/app/_redux/services';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { ApiError } from 'next/dist/server/api-utils';
+
+const getTotalCost = (services: TService[]) => {
+  return services.reduce((total, service) => {
+    total += service.price;
+    return total;
+  }, 0);
+};
 
 export const useAddBill = () => {
   // data from redux
@@ -113,6 +121,7 @@ export const useAddBill = () => {
       agent: { value: string };
       gender: { value: string };
       discount: { value: string };
+      pay: { value: string };
     };
 
     const name = form.name.value.trim();
@@ -124,12 +133,17 @@ export const useAddBill = () => {
     const agent = form.agent.value;
     const gender = form.gender.value;
     const discount = Number(form.discount.value);
+    const pay = Number(form.pay.value);
 
     const id = toast.loading('Generating the bill ...!');
     try {
       // validation
       if (!gender) throw new Error('Select gender');
       if (services.length === 0) throw new Error('Please select any service');
+
+      const price = getTotalCost(services);
+      if (pay > price - (discount ? discount : 0))
+        throw new Error('Can not pay more than you need to');
 
       let payload: Record<string, any> = {
         patientInfo: {
@@ -143,6 +157,7 @@ export const useAddBill = () => {
         doctorRefId: doctor,
         agentRefId: agent,
         discount: Number(discount),
+        pay,
         services: services.map(({ name, price }) => ({ name, price })),
       };
 
@@ -169,6 +184,9 @@ export const useAddBill = () => {
       onServiceAdd,
       onServiceRemove,
       onDiscountChange,
+    },
+    helpers: {
+      getTotalCost,
     },
     states: {
       patients,

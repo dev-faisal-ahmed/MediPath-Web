@@ -6,6 +6,7 @@ export type TGenerateBillPayload = {
   agentRefId: string;
   services: Omit<TService, '_id'>[];
   discount: number;
+  pay: number;
 };
 
 export type TBillDetails = {
@@ -18,4 +19,5 @@ export type TBillDetails = {
   price: number;
   discount?: number;
   date: Date;
+  pay: number;
 };

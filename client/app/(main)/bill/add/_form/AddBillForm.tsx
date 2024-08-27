@@ -10,20 +10,13 @@ import { SelectDoctor } from './form-components/SelectDoctor';
 import { SelectAgent } from './form-components/SelectAgent';
 import { Loader } from '@/components/shared/Loader';
 import { Button } from '@/components/ui/button';
-import { TService } from '@/app/_utils/types';
 import { useAddBill } from './useAddBill';
 
-const getTotalCost = (services: TService[]) => {
-  return services.reduce((total, service) => {
-    total += service.price;
-    return total;
-  }, 0);
-};
-
 export const AddBillForm = () => {
-  const { handlers, states, data, loading } = useAddBill();
+  const { handlers, states, data, loading, helpers } = useAddBill();
   const { patient, patients, services, servicesList, discount } = states;
   const { allDoctors, allAgents } = data;
+  const { getTotalCost } = helpers;
 
   const {
     onAddBill,
@@ -110,15 +103,24 @@ export const AddBillForm = () => {
           <SelectAgent agents={allAgents} />
         </div>
 
-        <CustomInput
-          containerClass='md:col-span-2'
-          name='discount'
-          label='Discount'
-          placeholder='Enter Amount'
-          type='number'
-          min={0}
-          onChange={onDiscountChange}
-        />
+        <div className='my-6 flex gap-6'>
+          <CustomInput
+            name='discount'
+            label='Discount'
+            placeholder='Enter Amount'
+            type='number'
+            min={0}
+            onChange={onDiscountChange}
+          />
+          <CustomInput
+            name='pay'
+            label='Payment'
+            placeholder='Enter Amount'
+            type='number'
+            min={0}
+            required
+          />
+        </div>
 
         <Button disabled={isBillLoading} className='mt-6 block w-full'>
           Generate Bill

@@ -13,7 +13,7 @@ type TProps = InputHTMLAttributes<HTMLInputElement> & {
 export const CustomInput = forwardRef<HTMLInputElement, TProps>(
   ({ label, name, containerClass, ...props }, ref) => {
     return (
-      <div className={cn('flex flex-col gap-2', containerClass)}>
+      <div className={cn('flex w-full flex-col gap-2', containerClass)}>
         <Label className='font-semibold' htmlFor={name}>
           {label}
         </Label>
