@@ -7,14 +7,14 @@ type TProps = {
 export const ServicesInfo = ({ services }: TProps) => {
   return (
     <>
-      <h3 className='mb-3 mt-8 text-base font-bold'>Services</h3>
+      <h3 className='mb-3 mt-8 text-lg font-bold'>Services</h3>
       <table className='w-full'>
         <thead>
           <tr>
-            <th className='text-left'>SL.</th>
-            <th className='text-left'>Test Name</th>
-            <th>Room No</th>
-            <th>Price</th>
+            <th className='p-1 text-left'>SL.</th>
+            <th className='p-1 text-left'>Test Name</th>
+            <th className='text-nowrap p-1'>Room No</th>
+            <th className='p-1'>Price</th>
           </tr>
         </thead>
         <tbody>

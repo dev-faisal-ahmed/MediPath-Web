@@ -1,14 +1,14 @@
 'use client';
 
-import { useGetBillDetailsQuery } from '@/app/_redux/services';
-import { Loader } from '@/components/shared/Loader';
-import { useReactToPrint } from 'react-to-print';
-import { Logo } from '@/components/shared/Logo';
 import { useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { PatientInfo } from './PatientInfo';
 import { ServicesInfo } from './ServicesInfo';
+import { PatientInfo } from './PatientInfo';
 import { PaymentInfo } from './PaymentInfo';
+import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/shared/Logo';
+import { useReactToPrint } from 'react-to-print';
+import { Loader } from '@/components/shared/Loader';
+import { useGetBillDetailsQuery } from '@/app/_redux/services';
 
 type TProps = {
   billId: string;
@@ -44,11 +44,23 @@ export const BillDetails = ({ billId }: TProps) => {
   } = billData?.data;
 
   return (
-    <section className='rounded-md bg-white'>
+    <section className='mx-auto max-w-[920px] rounded-md bg-white'>
       <div className='p-12' ref={printRef}>
-        <Logo />
-        {/* patient copy */}
-        <p className='my-6 text-center text-lg font-bold'>Patient Copy</p>
+        <div className='relative flex flex-col items-center justify-center gap-2'>
+          <Logo className='absolute left-0 top-0' hideTitle />
+          <h1 className='text-2xl font-bold'>
+            Medi Path Clinic And Digital Diagnostic Centre
+          </h1>
+          <p>Hospital Road, Rajjodhor Primary School, Sapahar Naogaon</p>
+          <p>
+            Mobile :{' '}
+            <span className='font-semibold'> 01725708075, 01728717696</span>{' '}
+          </p>
+        </div>
+
+        <p className='my-6 rounded-e-md border border-neutral-300 p-1 text-center text-lg font-bold'>
+          Invoice / Bill
+        </p>
         <PatientInfo
           billId={billId}
           date={date}
@@ -58,18 +70,6 @@ export const BillDetails = ({ billId }: TProps) => {
         />
         <ServicesInfo services={services} />
         <PaymentInfo paid={paid} price={price} discount={discount} />
-        <div className='mt-8 h-[1px] w-full bg-neutral-300' />
-
-        {/* lab copy */}
-        <p className='my-6 text-center text-lg font-bold'>Lab Copy</p>
-        <PatientInfo
-          billId={billId}
-          date={date}
-          patientInfo={patientInfo}
-          doctorRefId={doctorRefId}
-          agentRefId={agentRefId}
-        />
-        <ServicesInfo services={services} />
       </div>
 
       <div className='p-6'>
