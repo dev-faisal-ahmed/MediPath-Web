@@ -1,3 +1,6 @@
+import { CiNoWaitingSign } from 'react-icons/ci';
+import { MdVerifiedUser } from 'react-icons/md';
+
 type TProps = {
   price: number;
   discount?: number;
@@ -5,10 +8,12 @@ type TProps = {
 };
 
 export const PaymentInfo = ({ paid, price, discount }: TProps) => {
+  const due = price - paid - (discount ? discount : 0);
+
   return (
     <>
       <h3 className='mb-3 mt-8 text-base font-bold'>Payment Info</h3>
-      <div className='mx-auto max-w-[320px] border-t border-neutral-300 p-2'>
+      <div className='relative mx-auto w-full max-w-[420px] border-t border-neutral-300 p-2'>
         <div className='flex items-center justify-between gap-12'>
           <p>Total Cost</p>
           <p className='font-semibold'>{price}</p>
@@ -23,9 +28,25 @@ export const PaymentInfo = ({ paid, price, discount }: TProps) => {
         </div>
         <div className='mt-1 flex items-center justify-between gap-12 border-t border-neutral-300'>
           <p>Due</p>
-          <p className='font-semibold'>
-            {price - paid - (discount ? discount : 0)}
-          </p>
+          <p className='font-semibold'>{due}</p>
+        </div>
+        {/* paid icon */}
+        <div className='absolute left-1/2 top-1/2 -translate-x-1/2'>
+          {due ? (
+            <div className='flex items-center gap-1 rounded-full bg-red-100 px-5 py-2 text-3xl text-red-500'>
+              <div className='flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white'>
+                <CiNoWaitingSign />
+              </div>
+              DUE
+            </div>
+          ) : (
+            <div className='flex items-center gap-1 rounded-full bg-green-100 px-5 py-2 text-3xl text-green-500'>
+              <div className='text-green-500'>
+                <MdVerifiedUser />
+              </div>
+              PAID
+            </div>
+          )}
         </div>
       </div>
     </>

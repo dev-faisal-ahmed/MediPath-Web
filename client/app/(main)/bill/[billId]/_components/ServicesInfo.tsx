@@ -13,16 +13,16 @@ export const ServicesInfo = ({ services }: TProps) => {
           <tr>
             <th className='text-left'>SL.</th>
             <th className='text-left'>Test Name</th>
-            <th className='text-left'>Quantity</th>
-            <th className=''>Price</th>
+            <th>Room No</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
-          {services.map(({ name, price }, index) => (
+          {services.map(({ name, price, roomNo }, index) => (
             <tr key={name}>
               <td className='p-1'>{index + 1}</td>
               <td className='p-1'>{name}</td>
-              <td className='p-1 pl-5'>1</td>
+              <td className='p-1 text-center'>{roomNo}</td>
               <td className='p-1 text-center'>{price}</td>
             </tr>
           ))}
