@@ -5,6 +5,7 @@ const serviceSchema = new Schema<IService>(
   {
     name: { type: String, required: true, unique: true },
     price: { type: Number, required: true, min: 0 },
+    roomNo: { type: String, required: true },
   },
   { timestamps: true },
 );

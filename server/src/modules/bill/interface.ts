@@ -8,7 +8,7 @@ export interface IBill {
   doctorRefId: Schema.Types.ObjectId;
   agentRefId: Schema.Types.ObjectId;
   patientInfo: Omit<IPatient, '_id'>;
-  services: IService[];
+  services: Omit<IService, '_id'>[];
   price: number;
   discount: number;
   date: Date;

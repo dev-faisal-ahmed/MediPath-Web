@@ -29,7 +29,6 @@ export const SelectService = ({
   onServiceFilter,
 }: TProps) => {
   const containerRef = useRef<HTMLButtonElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
@@ -100,8 +99,16 @@ export const SelectService = ({
                     >
                       <p>Service Name : </p>
                       <p className='font-semibold'>{service.name}</p>
-                      <div className='row-span-3'>
-                        {isSelected(service, services) && <FaCheck />}
+                      <div className='row-span-3 flex items-center gap-3'>
+                        <p>
+                          Room :{' '}
+                          <span className='font-semibold'>
+                            {service.roomNo}
+                          </span>
+                        </p>
+                        <div className='w-6'>
+                          {isSelected(service, services) && <FaCheck />}
+                        </div>
                       </div>
                       <p>Price</p>
                       <p className='font-semibold'>{service.price}</p>

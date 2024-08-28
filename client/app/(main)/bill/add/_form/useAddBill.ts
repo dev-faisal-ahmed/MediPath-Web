@@ -1,6 +1,8 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { TAgeTitle, TGender, TPatient, TService } from '@/app/_utils/types';
 import { useGetAgentQuery } from '@/app/_redux/services';
 import { useGetDoctorsQuery } from '@/app/_redux/services';
@@ -9,9 +11,6 @@ import { useGetServicesQuery } from '@/app/_redux/services';
 import { useGenerateBillMutation } from '@/app/_redux/services';
 import { removeEmptyProperty } from '@/app/_helpers';
 import { TGenerateBillPayload } from '@/app/_redux/services';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { ApiError } from 'next/dist/server/api-utils';
 
 const getTotalCost = (services: TService[]) => {
   return services.reduce((total, service) => {
@@ -158,7 +157,11 @@ export const useAddBill = () => {
         agentRefId: agent,
         discount: Number(discount),
         paid,
-        services: services.map(({ name, price }) => ({ name, price })),
+        services: services.map(({ name, price, roomNo }) => ({
+          name,
+          price,
+          roomNo,
+        })),
       };
 
       payload = removeEmptyProperty(payload);

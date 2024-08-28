@@ -30,12 +30,6 @@ export type TAgent = {
   phone: string;
 };
 
-export type TService = {
-  _id: string;
-  name: string;
-  price: number;
-};
-
 export type TServerResponse<TData> = {
   ok: boolean;
   message: string;
