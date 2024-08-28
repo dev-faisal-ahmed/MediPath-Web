@@ -1,8 +1,9 @@
-export * from './types';
-
-import { TServerResponse } from '@/app/_utils/types';
-import { TBillDetails, TGenerateBillPayload } from './types';
-import { baseApi } from '../baseApi';
+import {
+  TBillDetails,
+  TGenerateBillPayload,
+  TServerResponse,
+} from '@/app/_utils/types';
+import { baseApi } from './baseApi';
 
 const bill = '/bill';
 

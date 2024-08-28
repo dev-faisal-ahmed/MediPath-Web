@@ -1,16 +1,23 @@
 'use client';
 
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {
+  TGender,
+  TPatient,
+  TService,
+  TAgeTitle,
+  TGenerateBillPayload,
+} from '@/app/_utils/types';
 import { toast } from 'sonner';
-import { TAgeTitle, TGender, TPatient, TService } from '@/app/_utils/types';
-import { useGetAgentQuery } from '@/app/_redux/services';
+import { useRouter } from 'next/navigation';
+import { removeEmptyProperty } from '@/app/_helpers';
+import {
+  useGenerateBillMutation,
+  useGetAgentQuery,
+} from '@/app/_redux/services';
 import { useGetDoctorsQuery } from '@/app/_redux/services';
 import { useGetPatientsQuery } from '@/app/_redux/services';
 import { useGetServicesQuery } from '@/app/_redux/services';
-import { useGenerateBillMutation } from '@/app/_redux/services';
-import { removeEmptyProperty } from '@/app/_helpers';
-import { TGenerateBillPayload } from '@/app/_redux/services';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 const getTotalCost = (services: TService[]) => {
   return services.reduce((total, service) => {

@@ -18,12 +18,6 @@ export type TPatient = {
   address: string;
 };
 
-export type TDoctor = {
-  _id: string;
-  name: string;
-  phone: string;
-};
-
 export type TAgent = {
   _id: string;
   name: string;

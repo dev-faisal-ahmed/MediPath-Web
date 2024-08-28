@@ -1,4 +1,6 @@
-import { TAgent, TDoctor, TPatient, TService } from '@/app/_utils/types';
+import { TAgent, TPatient } from './common';
+import { TDoctor } from './doctor';
+import { TService } from './services';
 
 export type TGenerateBillPayload = {
   patientInfo: Omit<TPatient, '_id'>;
