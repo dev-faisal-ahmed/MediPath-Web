@@ -8,7 +8,10 @@ export const metadata = {
 export default function DoctorsPage() {
   return (
     <main>
-      <AddDoctor />
+      <div className='flex items-center justify-between'>
+        <h1 className='text-lg font-semibold'>All Doctors</h1>
+        <AddDoctor />
+      </div>
       <Doctors />
     </main>
   );
