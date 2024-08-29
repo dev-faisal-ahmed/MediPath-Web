@@ -12,7 +12,7 @@ export const TopBar = ({ user }: TProps) => {
         Greetings,{' '}
         <span className='font-semibold'>{user.name.split(' ')[0]}</span>
       </h4>
-      <ProfileIcon name={user.name} imageUrl={user.imageUrl} extend />
+      <ProfileIcon name={user.name} extend />
     </nav>
   );
 };
