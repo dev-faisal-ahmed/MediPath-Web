@@ -47,7 +47,7 @@ export const AddBillForm = () => {
   const totalCost = getTotalCost(services);
 
   return (
-    <div className='mx-auto max-w-[650px]'>
+    <div className='mx-auto max-w-[650px] rounded-md border bg-neutral-50 p-10 shadow'>
       <form className='' onSubmit={onAddBill}>
         <div className='mb-8 flex items-center justify-between gap-6'>
           <h3 className='text-xl font-semibold'>Add Bill</h3>
