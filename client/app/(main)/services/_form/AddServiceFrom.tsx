@@ -1,23 +1,22 @@
 'use client';
 
 import * as dialog from '@/components/ui/dialog';
+import { useAddService } from './useAddService';
 import { Button } from '@/components/ui/button';
-import { useAddDoctor } from './useAddDoctor';
 import { CustomInput } from '@/components/shared/form/CustomInput';
 
-export const AddDoctor = () => {
-  const { isOpen, onAddDoctor, setIsOpen, isLoading } = useAddDoctor();
-
+export const AddServiceForm = () => {
+  const { isOpen, setIsOpen, isLoading, onAddServices } = useAddService();
   return (
     <dialog.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <dialog.DialogTrigger asChild>
-        <Button className='ml-auto block'>Add Doctor</Button>
+        <Button className='ml-auto block'>Add Service</Button>
       </dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>
           <dialog.DialogTitle>Add Doctor</dialog.DialogTitle>
         </dialog.DialogHeader>
-        <form className='flex flex-col gap-3' onSubmit={onAddDoctor}>
+        <form className='flex flex-col gap-3' onSubmit={onAddServices}>
           <h3 className='mb-2 font-semibold'>Input Doctor Information.</h3>
           <CustomInput
             label='Name'
@@ -25,13 +24,25 @@ export const AddDoctor = () => {
             placeholder='Input name'
             required
           />
+
           <CustomInput
-            label='Phone'
-            name='phone'
+            label='Price'
+            name='price'
             type='number'
-            placeholder='Input Phone'
+            placeholder='Input Price'
+            min={0}
             required
           />
+
+          <CustomInput
+            label='Room No'
+            name='roomNo'
+            type='number'
+            placeholder='Input RoomNo'
+            min={0}
+            required
+          />
+
           <Button disabled={isLoading} className='mt-3'>
             Add Doctor
           </Button>

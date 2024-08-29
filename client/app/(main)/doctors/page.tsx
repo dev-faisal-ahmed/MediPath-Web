@@ -1,4 +1,4 @@
-import { AddDoctor } from './_form/AddDoctor';
+import { AddDoctorForm } from './_form/AddDoctorForm';
 import { Doctors } from './_components/Doctors';
 
 export const metadata = {
@@ -10,7 +10,7 @@ export default function DoctorsPage() {
     <main>
       <div className='flex items-center justify-between'>
         <h1 className='text-lg font-semibold'>All Doctors</h1>
-        <AddDoctor />
+        <AddDoctorForm />
       </div>
       <Doctors />
     </main>
