@@ -31,16 +31,23 @@ export const generateBill = catchAsync(async (req, res) => {
     }
 
     // creating bill
-    const bill = await Bill.create({ ...payload, price, billId });
+    const [bill] = await Bill.create([{ ...payload, price, billId }], {
+      session,
+    });
     if (!bill) throw new AppError('Failed to generate bill', 400);
 
     // creating transaction
-    const transaction = await Transaction.create({
-      amount: payload.paid,
-      billId: bill._id,
-      type: 'REVENUE',
-      description: `Paid ${payload.paid}`,
-    });
+    const transaction = await Transaction.create(
+      [
+        {
+          amount: payload.paid,
+          billId: bill._id,
+          type: 'REVENUE',
+          description: `Collected payment ${payload.paid} TK`,
+        },
+      ],
+      { session },
+    );
 
     if (!transaction) throw new AppError('Failed to generate bill', 400);
     await session.commitTransaction();
