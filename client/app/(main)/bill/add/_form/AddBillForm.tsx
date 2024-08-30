@@ -65,7 +65,7 @@ export const AddBillForm = () => {
           onServiceFilter={onServiceFilter}
         />
 
-        <div className='mt-6 flex gap-6'>
+        <div className='mt-6 flex flex-col gap-6 md:flex-row'>
           <PatientNameInput
             patients={patients}
             patient={patient}
@@ -75,7 +75,7 @@ export const AddBillForm = () => {
           <PatientAgeInput age={patient?.age} ageTitle={patient?.ageTitle} />
         </div>
 
-        <div className='mt-6 flex gap-6'>
+        <div className='mt-6 flex flex-col gap-6 md:flex-row'>
           <CustomInput
             containerClass='w-full'
             label='Phone'
@@ -98,12 +98,12 @@ export const AddBillForm = () => {
           required
         />
 
-        <div className='my-6 flex gap-6'>
+        <div className='my-6 flex flex-col gap-6 md:flex-row'>
           <SelectDoctor doctors={allDoctors} />
           <SelectAgent agents={allAgents} />
         </div>
 
-        <div className='my-6 flex gap-6'>
+        <div className='my-6 flex flex-col gap-6 md:flex-row'>
           <CustomInput
             name='discount'
             label='Discount'
@@ -122,7 +122,7 @@ export const AddBillForm = () => {
           />
         </div>
 
-        <Button disabled={isBillLoading} className='mt-6 block w-full'>
+        <Button disabled={isBillLoading} className='mt-10 block w-full'>
           Generate Bill
         </Button>
       </form>

@@ -11,6 +11,17 @@ export type TGenerateBillPayload = {
   paid: number;
 };
 
+export type TBill = {
+  _id: string;
+  billId: string;
+  patientInfo: Omit<TPatient, '_id'>;
+  services: Omit<TService, '_id'>[];
+  price: number;
+  discount?: number;
+  date: Date;
+  paid: number;
+};
+
 export type TBillDetails = {
   _id: string;
   billId: string;
@@ -22,4 +33,9 @@ export type TBillDetails = {
   discount?: number;
   date: Date;
   paid: number;
+};
+
+export type TTakeDuePayload = {
+  price: number;
+  billId: string;
 };

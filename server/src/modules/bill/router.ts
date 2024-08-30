@@ -11,4 +11,4 @@ billRouter.get('/:billId', authGuard, billController.getBillById);
 billRouter.patch('/:billId', authGuard, billController.takeDue);
 
 // bills
-billsRouter.get('', authGuard, billController.getAllBills);
+billsRouter.get('/', authGuard, billController.getAllBills);
