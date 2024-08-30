@@ -60,3 +60,9 @@ export const generateBillValidationSchema = z.object({
     .number({ required_error: 'Payment is required' })
     .min(0, { message: 'Payment can not be negative' }),
 });
+
+export const takeDueValidationSchema = z.object({
+  price: z
+    .number({ required_error: 'Price is required' })
+    .min(0, { message: 'Price can not be negative' }),
+});
