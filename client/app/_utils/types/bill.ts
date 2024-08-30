@@ -1,5 +1,6 @@
-import { TAgent, TPatient } from './common';
+import { TAgent } from './agent';
 import { TDoctor } from './doctor';
+import { TPatient } from './patient';
 import { TService } from './services';
 
 export type TGenerateBillPayload = {

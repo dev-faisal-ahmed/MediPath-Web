@@ -52,6 +52,7 @@ export const getOverView = catchAsync(async (req, res) => {
     {
       $facet: {
         bills: [
+          { $sort: { date: -1 } },
           { $limit: limit }, // Limit the bills to 10 documents
           { $group: { _id: null, bills: { $push: '$$ROOT' } } },
           { $project: { _id: 0, bills: 1 } },

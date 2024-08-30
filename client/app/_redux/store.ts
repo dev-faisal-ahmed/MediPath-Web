@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { baseApi } from './services';
-import { searchSlice } from './slices';
+import { globalSlice } from './slices';
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
-    search: searchSlice.reducer,
+    global: globalSlice.reducer,
   },
 
   middleware: (getDefaultMiddleWare) =>

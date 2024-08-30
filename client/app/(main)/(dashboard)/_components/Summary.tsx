@@ -2,13 +2,14 @@
 
 import * as select from '@/components/ui/select';
 import { Loader } from '@/components/shared/Loader';
-import { useState } from 'react';
+import { updateType } from '@/app/_redux/slices';
 import { SummaryCard } from './SummaryCard';
 import { FaMoneyBills } from 'react-icons/fa6';
 import { TOverViewType } from '@/app/_utils/types';
 import { FaMoneyBillWheat } from 'react-icons/fa6';
 import { FaMoneyBillTrendUp } from 'react-icons/fa6';
 import { useGetOverviewQuery } from '@/app/_redux/services';
+import { useAppDispatch, useAppSelector } from '@/app/_redux/hooks';
 
 const getMessage = (type: TOverViewType) => {
   switch (type) {
@@ -24,14 +25,20 @@ const getMessage = (type: TOverViewType) => {
 };
 
 export const Summary = () => {
-  const [type, setType] = useState<TOverViewType>('DAILY');
+  const { type } = useAppSelector((state) => state.global);
+  const dispatch = useAppDispatch();
   const {
     data: overviewData,
     isLoading,
     isFetching,
   } = useGetOverviewQuery(type);
 
-  if (isLoading || isFetching) return <Loader className='mt-8' />;
+  if (isLoading || isFetching)
+    return (
+      <div className='flex h-32 w-full items-center justify-center rounded-md border border-input'>
+        <Loader className='mt-8' />;
+      </div>
+    );
 
   return (
     <section className='mt-1'>
@@ -39,7 +46,7 @@ export const Summary = () => {
         <h1 className='text-lg font-semibold'>{getMessage(type)}</h1>
         <select.Select
           value={type}
-          onValueChange={(val: TOverViewType) => setType(val)}
+          onValueChange={(val: TOverViewType) => dispatch(updateType(val))}
         >
           <select.SelectTrigger className='w-32'>
             <select.SelectValue placeholder='Select Any Type' />

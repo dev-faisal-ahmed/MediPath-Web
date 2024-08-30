@@ -1,1 +1,1 @@
-export * from './searchSlice';
+export * from './globalSlice';

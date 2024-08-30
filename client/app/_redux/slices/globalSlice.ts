@@ -1,14 +1,17 @@
+import { TOverViewType } from '@/app/_utils/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type TSearchSlice = {
   billId: string;
+  type: TOverViewType;
 };
 
 const initialState: TSearchSlice = {
   billId: '',
+  type: 'DAILY',
 };
 
-export const searchSlice = createSlice({
+export const globalSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
@@ -16,7 +19,11 @@ export const searchSlice = createSlice({
       state.billId = action.payload;
       return state;
     },
+
+    updateType: (state, action: PayloadAction<TOverViewType>) => {
+      state.type = action.payload;
+    },
   },
 });
 
-export const { updateBillId } = searchSlice.actions;
+export const { updateBillId, updateType } = globalSlice.actions;

@@ -16,6 +16,7 @@ export const getAllBills = catchAsync(async (req, res) => {
   if (billId) dbQuery['billId'] = { $regex: billId, $options: 'i' };
 
   const bills = await Bill.find(dbQuery)
+    .sort({ date: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 

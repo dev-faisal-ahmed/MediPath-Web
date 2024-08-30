@@ -8,22 +8,18 @@ import { TakeDueForm } from '../_form/TakeDueForm';
 import { generateDate } from '@/app/_helpers';
 
 export const Bills = () => {
-  const { billId } = useAppSelector((state) => state.search);
+  const { billId } = useAppSelector((state) => state.global);
   const {
     data: billsData,
     isLoading,
     isFetching,
   } = useGetBillsQuery({ billId });
 
-  console.log({ isLoading, isFetching });
-
   if (isLoading || isFetching) return <Loader className='mt-8' />;
 
   if (!billsData?.data?.length)
     return (
-      <p className='mt-8 text-center text-base font-semibold'>
-        No Doctor Found
-      </p>
+      <p className='mt-8 text-center text-base font-semibold'>No Bill Found</p>
     );
 
   const bills = billsData.data;
