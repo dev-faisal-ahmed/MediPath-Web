@@ -23,7 +23,7 @@ const billApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['bills'],
+      invalidatesTags: ['bills', 'overview'],
     }),
 
     // get all bills
@@ -45,7 +45,7 @@ const billApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: { price: payload.price },
       }),
-      invalidatesTags: ['billDetails', 'bills'],
+      invalidatesTags: ['billDetails', 'bills', 'overview'],
     }),
   }),
 });

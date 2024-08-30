@@ -5,25 +5,6 @@ export type TLoggedUser = {
   role: string;
 };
 
-export type TAgeTitle = 'Year' | 'Month' | 'Day' | 'Hour';
-export type TGender = 'Male' | 'Female' | 'Other';
-
-export type TPatient = {
-  _id: string;
-  name: string;
-  age: number;
-  ageTitle: TAgeTitle;
-  gender: TGender;
-  phone: string;
-  address: string;
-};
-
-export type TAgent = {
-  _id: string;
-  name: string;
-  phone: string;
-};
-
 export type TServerResponse<TData> = {
   ok: boolean;
   message: string;

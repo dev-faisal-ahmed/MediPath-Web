@@ -15,6 +15,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en'>
+      <link
+        rel='shortcut icon'
+        href='/images/medipath.jpg'
+        type='image/x-icon'
+      />
+
       <body className={cn(font.className, 'bg-primary-50 text-sm')}>
         <ReduxProvider>{children}</ReduxProvider>
         <Toaster richColors duration={6000} />
