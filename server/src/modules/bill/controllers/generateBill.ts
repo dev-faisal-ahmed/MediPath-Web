@@ -1,40 +1,58 @@
+import mongoose from 'mongoose';
 import { Bill } from '../model';
 import { AppError } from '../../../utils';
 import { catchAsync } from '../../../middlewares';
-import { sendSuccessResponse } from '../../../helpers';
+import { Transaction } from '../../transactions/model';
 import { generateBillValidationSchema } from '../validation';
-
-const totalDigit = 5;
+import { generateBillId, sendSuccessResponse } from '../../../helpers';
 
 export const generateBill = catchAsync(async (req, res) => {
   // validation
   const payload = await generateBillValidationSchema.parseAsync(req.body);
+  const session = await mongoose.startSession();
 
-  // generating total price
-  const price = payload.services.reduce((total, service) => {
-    total += service.price;
-    return total;
-  }, 0);
+  try {
+    session.startTransaction();
+    // calculating total price
+    const price = payload.services.reduce((total, service) => {
+      total += service.price;
+      return total;
+    }, 0);
 
-  const userNamePart = payload.patientInfo.name.slice(0, 2).toUpperCase();
+    // generating billId
+    let isBillIdMatch = false;
+    let billId: string;
 
-  const billCount = await Bill.countDocuments({
-    billId: { $regex: userNamePart, $options: 'i' },
-  });
+    while (!isBillIdMatch) {
+      billId = generateBillId();
+      // checking if this billId match
+      const isBillExist = await Bill.findOne({ billId });
+      if (!isBillExist) isBillIdMatch = true;
+    }
 
-  // generating billId
-  let billId = userNamePart + '-';
-  const remaining = totalDigit - billCount.toString().length;
-  for (let i = 1; i <= remaining; i++) billId += '0';
-  billId += (billCount + 1).toString();
+    // creating bill
+    const bill = await Bill.create({ ...payload, price, billId });
+    if (!bill) throw new AppError('Failed to generate bill', 400);
 
-  // creating bill
-  const bill = await Bill.create({ ...payload, price, billId });
-  if (!bill) throw new AppError('Failed to generate bill', 400);
+    // creating transaction
+    const transaction = await Transaction.create({
+      amount: payload.paid,
+      billId: bill._id,
+      type: 'REVENUE',
+      description: `Paid ${payload.paid}`,
+    });
 
-  // sending response
-  return sendSuccessResponse(res, {
-    message: 'Bill Generated Successfully',
-    data: { billId },
-  });
+    if (!transaction) throw new AppError('Failed to generate bill', 400);
+    await session.commitTransaction();
+
+    return sendSuccessResponse(res, {
+      message: 'Bill Generated Successfully',
+      data: { billId },
+    });
+  } catch (error: any) {
+    await session.abortTransaction();
+    throw new AppError(error.message, error.status);
+  } finally {
+    await session.endSession();
+  }
 });
