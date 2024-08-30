@@ -44,7 +44,7 @@ export const AddServiceForm = () => {
           />
 
           <Button disabled={isLoading} className='mt-3'>
-            Add Doctor
+            Add Service
           </Button>
         </form>
       </dialog.DialogContent>

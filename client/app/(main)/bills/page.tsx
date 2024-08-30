@@ -1,4 +1,5 @@
 import { Bills } from './_components/Bills';
+import { Search } from './_components/Search';
 
 export const metadata = {
   title: 'Medipath | Bills',
@@ -7,8 +8,9 @@ export const metadata = {
 export default function BillsPage() {
   return (
     <main>
-      <div className='flex items-center justify-between'>
+      <div className='mt-1 flex items-center justify-between'>
         <h1 className='text-lg font-semibold'>All Bills</h1>
+        <Search />
       </div>
       <Bills />
     </main>
