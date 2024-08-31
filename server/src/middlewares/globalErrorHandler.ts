@@ -1,6 +1,6 @@
-import { ErrorRequestHandler } from 'express';
 import { NODE_ENV } from '../app/config';
-import { sendErrorResponse } from '../helpers/responseHelper';
+import { ErrorRequestHandler } from 'express';
+import { sendErrorResponse } from '../helpers';
 
 export const globalErrorHandler: ErrorRequestHandler = (error, _, res, __) => {
   let status: number = error.status || 500;

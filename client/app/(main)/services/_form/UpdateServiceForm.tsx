@@ -2,27 +2,37 @@
 
 import * as dialog from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { useAddService } from './useAddService';
 import { CustomInput } from '@/components/shared/form/CustomInput';
+import { RiEdit2Fill } from 'react-icons/ri';
+import { useUpdateService } from './useUpdateService';
 
-export const AddServiceForm = () => {
-  const { isOpen, setIsOpen, isLoading, onAddServices } = useAddService();
+type TProps = {
+  billId: string;
+  name: string;
+  price: number;
+  roomNo: string;
+};
+
+export const UpdateServiceForm = ({ billId, name, price, roomNo }: TProps) => {
+  const { isOpen, setIsOpen, isLoading, onUpdateService } =
+    useUpdateService(billId);
 
   return (
     <dialog.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <dialog.DialogTrigger asChild>
-        <Button className='ml-auto block'>Add Service</Button>
+        <RiEdit2Fill className='cursor-pointer text-blue-600' size={20} />
       </dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>
-          <dialog.DialogTitle>Add Service</dialog.DialogTitle>
+          <dialog.DialogTitle>Update Service</dialog.DialogTitle>
         </dialog.DialogHeader>
-        <form className='flex flex-col gap-3' onSubmit={onAddServices}>
+        <form className='flex flex-col gap-3' onSubmit={onUpdateService}>
           <h3 className='mb-2 font-semibold'>Input Service Information.</h3>
           <CustomInput
             label='Name'
             name='name'
             placeholder='Input name'
+            defaultValue={name}
             required
           />
 
@@ -31,6 +41,7 @@ export const AddServiceForm = () => {
             name='price'
             type='number'
             placeholder='Input Price'
+            defaultValue={price}
             min={0}
             required
           />
@@ -40,6 +51,7 @@ export const AddServiceForm = () => {
             name='roomNo'
             type='number'
             placeholder='Input RoomNo'
+            defaultValue={roomNo}
             min={0}
             required
           />

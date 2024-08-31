@@ -5,6 +5,7 @@ import { useGetServicesQuery } from '@/app/_redux/services';
 import { Loader } from '@/components/shared/Loader';
 import { RiEdit2Fill } from 'react-icons/ri';
 import { TbTrashFilled } from 'react-icons/tb';
+import { UpdateServiceForm } from '../_form/UpdateServiceForm';
 
 export const Services = () => {
   const {
@@ -49,7 +50,12 @@ export const Services = () => {
               </table.TableCell>
               <table.TableCell>
                 <div className='flex items-center justify-center gap-3'>
-                  <RiEdit2Fill className='text-blue-600' size={20} />
+                  <UpdateServiceForm
+                    billId={_id}
+                    name={name}
+                    price={price}
+                    roomNo={roomNo}
+                  />
                   <TbTrashFilled className='text-red-600' size={20} />
                 </div>
               </table.TableCell>

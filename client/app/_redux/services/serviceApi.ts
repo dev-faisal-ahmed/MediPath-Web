@@ -1,5 +1,7 @@
 import { baseApi } from './baseApi';
-import { TServerResponse, TService } from '@/app/_utils/types';
+import { TService } from '@/app/_utils/types';
+import { TServerResponse } from '@/app/_utils/types';
+import { TUpdateServicePayload } from '@/app/_utils/types';
 
 const services = '/services';
 const service = '/service';
@@ -21,7 +23,24 @@ const serviceApi = baseApi.injectEndpoints({
       query: () => `${services}`,
       providesTags: ['services'],
     }),
+
+    // update service
+    updateService: builder.mutation<
+      TServerResponse<null>,
+      TUpdateServicePayload
+    >({
+      query: (payload) => ({
+        url: `${service}/${payload.serviceId}`,
+        method: 'PATCH',
+        body: payload.serviceInfo,
+      }),
+      invalidatesTags: ['services'],
+    }),
   }),
 });
 
-export const { useAddServiceMutation, useGetServicesQuery } = serviceApi;
+export const {
+  useAddServiceMutation,
+  useGetServicesQuery,
+  useUpdateServiceMutation,
+} = serviceApi;

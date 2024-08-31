@@ -4,3 +4,8 @@ export type TService = {
   price: number;
   roomNo: string;
 };
+
+export type TUpdateServicePayload = {
+  serviceId: string;
+  serviceInfo: Partial<TService>;
+};

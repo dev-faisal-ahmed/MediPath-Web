@@ -7,6 +7,7 @@ export const servicesRouter = Router();
 
 // service router
 serviceRouter.post('/', authGuard, serviceController.addService);
+serviceRouter.patch('/:serviceId', authGuard, serviceController.updateService);
 
 // services router
 servicesRouter.get('/', authGuard, serviceController.getServices);
