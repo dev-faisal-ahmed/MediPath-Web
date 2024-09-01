@@ -32,6 +32,7 @@ const agentApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: payload.data,
       }),
+      invalidatesTags: ['agents'],
     }),
     // delete agent
     deleteAgent: builder.mutation<TServerResponse<null>, string>({

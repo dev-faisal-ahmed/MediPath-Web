@@ -3,6 +3,7 @@
 import * as table from '@/components/ui/table';
 import { Loader } from '@/components/shared/Loader';
 import { useGetAgentQuery } from '@/app/_redux/services';
+import { UpdateAgentForm } from '../_form/UpdateAgentForm';
 
 export const AgentTable = () => {
   const { data: agentData, isLoading, isFetching } = useGetAgentQuery(null);
@@ -35,6 +36,7 @@ export const AgentTable = () => {
               <table.TableCell>{name}</table.TableCell>
               <table.TableCell>
                 <div className='flex items-center justify-center gap-3'>
+                  <UpdateAgentForm agentId={_id} name={name} />
                   {/* <UpdateDoctorForm
                     doctorId={_id}
                     name={name}
