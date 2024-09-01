@@ -1,8 +1,8 @@
 'use client';
 
+import * as dialog from '@/components/ui/dialog';
 import { useDeleteDoctorMutation } from '@/app/_redux/services';
 import { Button } from '@/components/ui/button';
-import * as dialog from '@/components/ui/dialog';
 import { TbTrashFilled } from 'react-icons/tb';
 import { toast } from 'sonner';
 
