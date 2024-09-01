@@ -20,7 +20,7 @@ export const SelectAgent = ({ agents }: TProps) => {
           />
         </select.SelectTrigger>
         <select.SelectContent style={{ maxHeight: 270 }}>
-          {agents ? (
+          {agents && agents.length ? (
             <>
               {agents.map((agent) => (
                 <select.SelectItem key={agent._id} value={agent._id}>

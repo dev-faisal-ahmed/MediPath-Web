@@ -82,7 +82,7 @@ export const SelectService = ({
           <drop.DropdownMenuContent
             className='p-3'
             sideOffset={15}
-            style={{ width: width - 60 }}
+            style={{ width }}
           >
             <div className='relative mb-3'>
               <IoSearch className='absolute left-2 top-1/2 -translate-y-1/2 text-lg text-primary' />

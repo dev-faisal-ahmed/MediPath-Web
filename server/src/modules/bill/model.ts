@@ -19,8 +19,8 @@ const patientSubSchema = new Schema<Omit<IPatient, '_id'>>(
     age: { type: Number, required: true },
     ageTitle: { type: String, enum: ageTitles, required: true },
     gender: { type: String, enum: genders, required: true },
-    phone: { type: String, required: true },
-    address: { type: String, required: true },
+    phone: { type: String },
+    address: { type: String },
   },
   { _id: false },
 );

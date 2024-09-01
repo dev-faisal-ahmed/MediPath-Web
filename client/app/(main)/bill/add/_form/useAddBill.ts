@@ -7,13 +7,13 @@ import {
   TAgeTitle,
   TGenerateBillPayload,
 } from '@/app/_utils/types';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { removeEmptyProperty } from '@/app/_helpers';
 import {
   useGenerateBillMutation,
   useGetAgentQuery,
 } from '@/app/_redux/services';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { removeEmptyProperty } from '@/app/_helpers';
 import { useGetDoctorsQuery } from '@/app/_redux/services';
 import { useGetPatientsQuery } from '@/app/_redux/services';
 import { useGetServicesQuery } from '@/app/_redux/services';
@@ -152,14 +152,14 @@ export const useAddBill = () => {
         throw new Error('Can not pay more than you need to');
 
       let payload: Record<string, any> = {
-        patientInfo: {
-          name,
+        patientInfo: removeEmptyProperty({
+          name: name.toUpperCase(),
           age,
           ageTitle: ageTitle as TAgeTitle,
           address,
           gender: gender as TGender,
           phone,
-        },
+        }),
         doctorRefId: doctor,
         agentRefId: agent,
         discount: Number(discount),
@@ -172,6 +172,7 @@ export const useAddBill = () => {
       };
 
       payload = removeEmptyProperty(payload);
+      console.log(payload);
 
       const response = await generateBill(
         payload as TGenerateBillPayload,
@@ -180,6 +181,7 @@ export const useAddBill = () => {
       toast.success(response.message, { id });
       router.push(`/bill/${response?.data?.billId}`);
     } catch (error: any) {
+      console.log(error);
       if (error instanceof Error) toast.error(error.message, { id });
       else toast.error(error.data?.message || 'Something went wrong', { id });
     }

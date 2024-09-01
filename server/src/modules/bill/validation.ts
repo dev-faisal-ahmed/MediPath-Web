@@ -4,18 +4,10 @@ import { enumGenerator } from '../../helpers';
 
 // sub schemas
 const patientSubSchema = z.object({
-  name: z
-    .string({ required_error: 'Patient Name is required' })
-    .min(0, { message: 'Patient Name is required' }),
-  phone: z
-    .string({ required_error: 'Phone number is required' })
-    .min(0, { message: 'Phone number is required' }),
-  address: z
-    .string({ required_error: 'Address is required' })
-    .min(0, { message: 'Address is required' }),
-  age: z
-    .number({ required_error: 'Age is required' })
-    .min(0, { message: 'Age can not be negative' }),
+  name: z.string().min(1, { message: 'Patient Name is required' }),
+  phone: z.string().min(1, { message: 'Phone number is required' }).optional(),
+  address: z.string().min(1, { message: 'Address is required' }).optional(),
+  age: z.number().min(0, { message: 'Age can not be negative' }),
   ageTitle: enumGenerator(
     ageTitles,
     `AgeTitle is required and it has to be ${ageTitles}`,

@@ -25,7 +25,6 @@ export const useLogin = () => {
     try {
       setIsLoading(true);
       const response = await loginAction({ userId, password });
-      console.log(response);
       if (!response?.ok) throw new Error(response?.message);
 
       toast.success(response?.message, { id });

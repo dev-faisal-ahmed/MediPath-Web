@@ -83,7 +83,6 @@ export const AddBillForm = () => {
             type='number'
             defaultValue={patient?.phone}
             placeholder="Input Patient's Phone Number"
-            required
           />
           <SelectGender defaultValue={patient?.gender} />
         </div>
@@ -95,10 +94,9 @@ export const AddBillForm = () => {
           label='Address'
           name='address'
           rows={4}
-          required
         />
 
-        <div className='my-6 flex flex-col gap-6 md:flex-row'>
+        <div className='my-6 flex flex-col gap-6'>
           <SelectDoctor doctors={allDoctors} />
           <SelectAgent agents={allAgents} />
         </div>

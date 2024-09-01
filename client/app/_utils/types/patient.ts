@@ -7,6 +7,6 @@ export type TPatient = {
   age: number;
   ageTitle: TAgeTitle;
   gender: TGender;
-  phone: string;
-  address: string;
+  phone?: string;
+  address?: string;
 };

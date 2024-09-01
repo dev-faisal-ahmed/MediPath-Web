@@ -5,10 +5,10 @@ import { ageTitles } from './constants';
 const patientSchema = new Schema<IPatient>(
   {
     name: { type: String, required: true },
-    phone: { type: String, required: true, unique: true },
+    phone: { type: String },
     age: { type: Number, required: true },
     ageTitle: { type: String, enum: ageTitles, default: 'Year' },
-    address: { type: String, required: true },
+    address: { type: String },
     gender: { type: String },
   },
   { timestamps: true },

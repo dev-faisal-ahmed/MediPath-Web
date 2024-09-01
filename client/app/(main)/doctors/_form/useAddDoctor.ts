@@ -20,11 +20,9 @@ export const useAddDoctor = () => {
     const id = toast.loading('Adding Doctor...🔃');
     try {
       const response = await addDoctor({ name, designation }).unwrap();
-      console.log(response);
       toast.success(response.message, { id });
       setIsOpen(false);
     } catch (error: any) {
-      console.log(error);
       if (error instanceof Error) toast.error(error.message, { id });
       else toast.error(error.data?.message || 'Something went wrong', { id });
     }

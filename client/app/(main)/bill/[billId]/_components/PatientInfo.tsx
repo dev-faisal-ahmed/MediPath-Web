@@ -30,9 +30,23 @@ export const PatientInfo = ({
       </span>
       {/* patient Info */}
       <span>Name</span>
-      <span>
-        : <span className='font-semibold'>{patientInfo.name}</span>
+      <span className='flex items-center justify-between gap-6'>
+        <span>
+          : <span className='font-semibold'>{patientInfo.name}</span>
+        </span>
+        {patientInfo.phone && (
+          <span>
+            Phone : <span className='font-semibold'>{patientInfo.phone}</span>{' '}
+          </span>
+        )}
       </span>
+      {patientInfo.address && (
+        <>
+          <span>Address</span>
+          <span> : {patientInfo.address}</span>
+        </>
+      )}
+
       <span>Age</span>
       <span className='flex items-center justify-between gap-6'>
         <span>
@@ -45,7 +59,9 @@ export const PatientInfo = ({
       {doctorRefId && (
         <>
           <span>Ref Doc</span>
-          <span>: {doctorRefId.name} </span>
+          <span>
+            : {doctorRefId.name} {doctorRefId.designation}
+          </span>
         </>
       )}
       {agentRefId && (
