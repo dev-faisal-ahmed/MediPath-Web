@@ -57,7 +57,7 @@ export const UpdateServiceForm = ({ billId, name, price, roomNo }: TProps) => {
           />
 
           <Button disabled={isLoading} className='mt-3'>
-            Add Service
+            Update Service
           </Button>
         </form>
       </dialog.DialogContent>

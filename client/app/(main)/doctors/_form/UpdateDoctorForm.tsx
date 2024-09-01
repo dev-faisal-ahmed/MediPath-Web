@@ -23,7 +23,7 @@ export const UpdateDoctorForm = ({ name, designation, doctorId }: TProps) => {
       </dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>
-          <dialog.DialogTitle>Add Doctor</dialog.DialogTitle>
+          <dialog.DialogTitle>Update Doctor</dialog.DialogTitle>
         </dialog.DialogHeader>
         <form className='flex flex-col gap-3' onSubmit={onUpdateDoctor}>
           <h3 className='mb-2 font-semibold'>Input Doctor Information.</h3>
