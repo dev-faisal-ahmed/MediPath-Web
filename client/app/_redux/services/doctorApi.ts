@@ -37,6 +37,15 @@ const doctorApi = baseApi.injectEndpoints({
         invalidatesTags: ['doctors'],
       },
     ),
+
+    // delete doctor
+    deleteDoctor: builder.mutation<TServerResponse<null>, string>({
+      query: (doctorId) => ({
+        url: `${doctor}/${doctorId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['doctors'],
+    }),
   }),
 });
 
@@ -44,4 +53,5 @@ export const {
   useAddDoctorMutation,
   useGetDoctorsQuery,
   useUpdateDoctorMutation,
+  useDeleteDoctorMutation,
 } = doctorApi;

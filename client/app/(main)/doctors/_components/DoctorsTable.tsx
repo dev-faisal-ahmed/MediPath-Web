@@ -6,6 +6,7 @@ import { TbTrashFilled } from 'react-icons/tb';
 import { Loader } from '@/components/shared/Loader';
 import { useGetDoctorsQuery } from '@/app/_redux/services';
 import { UpdateDoctorForm } from '../_form/UpdateDoctorForm';
+import { DeleteDoctor } from './DeleteDoctor';
 
 export const DoctorsTable = () => {
   const { data: doctorsData, isLoading, isFetching } = useGetDoctorsQuery(null);
@@ -45,7 +46,7 @@ export const DoctorsTable = () => {
                     name={name}
                     designation={designation}
                   />
-                  <TbTrashFilled className='text-red-600' size={20} />
+                  <DeleteDoctor doctorId={_id} />
                 </div>
               </table.TableCell>
             </table.TableRow>
