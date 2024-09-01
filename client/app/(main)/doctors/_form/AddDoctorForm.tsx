@@ -26,10 +26,9 @@ export const AddDoctorForm = () => {
             required
           />
           <CustomInput
-            label='Phone'
-            name='phone'
-            type='number'
-            placeholder='Input Phone'
+            label='Designation'
+            name='designation'
+            placeholder='Input Designation'
             required
           />
           <Button disabled={isLoading} className='mt-3'>

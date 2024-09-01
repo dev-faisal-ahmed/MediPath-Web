@@ -1,5 +1,5 @@
 import { AddDoctorForm } from './_form/AddDoctorForm';
-import { Doctors } from './_components/Doctors';
+import { DoctorsTable } from './_components/DoctorsTable';
 
 export const metadata = {
   title: 'MediPath | Doctors',
@@ -12,7 +12,7 @@ export default function DoctorsPage() {
         <h1 className='text-lg font-semibold'>All Doctors</h1>
         <AddDoctorForm />
       </div>
-      <Doctors />
+      <DoctorsTable />
     </main>
   );
 }

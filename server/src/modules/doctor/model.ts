@@ -3,8 +3,8 @@ import { IDoctor } from './interface';
 
 const doctorSchema = new Schema<IDoctor>(
   {
-    name: { type: String, required: true },
-    phone: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true },
+    designation: { type: String, required: true },
   },
   { timestamps: true },
 );
