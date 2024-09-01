@@ -3,11 +3,10 @@
 import * as table from '@/components/ui/table';
 import { useGetServicesQuery } from '@/app/_redux/services';
 import { Loader } from '@/components/shared/Loader';
-import { RiEdit2Fill } from 'react-icons/ri';
-import { TbTrashFilled } from 'react-icons/tb';
 import { UpdateServiceForm } from '../_form/UpdateServiceForm';
+import { DeleteService } from './DeleteService';
 
-export const Services = () => {
+export const ServiceTable = () => {
   const {
     data: servicesData,
     isFetching,
@@ -56,7 +55,7 @@ export const Services = () => {
                     price={price}
                     roomNo={roomNo}
                   />
-                  <TbTrashFilled className='text-red-600' size={20} />
+                  <DeleteService serviceId={_id} />
                 </div>
               </table.TableCell>
             </table.TableRow>
