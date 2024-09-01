@@ -2,8 +2,8 @@ import { sendSuccessResponse } from '../../../helpers';
 import { catchAsync } from '../../../middlewares';
 import { Doctor } from '../model';
 
-export const getDoctors = catchAsync(async (req, res) => {
-  const doctors = await Doctor.find();
+export const getDoctors = catchAsync(async (_req, res) => {
+  const doctors = await Doctor.find().sort({ createdAt: -1 });
 
   return sendSuccessResponse(res, {
     message: 'Doctor retrieved successfully',

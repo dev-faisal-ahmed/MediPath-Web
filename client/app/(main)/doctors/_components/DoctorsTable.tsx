@@ -5,6 +5,7 @@ import { RiEdit2Fill } from 'react-icons/ri';
 import { TbTrashFilled } from 'react-icons/tb';
 import { Loader } from '@/components/shared/Loader';
 import { useGetDoctorsQuery } from '@/app/_redux/services';
+import { UpdateDoctorForm } from '../_form/UpdateDoctorForm';
 
 export const DoctorsTable = () => {
   const { data: doctorsData, isLoading, isFetching } = useGetDoctorsQuery(null);
@@ -39,7 +40,11 @@ export const DoctorsTable = () => {
               <table.TableCell>{designation}</table.TableCell>
               <table.TableCell>
                 <div className='flex items-center justify-center gap-3'>
-                  <RiEdit2Fill className='text-blue-600' size={20} />
+                  <UpdateDoctorForm
+                    doctorId={_id}
+                    name={name}
+                    designation={designation}
+                  />
                   <TbTrashFilled className='text-red-600' size={20} />
                 </div>
               </table.TableCell>

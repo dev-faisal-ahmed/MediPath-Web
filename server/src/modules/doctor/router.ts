@@ -7,6 +7,7 @@ export const doctorsRouter = Router();
 
 // doctor
 doctorRouter.post('/', authGuard, doctorController.addDoctor);
+doctorRouter.patch('/:doctorId', authGuard, doctorController.updateDoctor);
 
 // doctors
 doctorsRouter.get('/', authGuard, doctorController.getDoctors);

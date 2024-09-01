@@ -1,4 +1,8 @@
-import { TDoctor, TServerResponse } from '@/app/_utils/types';
+import {
+  TDoctor,
+  TServerResponse,
+  TUpdateDoctorPayload,
+} from '@/app/_utils/types';
 import { baseApi } from './baseApi';
 
 const doctor = '/doctor';
@@ -21,7 +25,23 @@ const doctorApi = baseApi.injectEndpoints({
       query: () => `${doctors}`,
       providesTags: ['doctors'],
     }),
+
+    // update doctor
+    updateDoctor: builder.mutation<TServerResponse<null>, TUpdateDoctorPayload>(
+      {
+        query: (payload) => ({
+          url: `${doctor}/${payload.doctorId}`,
+          method: 'PATCH',
+          body: payload.data,
+        }),
+        invalidatesTags: ['doctors'],
+      },
+    ),
   }),
 });
 
-export const { useAddDoctorMutation, useGetDoctorsQuery } = doctorApi;
+export const {
+  useAddDoctorMutation,
+  useGetDoctorsQuery,
+  useUpdateDoctorMutation,
+} = doctorApi;
