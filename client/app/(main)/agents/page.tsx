@@ -1,3 +1,4 @@
+import { AgentTable } from './_components/AgentTable';
 import { AddAgentForm } from './_form/AddAgentForm';
 
 export const metadata = {
@@ -11,7 +12,7 @@ export default function AgentPage() {
         <h1 className='text-lg font-semibold'>All Agents</h1>
         <AddAgentForm />
       </div>
-      {/* <DoctorsTable /> */}
+      <AgentTable />
     </main>
   );
 }
