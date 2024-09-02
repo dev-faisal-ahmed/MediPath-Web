@@ -9,4 +9,4 @@ const referrerSchema = new Schema<IReferrer>({
   isDeleted: { type: Boolean, default: false },
 });
 
-export const Referrer = model<IReferrer>('referer', referrerSchema);
+export const Referrer = model<IReferrer>('referrer', referrerSchema);

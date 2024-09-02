@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { ageTitles, genders } from '../patient/constants';
 import { enumGenerator } from '../../helpers';
+import { ageTitles, genders } from '../patient/constants';
 
 // sub schemas
 const patientSubSchema = z.object({
@@ -33,14 +33,9 @@ const serviceSubSchema = z.object({
 // main schemas
 export const generateBillValidationSchema = z.object({
   patientInfo: patientSubSchema,
-  doctorRefId: z
+  referrer: z
     .string({ required_error: 'Doctor id is required' })
     .min(1, { message: 'Doctor id is required' })
-    .min(24, { message: 'Invalid Id' })
-    .optional(),
-  agentRefId: z
-    .string({ required_error: 'Agent id is required' })
-    .min(1, { message: 'Agent id is required' })
     .min(24, { message: 'Invalid Id' })
     .optional(),
   services: serviceSubSchema.array(),
@@ -51,6 +46,10 @@ export const generateBillValidationSchema = z.object({
   paid: z
     .number({ required_error: 'Payment is required' })
     .min(0, { message: 'Payment can not be negative' }),
+  commission: z
+    .number()
+    .min(0, { message: 'Commission can not be negative' })
+    .optional(),
 });
 
 export const takeDueValidationSchema = z.object({
