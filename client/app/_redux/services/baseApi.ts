@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAccessTokenAction } from '@/app/_actions';
 import { serverAddress } from '@/app/_data';
+import { getAccessTokenAction } from '@/app/_actions';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuey = fetchBaseQuery({
   baseUrl: `${serverAddress}`,
@@ -18,8 +18,8 @@ export const baseApi = createApi({
   baseQuery: baseQuey,
   endpoints: () => ({}),
   tagTypes: [
-    'doctors',
-    'agents',
+    'referrers',
+    'referrerDetails',
     'services',
     'patients',
     'bills',
