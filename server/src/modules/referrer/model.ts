@@ -1,11 +1,12 @@
 import { model, Schema } from 'mongoose';
-import { IReferer } from './interface';
+import { IReferrer } from './interface';
 import { referrerTypes } from './constants';
 
-const refererSchema = new Schema<IReferer>({
+const referrerSchema = new Schema<IReferrer>({
   name: { type: String, required: true },
   designation: { type: String },
   type: { type: String, enum: referrerTypes, required: true },
+  isDeleted: { type: Boolean, default: false },
 });
 
-export const Referer = model<IReferer>('referer', refererSchema);
+export const Referrer = model<IReferrer>('referer', referrerSchema);
