@@ -164,7 +164,6 @@ export const useAddBill = () => {
       toast.success(response.message, { id });
       router.push(`/bill/${response?.data?.billId}`);
     } catch (error: any) {
-      console.log(error);
       if (error instanceof Error) toast.error(error.message, { id });
       else toast.error(error.data?.message || 'Something went wrong', { id });
     }
