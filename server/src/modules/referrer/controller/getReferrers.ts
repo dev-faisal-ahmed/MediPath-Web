@@ -13,7 +13,20 @@ export const getReferrers = catchAsync(async (req, res) => {
         as: 'bills',
       },
     },
-    { $addFields: { commission: { $sum: '$bills.commission' } } },
+    {
+      $lookup: {
+        from: 'transactions',
+        localField: '_id',
+        foreignField: 'referrerId',
+        as: 'transactions',
+      },
+    },
+    {
+      $addFields: {
+        commission: { $sum: '$bills.commission' },
+        paid: { $sum: '$transactions.amount' },
+      },
+    },
   ]);
 
   return sendSuccessResponse(res, {

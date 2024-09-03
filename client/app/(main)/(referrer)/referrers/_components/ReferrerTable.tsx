@@ -32,6 +32,12 @@ export const ReferrerTable = () => {
               Commission
             </table.TableHead>
             <table.TableHead className='text-center font-semibold'>
+              Paid
+            </table.TableHead>
+            <table.TableHead className='text-center font-semibold'>
+              Due
+            </table.TableHead>
+            <table.TableHead className='text-center font-semibold'>
               Type
             </table.TableHead>
             <table.TableHead className='text-center font-semibold'>
@@ -41,7 +47,7 @@ export const ReferrerTable = () => {
         </table.TableHeader>
         <table.TableBody>
           {referrerData.data.map(
-            ({ _id, name, designation, type, commission }, index) => (
+            ({ _id, name, designation, type, commission, paid }, index) => (
               <table.TableRow key={_id}>
                 <table.TableCell>{index + 1}</table.TableCell>
                 <table.TableCell>
@@ -54,6 +60,12 @@ export const ReferrerTable = () => {
                 </table.TableCell>
                 <table.TableCell className='text-center'>
                   {commission}
+                </table.TableCell>
+                <table.TableCell className='text-center'>
+                  {paid}
+                </table.TableCell>
+                <table.TableCell className='text-center'>
+                  {commission - paid}
                 </table.TableCell>
                 <table.TableCell className='text-center'>
                   {type}

@@ -1,14 +1,14 @@
 'use client';
 
-import { PatientAgeInput } from './form-components/PatientAgeInput';
-import { CustomInput } from '@/components/shared/form/CustomInput';
-import { SelectService } from './form-components/SelectService';
-import { SelectGender } from './form-components/SelectGender';
-import { Loader } from '@/components/shared/Loader';
-import { Button } from '@/components/ui/button';
 import { useAddBill } from './useAddBill';
+import { Button } from '@/components/ui/button';
+import { Loader } from '@/components/shared/Loader';
+import { SelectDoctor } from './form-components/SelectDoctor';
+import { SelectGender } from './form-components/SelectGender';
+import { SelectService } from './form-components/SelectService';
+import { CustomInput } from '@/components/shared/form/CustomInput';
+import { PatientAgeInput } from './form-components/PatientAgeInput';
 import { SelectReferrer } from './form-components/SelectReferrer';
-import { SelectDoctor } from './form-components/SelectDoctot';
 
 export const AddBillForm = () => {
   const { handlers, states, loading, helpers, data } = useAddBill();
