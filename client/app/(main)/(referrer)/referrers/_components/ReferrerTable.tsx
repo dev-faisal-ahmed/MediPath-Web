@@ -1,10 +1,11 @@
 'use client';
 
 import * as table from '@/components/ui/table';
+import { DeleteReferrer } from './DeleteReferrer';
 import { Loader } from '@/components/shared/Loader';
 import { useGetReferrersQuery } from '@/app/_redux/services';
 import { UpdateReferrerForm } from '../_form/UpdateReferrerForm';
-import { DeleteReferrer } from './DeleteReferrer';
+import { GiveCommission } from '../../_components/GiveCommission';
 
 export const ReferrerTable = () => {
   const { data: referrerData, isLoading } = useGetReferrersQuery(null);
@@ -66,6 +67,7 @@ export const ReferrerTable = () => {
                       type={type}
                     />
                     <DeleteReferrer referrerId={_id} />
+                    <GiveCommission referrerId={_id} />
                   </div>
                 </table.TableCell>
               </table.TableRow>
