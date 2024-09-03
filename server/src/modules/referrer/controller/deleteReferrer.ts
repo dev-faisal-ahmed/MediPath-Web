@@ -8,7 +8,7 @@ export const deleteReferrer = catchAsync(async (req, res) => {
 
   const deletedStatus = await Referrer.updateOne(
     { _id: referrerId },
-    { $set: { isDeleted: false } },
+    { $set: { isDeleted: true } },
   );
 
   if (!deletedStatus.acknowledged)

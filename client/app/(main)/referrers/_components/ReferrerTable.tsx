@@ -4,6 +4,7 @@ import * as table from '@/components/ui/table';
 import { Loader } from '@/components/shared/Loader';
 import { useGetReferrersQuery } from '@/app/_redux/services';
 import { UpdateReferrerForm } from '../_form/UpdateReferrerForm';
+import { DeleteReferrer } from './DeleteReferrer';
 
 export const ReferrerTable = () => {
   const { data: referrerData, isLoading } = useGetReferrersQuery(null);
@@ -53,6 +54,7 @@ export const ReferrerTable = () => {
                     designation={designation}
                     type={type}
                   />
+                  <DeleteReferrer referrerId={_id} />
                 </div>
               </table.TableCell>
             </table.TableRow>
