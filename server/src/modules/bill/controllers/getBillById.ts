@@ -4,9 +4,7 @@ import { Bill } from '../model';
 
 export const getBillById = catchAsync(async (req, res) => {
   const { billId } = req.params;
-  const bill = await Bill.findOne({ billId })
-    .populate('doctorRefId')
-    .populate('agentRefId');
+  const bill = await Bill.findOne({ billId }).populate('referrer');
 
   return sendSuccessResponse(res, {
     message: 'Bill retrieved successfully',

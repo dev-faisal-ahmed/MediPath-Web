@@ -1,6 +1,6 @@
 import {
-  TServerResponse,
   TReferrer,
+  TServerResponse,
   TUpdateReferrer,
 } from '@/app/_utils/types';
 import { baseApi } from './baseApi';
@@ -23,7 +23,7 @@ export const referrerApi = baseApi.injectEndpoints({
       invalidatesTags: ['referrers'],
     }),
     // get referrers
-    getReferrers: builder.query<TServerResponse<TReferrer>, null>({
+    getReferrers: builder.query<TServerResponse<TReferrer[]>, null>({
       query: () => `${referrers}`,
       providesTags: ['referrers'],
     }),

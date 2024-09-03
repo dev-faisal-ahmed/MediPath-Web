@@ -1,20 +1,18 @@
 import { generateDate } from '@/app/_helpers';
-import { TAgent, TDoctor, TPatient } from '@/app/_utils/types';
+import { TPatient, TReferrer } from '@/app/_utils/types';
 
 type TProps = {
   billId: string;
   date: Date;
   patientInfo: Omit<TPatient, '_id'>;
-  doctorRefId?: Omit<TDoctor, '_id'>;
-  agentRefId?: Omit<TAgent, '_id'>;
+  referrer: TReferrer;
 };
 
 export const PatientInfo = ({
   billId,
   date,
   patientInfo,
-  doctorRefId,
-  agentRefId,
+  referrer,
 }: TProps) => {
   return (
     <div className='mt-8 grid grid-cols-[auto_1fr] gap-x-1 gap-y-2'>
@@ -56,18 +54,15 @@ export const PatientInfo = ({
         <span>Gender: {patientInfo.gender} </span>
       </span>
       {/* references */}
-      {doctorRefId && (
+      {referrer && (
         <>
-          <span>Ref Doc</span>
+          <span>Referred By</span>
           <span>
-            : {doctorRefId.name} {doctorRefId.designation}
+            : {referrer.name}{' '}
+            {referrer.designation && (
+              <span className='text-neutral-400'>({referrer.designation})</span>
+            )}
           </span>
-        </>
-      )}
-      {agentRefId && (
-        <>
-          <span>Ref Agent</span>
-          <span>: {agentRefId.name} </span>
         </>
       )}
     </div>

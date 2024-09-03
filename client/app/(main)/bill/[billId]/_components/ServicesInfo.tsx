@@ -14,7 +14,7 @@ export const ServicesInfo = ({ services }: TProps) => {
             <th className='p-1 text-left'>SL.</th>
             <th className='p-1 text-left'>Test Name</th>
             <th className='text-nowrap p-1'>Room No</th>
-            <th className='p-1'>Price</th>
+            <th className='p-1 text-right'>Price</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@ export const ServicesInfo = ({ services }: TProps) => {
               <td className='p-1'>{index + 1}</td>
               <td className='p-1'>{name}</td>
               <td className='p-1 text-center'>{roomNo}</td>
-              <td className='p-1 text-center'>{price}</td>
+              <td className='p-1 text-right'>{price}</td>
             </tr>
           ))}
         </tbody>

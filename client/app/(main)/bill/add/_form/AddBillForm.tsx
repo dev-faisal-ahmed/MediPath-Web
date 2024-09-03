@@ -1,60 +1,44 @@
 'use client';
 
-import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
-import { PatientNameInput } from './form-components/PatientNameInput';
 import { PatientAgeInput } from './form-components/PatientAgeInput';
 import { CustomInput } from '@/components/shared/form/CustomInput';
 import { SelectService } from './form-components/SelectService';
 import { SelectGender } from './form-components/SelectGender';
-import { SelectDoctor } from './form-components/SelectDoctor';
-import { SelectAgent } from './form-components/SelectAgent';
 import { Loader } from '@/components/shared/Loader';
 import { Button } from '@/components/ui/button';
 import { useAddBill } from './useAddBill';
+import { SelectReferrer } from './form-components/SelectReferrer';
 
 export const AddBillForm = () => {
-  const { handlers, states, data, loading, helpers } = useAddBill();
-  const { patient, patients, services, servicesList, discount } = states;
-  const { allDoctors, allAgents } = data;
+  const { handlers, states, loading, helpers, data } = useAddBill();
+  const { services, servicesList, discount, referrer, paid, commission } =
+    states;
   const { getTotalCost } = helpers;
+  const { referrersList } = data;
 
   const {
     onAddBill,
-    onPatientNameChange,
-    onPatientSelect,
     onServiceFilter,
     onServiceAdd,
     onServiceRemove,
     onDiscountChange,
+    onReferrerSelection,
+    onPaidChange,
+    onCommissionChange,
   } = handlers;
 
-  const {
-    isDoctorLoading,
-    isAgentLoading,
-    isPatientLoading,
-    isServicesLoading,
-    isBillLoading,
-  } = loading;
+  const { isServicesLoading, isBillLoading, isReferrersLoading } = loading;
 
-  if (
-    isDoctorLoading ||
-    isAgentLoading ||
-    isPatientLoading ||
-    isServicesLoading
-  )
+  if (isReferrersLoading || isServicesLoading)
     return <Loader className='mt-12' />;
 
   const totalCost = getTotalCost(services);
 
   return (
-    <div className='mx-auto max-w-[650px] rounded-md border bg-neutral-50 p-10 shadow'>
-      <form className='' onSubmit={onAddBill}>
-        <div className='mb-8 flex items-center justify-between gap-6'>
+    <div className='mx-auto max-w-[650px] rounded-md border bg-neutral-50 p-8 shadow'>
+      <form onSubmit={onAddBill}>
+        <div className='mb-4 flex items-center justify-between gap-6'>
           <h3 className='text-xl font-semibold'>Add Bill</h3>
-          <h3 className='text-lg font-semibold'>
-            Total : ৳{' '}
-            {totalCost - (discount ? (totalCost === 0 ? 0 : discount) : 0)}
-          </h3>
         </div>
 
         <SelectService
@@ -65,43 +49,52 @@ export const AddBillForm = () => {
           onServiceFilter={onServiceFilter}
         />
 
-        <div className='mt-6 flex flex-col gap-6 md:flex-row'>
-          <PatientNameInput
-            patients={patients}
-            patient={patient}
-            onPatientNameChange={onPatientNameChange}
-            onPatientSelect={onPatientSelect}
+        <div className='mt-3 flex flex-col gap-6 md:flex-row'>
+          <CustomInput
+            containerClass='w-full'
+            label='Full Name'
+            name='name'
+            placeholder="Input Patient's Name"
           />
-          <PatientAgeInput age={patient?.age} ageTitle={patient?.ageTitle} />
+          <PatientAgeInput />
         </div>
 
-        <div className='mt-6 flex flex-col gap-6 md:flex-row'>
+        <div className='mt-3 flex flex-col gap-6 md:flex-row'>
           <CustomInput
             containerClass='w-full'
             label='Phone'
             name='phone'
             type='number'
-            defaultValue={patient?.phone}
             placeholder="Input Patient's Phone Number"
           />
-          <SelectGender defaultValue={patient?.gender} />
+          <SelectGender />
         </div>
 
-        <CustomTextarea
-          containerClass='mt-6'
+        <CustomInput
+          containerClass='mt-3'
           placeholder='Add Address'
-          defaultValue={patient?.address}
           label='Address'
           name='address'
-          rows={4}
         />
 
-        <div className='my-6 flex flex-col gap-6'>
-          <SelectDoctor doctors={allDoctors} />
-          <SelectAgent agents={allAgents} />
-        </div>
+        <SelectReferrer
+          referrer={referrer}
+          referrerList={referrersList}
+          onReferrerSelection={onReferrerSelection}
+        />
 
-        <div className='my-6 flex flex-col gap-6 md:flex-row'>
+        <CustomInput
+          containerClass='mt-3'
+          label='Commission'
+          placeholder={referrer ? 'Enter Amount' : 'Select a referrer first'}
+          type='number'
+          min={0}
+          value={commission}
+          onChange={onCommissionChange}
+          disabled={!referrer}
+        />
+
+        <div className='my-3 flex flex-col gap-6 md:flex-row'>
           <CustomInput
             name='discount'
             label='Discount'
@@ -111,16 +104,32 @@ export const AddBillForm = () => {
             onChange={onDiscountChange}
           />
           <CustomInput
-            name='paid'
             label='Payment'
             placeholder='Enter Amount'
             type='number'
             min={0}
+            value={paid}
+            onChange={onPaidChange}
             required
           />
         </div>
 
-        <Button disabled={isBillLoading} className='mt-10 block w-full'>
+        <div className='mt-3 grid grid-cols-[1fr_auto] rounded-md border border-input p-3'>
+          <h1 className='col-span-2 mb-3 text-lg font-semibold'>Summary.</h1>
+          <h1 className='text-lg font-bold'>Total. </h1>
+          <p className='text-right text-lg font-bold'> {totalCost} ৳</p>
+          <h3 className='font-semibold'>Discount.</h3>
+          <p className='text-right font-semibold'> {discount || 0} ৳</p>
+          <h3 className='font-semibold'>Paid.</h3>
+          <p className='text-right font-semibold'> {paid || 0} ৳</p>
+          <h3 className='font-semibold'>Due.</h3>
+          <p className='text-right font-semibold'>
+            {' '}
+            {totalCost - (discount || 0) - (paid || 0)} ৳
+          </p>
+        </div>
+
+        <Button disabled={isBillLoading} className='mt-6 block w-full'>
           Generate Bill
         </Button>
       </form>

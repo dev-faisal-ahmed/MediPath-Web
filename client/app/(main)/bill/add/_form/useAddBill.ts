@@ -2,21 +2,17 @@
 
 import {
   TGender,
-  TPatient,
   TService,
   TAgeTitle,
+  TReferrer,
   TGenerateBillPayload,
 } from '@/app/_utils/types';
-import {
-  useGenerateBillMutation,
-  useGetAgentQuery,
-} from '@/app/_redux/services';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { removeEmptyProperty } from '@/app/_helpers';
-import { useGetDoctorsQuery } from '@/app/_redux/services';
-import { useGetPatientsQuery } from '@/app/_redux/services';
 import { useGetServicesQuery } from '@/app/_redux/services';
+import { useGetReferrersQuery } from '@/app/_redux/services';
+import { useGenerateBillMutation } from '@/app/_redux/services';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 const getTotalCost = (services: TService[]) => {
@@ -28,13 +24,10 @@ const getTotalCost = (services: TService[]) => {
 
 export const useAddBill = () => {
   // data from redux
-  const { data: agentData, isLoading: isAgentLoading } = useGetAgentQuery(null);
-  const { data: patientData, isLoading: isPatientLoading } =
-    useGetPatientsQuery(null);
-  const { data: doctorData, isLoading: isDoctorLoading } =
-    useGetDoctorsQuery(null);
   const { data: servicesData, isLoading: isServicesLoading } =
     useGetServicesQuery(null);
+  const { data: referrersData, isLoading: isReferrersLoading } =
+    useGetReferrersQuery(null);
 
   // redux mutation
   const [generateBill, { isLoading: isBillLoading }] =
@@ -44,39 +37,21 @@ export const useAddBill = () => {
   const router = useRouter();
 
   // states
-  const [patients, setPatients] = useState<TPatient[] | undefined>();
   const [services, setServices] = useState<TService[]>([]);
   const [servicesList, setServicesList] = useState<TService[] | undefined>(
     servicesData?.data,
   );
-  const [patient, setPatient] = useState<TPatient>();
   const [discount, setDiscount] = useState<number>();
+  const [referrer, setReferrer] = useState<TReferrer | undefined>();
+  const [paid, setPaid] = useState<number>();
+  const [commission, setCommission] = useState<number>();
 
   // side effect
   useEffect(() => {
-    setServicesList(servicesData?.data);
+    setServicesList(servicesData?.data || []);
   }, [servicesData?.data]);
 
   // handlers
-  const onPatientNameChange = (key: string) => {
-    if (!key) return setPatients([]);
-
-    const matchedPatients = patientData?.data?.reduce(
-      (matched: TPatient[], patient) => {
-        if (patient.name.toLowerCase().includes(key.toLowerCase()))
-          matched.push(patient);
-        return matched;
-      },
-      [],
-    );
-
-    setPatients(matchedPatients);
-  };
-
-  const onPatientSelect = (patient: TPatient) => {
-    setPatient(patient);
-  };
-
   const onServiceAdd = (service: TService) => {
     setServices((prevServices) => [...prevServices, service]);
   };
@@ -104,14 +79,30 @@ export const useAddBill = () => {
 
   const onDiscountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const discount = Number(event.target.value);
-    if (isNaN(discount)) {
-      return;
-    }
+    if (isNaN(discount)) return;
+    if (discount < 0) return setDiscount(-discount);
 
-    if (discount < 0) {
-      return setDiscount(-discount);
-    }
     setDiscount(discount);
+  };
+
+  const onReferrerSelection = (referrer: TReferrer | undefined) => {
+    setReferrer(referrer);
+  };
+
+  const onPaidChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const paid = Number(event.target.value);
+    if (isNaN(paid)) return;
+    if (paid < 0) return setPaid(-paid);
+
+    setPaid(paid);
+  };
+
+  const onCommissionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const commission = Number(event.target.value);
+    if (isNaN(commission)) return;
+    if (commission < 0) return setCommission(-commission);
+
+    setCommission(commission);
   };
 
   const onAddBill = async (event: FormEvent<HTMLFormElement>) => {
@@ -123,11 +114,7 @@ export const useAddBill = () => {
       ageTitle: { value: string };
       phone: { value: string };
       address: { value: string };
-      doctor: { value: string };
-      agent: { value: string };
       gender: { value: string };
-      discount: { value: string };
-      paid: { value: string };
     };
 
     const name = form.name.value.trim();
@@ -135,20 +122,17 @@ export const useAddBill = () => {
     const ageTitle = form.ageTitle.value || 'Year';
     const phone = form.phone.value;
     const address = form.address.value.trim();
-    const doctor = form.doctor.value;
-    const agent = form.agent.value;
     const gender = form.gender.value;
-    const discount = Number(form.discount.value);
-    const paid = Number(form.paid.value);
 
     const id = toast.loading('Generating the bill ...!');
     try {
       // validation
+      if (!paid) throw Error('Take payment first');
       if (!gender) throw new Error('Select gender');
       if (services.length === 0) throw new Error('Please select any service');
 
       const price = getTotalCost(services);
-      if (paid > price - (discount ? discount : 0))
+      if (paid > price - (discount || 0))
         throw new Error('Can not pay more than you need to');
 
       let payload: Record<string, any> = {
@@ -160,9 +144,9 @@ export const useAddBill = () => {
           gender: gender as TGender,
           phone,
         }),
-        doctorRefId: doctor,
-        agentRefId: agent,
-        discount: Number(discount),
+        referrer: referrer?._id,
+        discount: discount,
+        commission: referrer ? commission : undefined,
         paid,
         services: services.map(({ name, price, roomNo }) => ({
           name,
@@ -172,7 +156,6 @@ export const useAddBill = () => {
       };
 
       payload = removeEmptyProperty(payload);
-      console.log(payload);
 
       const response = await generateBill(
         payload as TGenerateBillPayload,
@@ -190,30 +173,30 @@ export const useAddBill = () => {
   return {
     handlers: {
       onAddBill,
-      onPatientNameChange,
-      onPatientSelect,
       onServiceFilter,
       onServiceAdd,
       onServiceRemove,
       onDiscountChange,
+      onReferrerSelection,
+      onPaidChange,
+      onCommissionChange,
     },
     helpers: {
       getTotalCost,
     },
     states: {
-      patients,
-      patient,
       services,
       servicesList,
       discount,
+      referrer,
+      paid,
+      commission,
     },
     loading: {
-      isDoctorLoading,
-      isAgentLoading,
       isServicesLoading,
-      isPatientLoading,
       isBillLoading,
+      isReferrersLoading,
     },
-    data: { allDoctors: doctorData?.data, allAgents: agentData?.data },
+    data: { referrersList: referrersData?.data || [] },
   };
 };

@@ -32,16 +32,8 @@ export const BillDetails = ({ billId }: TProps) => {
       </section>
     );
 
-  const {
-    date,
-    patientInfo,
-    doctorRefId,
-    agentRefId,
-    services,
-    price,
-    discount,
-    paid,
-  } = billData?.data;
+  const { date, patientInfo, services, price, discount, paid, referrer } =
+    billData?.data;
 
   return (
     <section className='mx-auto max-w-[920px] rounded-md bg-white'>
@@ -65,8 +57,7 @@ export const BillDetails = ({ billId }: TProps) => {
           billId={billId}
           date={date}
           patientInfo={patientInfo}
-          doctorRefId={doctorRefId}
-          agentRefId={agentRefId}
+          referrer={referrer}
         />
         <ServicesInfo services={services} />
         <PaymentInfo paid={paid} price={price} discount={discount} />
