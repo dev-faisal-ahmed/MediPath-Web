@@ -8,6 +8,6 @@ export type TReferrer = {
 };
 
 export type TUpdateReferrer = {
-  referredId: string;
+  referrerId: string;
   payload: Omit<TReferrer, '_id'>;
 };

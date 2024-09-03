@@ -1,5 +1,5 @@
 import { ReferrerTable } from './_components/ReferrerTable';
-import { AddReferrerForm } from './_form/AddReferrer.Form';
+import { AddReferrerForm } from './_form/AddReferrerForm';
 
 export default function ReferrersPage() {
   return (

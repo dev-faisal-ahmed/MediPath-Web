@@ -36,8 +36,8 @@ export const referrerApi = baseApi.injectEndpoints({
 
     // update referrer
     updateReferrer: builder.mutation<TServerResponse<null>, TUpdateReferrer>({
-      query: ({ payload, referredId }) => ({
-        url: `${referrer}/${referredId}`,
+      query: ({ payload, referrerId }) => ({
+        url: `${referrer}/${referrerId}`,
         method: 'PATCH',
         body: payload,
       }),

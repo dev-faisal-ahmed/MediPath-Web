@@ -3,6 +3,7 @@
 import * as table from '@/components/ui/table';
 import { Loader } from '@/components/shared/Loader';
 import { useGetReferrersQuery } from '@/app/_redux/services';
+import { UpdateReferrerForm } from '../_form/UpdateReferrerForm';
 
 export const ReferrerTable = () => {
   const { data: referrerData, isLoading } = useGetReferrersQuery(null);
@@ -46,8 +47,12 @@ export const ReferrerTable = () => {
               <table.TableCell className='text-center'>{type}</table.TableCell>
               <table.TableCell>
                 <div className='flex items-center justify-center gap-3'>
-                  {/* <UpdateAgentForm agentId={_id} name={name} />
-                  <DeleteAgent agentId={_id} /> */}
+                  <UpdateReferrerForm
+                    referrerId={_id}
+                    name={name}
+                    designation={designation}
+                    type={type}
+                  />
                 </div>
               </table.TableCell>
             </table.TableRow>
