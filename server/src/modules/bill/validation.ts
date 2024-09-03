@@ -38,6 +38,11 @@ export const generateBillValidationSchema = z.object({
     .min(1, { message: 'Doctor id is required' })
     .min(24, { message: 'Invalid Id' })
     .optional(),
+  visitedBy: z
+    .string({ required_error: 'Doctor id is required' })
+    .min(1, { message: 'Doctor id is required' })
+    .min(24, { message: 'Invalid Id' })
+    .optional(),
   services: serviceSubSchema.array(),
   discount: z
     .number()

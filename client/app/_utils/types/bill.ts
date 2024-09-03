@@ -5,6 +5,7 @@ import { TService } from './services';
 export type TGenerateBillPayload = {
   patientInfo: Omit<TPatient, '_id'>;
   referrer?: string;
+  visitedBy?: string;
   services: Omit<TService, '_id'>[];
   discount: number;
   paid: number;
@@ -27,6 +28,7 @@ export type TBillDetails = {
   billId: string;
   patientInfo: Omit<TPatient, '_id'>;
   referrer: TReferrer;
+  visitedBy: TReferrer;
   services: Omit<TService, '_id'>[];
   price: number;
   discount?: number;

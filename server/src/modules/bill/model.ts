@@ -28,13 +28,14 @@ const patientSubSchema = new Schema<Omit<IPatient, '_id'>>(
 const billSchema = new Schema<IBill>(
   {
     billId: { type: String, required: true, unique: true },
+    referrer: { type: Schema.Types.ObjectId, ref: 'referrer' },
+    visitedBy: { type: Schema.Types.ObjectId, ref: 'referrer' },
     patientInfo: { type: patientSubSchema, required: true },
     services: { type: [serviceSubSchema], required: true },
+    date: { type: Date, default: new Date() },
     price: { type: Number, required: true, min: 0 },
     paid: { type: Number, required: true, min: 0 },
     discount: { type: Number, default: 0, min: 0 },
-    date: { type: Date, default: new Date() },
-    referrer: { type: Schema.Types.ObjectId, ref: 'referrer' },
     commission: { type: Number },
   },
   { timestamps: true },

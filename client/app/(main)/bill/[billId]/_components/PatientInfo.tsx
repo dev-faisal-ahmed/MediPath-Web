@@ -6,13 +6,14 @@ type TProps = {
   date: Date;
   patientInfo: Omit<TPatient, '_id'>;
   referrer: TReferrer;
+  visitedBy: TReferrer;
 };
 
 export const PatientInfo = ({
   billId,
   date,
   patientInfo,
-  referrer,
+  visitedBy,
 }: TProps) => {
   return (
     <div className='mt-8 grid grid-cols-[auto_1fr] gap-x-1 gap-y-2'>
@@ -53,16 +54,11 @@ export const PatientInfo = ({
         </span>
         <span>Gender: {patientInfo.gender} </span>
       </span>
-      {/* references */}
-      {referrer && (
+      {/* visited by */}
+      {visitedBy && (
         <>
-          <span>Referred By</span>
-          <span>
-            : {referrer.name}{' '}
-            {referrer.designation && (
-              <span className='text-neutral-400'>({referrer.designation})</span>
-            )}
-          </span>
+          <span>Visited By</span>
+          <span className='line-clamp-1'>: {visitedBy.name} </span>
         </>
       )}
     </div>

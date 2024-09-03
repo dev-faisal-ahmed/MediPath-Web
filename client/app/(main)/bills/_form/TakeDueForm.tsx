@@ -16,7 +16,7 @@ export const TakeDueForm = ({ due, billId }: TProps) => {
   return (
     <dialog.Dialog>
       <dialog.DialogTrigger asChild>
-        <Button disabled={due === 0} className='mx-auto block'>
+        <Button disabled={due === 0} className='block'>
           {due ? 'Take Due' : 'Already Paid'}
         </Button>
       </dialog.DialogTrigger>

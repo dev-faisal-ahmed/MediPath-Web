@@ -1,4 +1,4 @@
-import { Bills } from './_components/Bills';
+import { BillsTable } from './_components/BillsTable';
 import { Search } from './_components/Search';
 
 export const metadata = {
@@ -12,7 +12,7 @@ export default function BillsPage() {
         <h1 className='text-lg font-semibold'>All Bills</h1>
         <Search />
       </div>
-      <Bills />
+      <BillsTable />
     </main>
   );
 }

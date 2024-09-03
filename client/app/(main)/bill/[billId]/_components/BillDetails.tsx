@@ -23,6 +23,8 @@ export const BillDetails = ({ billId }: TProps) => {
     documentTitle: `Invoice`,
   });
 
+  console.log(billData);
+
   if (isLoading) return <Loader className='mt-12' />;
 
   if (!billData?.data)
@@ -32,8 +34,16 @@ export const BillDetails = ({ billId }: TProps) => {
       </section>
     );
 
-  const { date, patientInfo, services, price, discount, paid, referrer } =
-    billData?.data;
+  const {
+    date,
+    patientInfo,
+    services,
+    price,
+    discount,
+    paid,
+    referrer,
+    visitedBy,
+  } = billData?.data;
 
   return (
     <section className='mx-auto max-w-[920px] rounded-md bg-white'>
@@ -58,6 +68,7 @@ export const BillDetails = ({ billId }: TProps) => {
           date={date}
           patientInfo={patientInfo}
           referrer={referrer}
+          visitedBy={visitedBy}
         />
         <ServicesInfo services={services} />
         <PaymentInfo paid={paid} price={price} discount={discount} />

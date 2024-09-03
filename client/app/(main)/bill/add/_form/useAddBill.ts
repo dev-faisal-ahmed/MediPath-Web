@@ -43,6 +43,7 @@ export const useAddBill = () => {
   );
   const [discount, setDiscount] = useState<number>();
   const [referrer, setReferrer] = useState<TReferrer | undefined>();
+  const [doctor, setDoctor] = useState<TReferrer | undefined>();
   const [paid, setPaid] = useState<number>();
   const [commission, setCommission] = useState<number>();
 
@@ -87,6 +88,10 @@ export const useAddBill = () => {
 
   const onReferrerSelection = (referrer: TReferrer | undefined) => {
     setReferrer(referrer);
+  };
+
+  const onDoctorSelection = (doctor: TReferrer | undefined) => {
+    setDoctor(doctor);
   };
 
   const onPaidChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -145,6 +150,7 @@ export const useAddBill = () => {
           phone,
         }),
         referrer: referrer?._id,
+        visitedBy: doctor?._id,
         discount: discount,
         commission: referrer ? commission : undefined,
         paid,
@@ -179,6 +185,7 @@ export const useAddBill = () => {
       onReferrerSelection,
       onPaidChange,
       onCommissionChange,
+      onDoctorSelection,
     },
     helpers: {
       getTotalCost,
@@ -190,12 +197,17 @@ export const useAddBill = () => {
       referrer,
       paid,
       commission,
+      doctor,
     },
     loading: {
       isServicesLoading,
       isBillLoading,
       isReferrersLoading,
     },
-    data: { referrersList: referrersData?.data || [] },
+    data: {
+      referrersList: referrersData?.data || [],
+      doctorList:
+        referrersData?.data?.filter((doctor) => doctor.type === 'DOCTOR') || [],
+    },
   };
 };

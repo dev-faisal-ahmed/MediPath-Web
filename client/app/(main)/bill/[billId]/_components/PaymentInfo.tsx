@@ -31,16 +31,16 @@ export const PaymentInfo = ({ paid, price, discount }: TProps) => {
           <p className='font-semibold'>{due}</p>
         </div>
         {/* paid icon */}
-        <div className='absolute left-1/2 top-1/2 -translate-x-1/2'>
+        <div className='absolute left-1/2 top-[58%] -translate-x-1/2'>
           {due ? (
-            <div className='flex items-center gap-1 rounded-full bg-red-100 px-5 py-2 text-3xl text-red-500'>
-              <div className='flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white'>
-                <CiNoWaitingSign />
+            <div className='flex items-center gap-1 rounded-full bg-red-100 px-3 py-1 text-xl text-red-500'>
+              <div className='flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white'>
+                <CiNoWaitingSign size={18} />
               </div>
               DUE
             </div>
           ) : (
-            <div className='flex items-center gap-1 rounded-full bg-green-100 px-5 py-2 text-3xl text-green-500'>
+            <div className='flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xl text-green-500'>
               <div className='text-green-500'>
                 <MdVerifiedUser />
               </div>

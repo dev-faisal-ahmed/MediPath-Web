@@ -8,13 +8,22 @@ import { Loader } from '@/components/shared/Loader';
 import { Button } from '@/components/ui/button';
 import { useAddBill } from './useAddBill';
 import { SelectReferrer } from './form-components/SelectReferrer';
+import { SelectDoctor } from './form-components/SelectDoctot';
 
 export const AddBillForm = () => {
   const { handlers, states, loading, helpers, data } = useAddBill();
-  const { services, servicesList, discount, referrer, paid, commission } =
-    states;
   const { getTotalCost } = helpers;
-  const { referrersList } = data;
+  const { referrersList, doctorList } = data;
+
+  const {
+    services,
+    servicesList,
+    discount,
+    referrer,
+    paid,
+    commission,
+    doctor,
+  } = states;
 
   const {
     onAddBill,
@@ -25,6 +34,7 @@ export const AddBillForm = () => {
     onReferrerSelection,
     onPaidChange,
     onCommissionChange,
+    onDoctorSelection,
   } = handlers;
 
   const { isServicesLoading, isBillLoading, isReferrersLoading } = loading;
@@ -65,7 +75,6 @@ export const AddBillForm = () => {
             containerClass='w-full'
             label='Phone'
             name='phone'
-            type='number'
             placeholder="Input Patient's Phone Number"
           />
           <SelectGender />
@@ -76,6 +85,12 @@ export const AddBillForm = () => {
           placeholder='Add Address'
           label='Address'
           name='address'
+        />
+
+        <SelectDoctor
+          doctor={doctor}
+          doctorList={doctorList}
+          onDoctorSelection={onDoctorSelection}
         />
 
         <SelectReferrer

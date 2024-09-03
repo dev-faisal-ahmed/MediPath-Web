@@ -6,8 +6,10 @@ import { useAppSelector } from '@/app/_redux/hooks';
 import { useGetBillsQuery } from '@/app/_redux/services';
 import { TakeDueForm } from '../_form/TakeDueForm';
 import { generateDate } from '@/app/_helpers';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
-export const Bills = () => {
+export const BillsTable = () => {
   const { billId } = useAppSelector((state) => state.global);
   const {
     data: billsData,
@@ -85,10 +87,15 @@ export const Bills = () => {
                   {generateDate(date)}
                 </table.TableCell>
                 <table.TableCell>
-                  <TakeDueForm
-                    due={price - paid - (discount ? discount : 0)}
-                    billId={billId}
-                  />
+                  <div className='flex flex-col items-center justify-center gap-3'>
+                    <TakeDueForm
+                      due={price - paid - (discount ? discount : 0)}
+                      billId={billId}
+                    />
+                    <Link href={`/bill/${billId}`}>
+                      <Button variant={'outline'}>View Receipt</Button>
+                    </Link>
+                  </div>
                 </table.TableCell>
               </table.TableRow>
             ),
