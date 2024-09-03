@@ -5,9 +5,10 @@ export type TReferrer = {
   name: string;
   designation?: string;
   type: TReferrerType;
+  commission: number;
 };
 
 export type TUpdateReferrer = {
   referrerId: string;
-  payload: Omit<TReferrer, '_id'>;
+  payload: Omit<TReferrer, '_id' | 'commission'>;
 };

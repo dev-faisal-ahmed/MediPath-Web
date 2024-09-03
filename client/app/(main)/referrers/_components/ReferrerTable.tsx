@@ -28,6 +28,9 @@ export const ReferrerTable = () => {
               Referrer Details
             </table.TableHead>
             <table.TableHead className='text-center font-semibold'>
+              Commission
+            </table.TableHead>
+            <table.TableHead className='text-center font-semibold'>
               Type
             </table.TableHead>
             <table.TableHead className='text-center font-semibold'>
@@ -36,29 +39,38 @@ export const ReferrerTable = () => {
           </table.TableRow>
         </table.TableHeader>
         <table.TableBody>
-          {referrerData.data.map(({ _id, name, designation, type }, index) => (
-            <table.TableRow key={_id}>
-              <table.TableCell>{index + 1}</table.TableCell>
-              <table.TableCell>
-                <div>
-                  <p className='font-semibold'>{name}</p>
-                  <p className='text-sm text-muted-foreground'>{designation}</p>
-                </div>
-              </table.TableCell>
-              <table.TableCell className='text-center'>{type}</table.TableCell>
-              <table.TableCell>
-                <div className='flex items-center justify-center gap-3'>
-                  <UpdateReferrerForm
-                    referrerId={_id}
-                    name={name}
-                    designation={designation}
-                    type={type}
-                  />
-                  <DeleteReferrer referrerId={_id} />
-                </div>
-              </table.TableCell>
-            </table.TableRow>
-          ))}
+          {referrerData.data.map(
+            ({ _id, name, designation, type, commission }, index) => (
+              <table.TableRow key={_id}>
+                <table.TableCell>{index + 1}</table.TableCell>
+                <table.TableCell>
+                  <div>
+                    <p className='font-semibold'>{name}</p>
+                    <p className='text-sm text-muted-foreground'>
+                      {designation}
+                    </p>
+                  </div>
+                </table.TableCell>
+                <table.TableCell className='text-center'>
+                  {commission}
+                </table.TableCell>
+                <table.TableCell className='text-center'>
+                  {type}
+                </table.TableCell>
+                <table.TableCell>
+                  <div className='flex items-center justify-center gap-3'>
+                    <UpdateReferrerForm
+                      referrerId={_id}
+                      name={name}
+                      designation={designation}
+                      type={type}
+                    />
+                    <DeleteReferrer referrerId={_id} />
+                  </div>
+                </table.TableCell>
+              </table.TableRow>
+            ),
+          )}
         </table.TableBody>
       </table.Table>
     </section>
