@@ -49,7 +49,7 @@ export const AddBillForm = () => {
       <form onSubmit={onAddBill}>
         <div className='mb-4 flex items-center justify-between gap-6'>
           <h3 className='text-xl font-semibold'>Add Bill</h3>
-          <h4 className=''>Total : {totalCost} ৳</h4>
+          <h4 className='text-xl font-semibold'>Total : {totalCost} ৳</h4>
         </div>
 
         <SelectService

@@ -5,6 +5,9 @@ import { Loader } from '@/components/shared/Loader';
 import { updateType } from '@/app/_redux/slices';
 import { SummaryCard } from './SummaryCard';
 import { FaMoneyBills } from 'react-icons/fa6';
+import { FaMoneyCheck } from 'react-icons/fa6';
+import { FaBalanceScale } from 'react-icons/fa';
+import { FaMoneyBillWave } from 'react-icons/fa6';
 import { TOverViewType } from '@/app/_utils/types';
 import { FaMoneyBillWheat } from 'react-icons/fa6';
 import { FaMoneyBillTrendUp } from 'react-icons/fa6';
@@ -61,6 +64,11 @@ export const Summary = () => {
       </div>
       <div className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
         <SummaryCard
+          title='Balance'
+          value={overviewData?.data?.balance || 0}
+          icon={<FaBalanceScale size={30} />}
+        />
+        <SummaryCard
           title='Revenue'
           value={overviewData?.data?.revenue || 0}
           icon={<FaMoneyBillTrendUp size={30} />}
@@ -74,6 +82,16 @@ export const Summary = () => {
           title='Due'
           value={overviewData?.data?.due || 0}
           icon={<FaMoneyBills size={30} />}
+        />
+        <SummaryCard
+          title='Commission To Be Paid'
+          value={overviewData?.data?.commissionToBePaid || 0}
+          icon={<FaMoneyBillWave size={30} />}
+        />
+        <SummaryCard
+          title='Commission Paid'
+          value={overviewData?.data?.commission || 0}
+          icon={<FaMoneyCheck size={30} />}
         />
       </div>
     </section>

@@ -4,6 +4,9 @@ export type TOverview = {
   collection: number;
   revenue: number;
   due: number;
+  commission: number;
+  balance: number;
+  commissionToBePaid: number;
   bills: TBill[];
 };
 
