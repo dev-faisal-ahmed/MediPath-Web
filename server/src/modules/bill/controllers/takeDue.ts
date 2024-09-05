@@ -42,6 +42,7 @@ export const takeDue = catchAsync(async (req, res) => {
           amount: price,
           type: 'REVENUE',
           description: `Collected due ${price} TK`,
+          category: 'SERVICE_REVENUE',
         },
       ],
       { session },

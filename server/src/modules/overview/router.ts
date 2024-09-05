@@ -4,4 +4,4 @@ import { overViewController } from './controllers';
 
 export const overviewRouter = Router();
 
-overviewRouter.get('/', authGuard, overViewController.getOverView);
+overviewRouter.get('/', authGuard, overViewController.getOverview);

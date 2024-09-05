@@ -1,3 +1,3 @@
-import { getOverView } from './getOverview';
+import { getOverview } from './getOverview';
 
-export const overViewController = { getOverView };
+export const overViewController = { getOverview };

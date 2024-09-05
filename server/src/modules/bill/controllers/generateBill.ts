@@ -44,6 +44,7 @@ export const generateBill = catchAsync(async (req, res) => {
           billId: bill._id,
           type: 'REVENUE',
           description: `Collected payment ${payload.paid} TK`,
+          category: 'SERVICE_REVENUE',
         },
       ],
       { session },

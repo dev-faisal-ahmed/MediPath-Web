@@ -1,10 +1,10 @@
 import { Bill } from '../../bill/model';
+import { generateDateQuery } from '../helper';
 import { catchAsync } from '../../../middlewares';
 import { Transaction } from '../../transactions/model';
-import { generateDateQuery } from '../helper';
 import { sendSuccessResponse } from '../../../helpers';
 
-export const getOverView = catchAsync(async (req, res) => {
+export const getOverview = catchAsync(async (req, res) => {
   const { query } = req;
   const type = query.type as string;
   const limit = Number(query.limit) || 20;
@@ -43,6 +43,18 @@ export const getOverView = catchAsync(async (req, res) => {
             },
           },
         },
+        commission: {
+          // only increase commission when category = REFER_EXPENSE
+          $sum: {
+            $cond: {
+              if: {
+                $eq: ['$category', 'REFER_EXPENSE'],
+              },
+              then: '$amount',
+              else: 0,
+            },
+          },
+        },
       },
     },
   ]);
@@ -69,26 +81,42 @@ export const getOverView = catchAsync(async (req, res) => {
                   $subtract: [{ $subtract: ['$price', '$discount'] }, '$paid'],
                 },
               },
+              commissionToBePaid: {
+                $sum: '$commission',
+              },
             },
           },
-          { $project: { _id: 0, revenue: 1, due: 1 } },
+          { $project: { _id: 0, revenue: 1, due: 1, commissionToBePaid: 1 } },
         ],
       },
     },
     {
       $project: {
-        bills: { $arrayElemAt: ['$bills.bills', 0] }, // Extract bills array from the facet
-        revenue: { $arrayElemAt: ['$totals.revenue', 0] }, // Extract demand from the facet
-        due: { $arrayElemAt: ['$totals.due', 0] }, // Extract due from the facet
+        // Extract bills array from the facet
+        bills: { $arrayElemAt: ['$bills.bills', 0] },
+        // Extract demand from the facet
+        revenue: { $arrayElemAt: ['$totals.revenue', 0] },
+        // Extract due from the facet
+        due: { $arrayElemAt: ['$totals.due', 0] },
+        // Extract commission from the facet
+        commissionToBePaid: { $arrayElemAt: ['$totals.commissionToBePaid', 0] },
       },
     },
   ]);
 
-  const { collection } = transaction;
-  const { revenue, due, bills } = billInfo;
+  const { collection, commission } = transaction;
+  const { revenue, due, bills, commissionToBePaid } = billInfo;
 
   return sendSuccessResponse(res, {
     message: 'Overview retrieved successfully',
-    data: { collection, revenue, due, bills },
+    data: {
+      collection,
+      revenue,
+      due,
+      commission,
+      balance: collection - commission,
+      commissionToBePaid,
+      bills,
+    },
   });
 });
