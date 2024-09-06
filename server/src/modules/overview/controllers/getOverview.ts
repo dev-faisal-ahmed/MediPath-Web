@@ -1,7 +1,7 @@
 import { Bill } from '../../bill/model';
-import { generateDateQuery } from '../helper';
 import { catchAsync } from '../../../middlewares';
 import { Transaction } from '../../transactions/model';
+import { generateDateQuery } from '../helper';
 import { sendSuccessResponse } from '../../../helpers';
 
 export const getOverview = catchAsync(async (req, res) => {
@@ -31,12 +31,12 @@ export const getOverview = catchAsync(async (req, res) => {
             },
           },
         },
-        expense: {
+        utilityExpense: {
           // only increase revenue when type = REVENUE
           $sum: {
             $cond: {
               if: {
-                $eq: ['$type', 'EXPENSE'],
+                $eq: ['$category', 'UTILITY_EXPENSE'],
               },
               then: '$amount',
               else: 0,
@@ -104,7 +104,7 @@ export const getOverview = catchAsync(async (req, res) => {
     },
   ]);
 
-  const { collection, commission } = transaction;
+  const { collection, commission, utilityExpense } = transaction;
   const { revenue, due, bills, commissionToBePaid } = billInfo;
 
   return sendSuccessResponse(res, {
@@ -112,6 +112,7 @@ export const getOverview = catchAsync(async (req, res) => {
     data: {
       collection,
       revenue,
+      utilityExpense,
       due,
       commission,
       balance: collection - commission,

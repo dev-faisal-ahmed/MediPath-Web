@@ -11,6 +11,7 @@ import { FaMoneyBillWave } from 'react-icons/fa6';
 import { TOverViewType } from '@/app/_utils/types';
 import { FaMoneyBillWheat } from 'react-icons/fa6';
 import { FaMoneyBillTrendUp } from 'react-icons/fa6';
+import { FaMoneyCheckAlt } from 'react-icons/fa';
 import { useGetOverviewQuery } from '@/app/_redux/services';
 import { useAppDispatch, useAppSelector } from '@/app/_redux/hooks';
 
@@ -62,36 +63,43 @@ export const Summary = () => {
           </select.SelectContent>
         </select.Select>
       </div>
-      <div className='mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='mt-6 flex items-center gap-3'>
         <SummaryCard
           title='Balance'
           value={overviewData?.data?.balance || 0}
-          icon={<FaBalanceScale size={30} />}
+          icon={<FaBalanceScale size={24} />}
         />
         <SummaryCard
           title='Revenue'
           value={overviewData?.data?.revenue || 0}
-          icon={<FaMoneyBillTrendUp size={30} />}
+          icon={<FaMoneyBillTrendUp size={24} />}
         />
         <SummaryCard
           title='Collection'
           value={overviewData?.data?.collection || 0}
-          icon={<FaMoneyBillWheat size={30} />}
+          icon={<FaMoneyBillWheat size={24} />}
         />
+      </div>
+      <div className='mt-3 flex items-center gap-3'>
         <SummaryCard
           title='Due'
           value={overviewData?.data?.due || 0}
-          icon={<FaMoneyBills size={30} />}
+          icon={<FaMoneyBills size={24} />}
         />
         <SummaryCard
           title='Commission To Be Paid'
           value={overviewData?.data?.commissionToBePaid || 0}
-          icon={<FaMoneyBillWave size={30} />}
+          icon={<FaMoneyBillWave size={24} />}
         />
         <SummaryCard
           title='Commission Paid'
           value={overviewData?.data?.commission || 0}
-          icon={<FaMoneyCheck size={30} />}
+          icon={<FaMoneyCheck size={24} />}
+        />
+        <SummaryCard
+          title='Utility Expense'
+          value={overviewData?.data?.utilityExpense || 0}
+          icon={<FaMoneyCheckAlt size={24} />}
         />
       </div>
     </section>

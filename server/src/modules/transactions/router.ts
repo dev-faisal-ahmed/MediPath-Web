@@ -6,3 +6,4 @@ export const transactionRouter = Router();
 
 // transaction
 transactionRouter.post('/', authGuard, transactionController.giveCommission);
+transactionRouter.post('/expense', authGuard, transactionController.addExpense);

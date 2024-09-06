@@ -9,7 +9,7 @@ export type TTransactionCategory =
 export interface ITransaction {
   _id: Schema.Types.ObjectId;
   billId?: Schema.Types.ObjectId;
-  referrerId: Schema.Types.ObjectId;
+  referrerId?: Schema.Types.ObjectId;
   type: TTransactionType;
   category: TTransactionCategory;
   amount: number;

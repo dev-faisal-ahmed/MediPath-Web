@@ -11,17 +11,15 @@ type TProps = {
 
 export const SummaryCard = ({ title, value, icon, colorClass }: TProps) => {
   return (
-    <card.Card>
+    <card.Card className='w-full'>
       <card.CardHeader>
-        <card.CardTitle className='text-lg font-semibold'>
-          {title}
-        </card.CardTitle>
+        <card.CardTitle className='font-semibold'>{title}</card.CardTitle>
       </card.CardHeader>
       <card.CardContent
         className={cn('flex items-center justify-between', colorClass)}
       >
-        <h3 className='text-3xl font-semibold'>৳ {value}</h3>
-        <span>{icon}</span>
+        <h3 className='text-2xl font-semibold'>৳ {value}</h3>
+        <span className='text-xl'>{icon}</span>
       </card.CardContent>
     </card.Card>
   );
