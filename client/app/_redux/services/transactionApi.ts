@@ -2,6 +2,7 @@ import {
   TAddExpensePayload,
   TGiveCommissionPayload,
   TServerResponse,
+  TTransaction,
 } from '@/app/_utils/types';
 import { baseApi } from './baseApi';
 
@@ -34,7 +35,7 @@ const transactionApi = baseApi.injectEndpoints({
     }),
 
     // get expenses
-    getExpense: builder.query<TServerResponse<null>, null>({
+    getExpense: builder.query<TServerResponse<TTransaction[]>, null>({
       query: () => `${transactions}`,
       providesTags: ['expenses'],
     }),
