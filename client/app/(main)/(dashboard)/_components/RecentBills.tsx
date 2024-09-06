@@ -8,9 +8,9 @@ import { generateDate } from '@/app/_helpers';
 
 export const RecentBills = () => {
   const { type } = useAppSelector((state) => state.global);
-  const { data: billsData, isLoading, isFetching } = useGetOverviewQuery(type);
+  const { data: billsData, isLoading } = useGetOverviewQuery(type);
 
-  if (isLoading || isFetching)
+  if (isLoading)
     return (
       <div className='mt-6 flex h-72 w-full items-center justify-center rounded-md border border-input'>
         <Loader className='mt-8' />;

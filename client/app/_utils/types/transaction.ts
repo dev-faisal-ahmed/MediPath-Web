@@ -3,3 +3,9 @@ export type TGiveCommissionPayload = {
   referrerId: string;
   description?: string;
 };
+
+export type TAddExpensePayload = {
+  amount: number;
+  description?: number;
+  date: Date;
+};

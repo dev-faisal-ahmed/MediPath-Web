@@ -1,23 +1,20 @@
 'use client';
 
 import * as table from '@/components/ui/table';
+
+import Link from 'next/link';
 import { Loader } from '@/components/shared/Loader';
 import { useAppSelector } from '@/app/_redux/hooks';
 import { useGetBillsQuery } from '@/app/_redux/services';
 import { TakeDueForm } from '../_form/TakeDueForm';
 import { generateDate } from '@/app/_helpers';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
 export const BillsTable = () => {
   const { billId } = useAppSelector((state) => state.global);
-  const {
-    data: billsData,
-    isLoading,
-    isFetching,
-  } = useGetBillsQuery({ billId });
+  const { data: billsData, isLoading } = useGetBillsQuery({ billId });
 
-  if (isLoading || isFetching) return <Loader className='mt-8' />;
+  if (isLoading) return <Loader className='mt-8' />;
 
   if (!billsData?.data?.length)
     return (

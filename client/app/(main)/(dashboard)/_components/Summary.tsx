@@ -37,7 +37,7 @@ export const Summary = () => {
     isFetching,
   } = useGetOverviewQuery(type);
 
-  if (isLoading || isFetching)
+  if (isLoading)
     return (
       <div className='flex h-32 w-full items-center justify-center rounded-md border border-input'>
         <Loader className='mt-8' />;
