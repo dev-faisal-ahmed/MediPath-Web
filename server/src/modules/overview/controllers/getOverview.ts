@@ -115,7 +115,7 @@ export const getOverview = catchAsync(async (req, res) => {
       utilityExpense,
       due,
       commission,
-      balance: collection - commission,
+      balance: collection - commission - utilityExpense,
       commissionToBePaid,
       bills,
     },

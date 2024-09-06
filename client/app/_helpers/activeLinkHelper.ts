@@ -4,6 +4,7 @@ const activeLink: Record<string, string[]> = {
   ['/services']: ['/services'],
   ['/bills']: ['/bills'],
   ['/referrers']: ['/referrers'],
+  ['/expenses']: ['/expenses'],
 };
 
 export const isActive = (url: string, pathName: string) => {
