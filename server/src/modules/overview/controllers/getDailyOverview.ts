@@ -1,8 +1,8 @@
+import { sendSuccessResponse } from '../../../helpers';
 import { Transaction } from '../../transactions/model';
 import { catchAsync } from '../../../middlewares';
 import { getDateRangeQuery } from '../helper';
 import { Bill } from '../../bill/model';
-import { sendSuccessResponse } from '../../../helpers';
 
 export const getDailyOverview = catchAsync(async (req, res) => {
   const date = req.query.date as string;
@@ -100,8 +100,13 @@ export const getDailyOverview = catchAsync(async (req, res) => {
     },
   ]);
 
-  const { collection, commission, utilityExpense } = transaction;
-  const { revenue, due, bills, commissionToBePaid } = billInfo;
+  const collection = transaction?.collection;
+  const commission = transaction?.commission;
+  const utilityExpense = transaction?.utilityExpense;
+  const revenue = billInfo?.revenue;
+  const due = billInfo?.due;
+  const commissionToBePaid = billInfo?.commissionToBePaid;
+  const bills = billInfo?.bills;
 
   return sendSuccessResponse(res, {
     message: 'Overview retrieved successfully',

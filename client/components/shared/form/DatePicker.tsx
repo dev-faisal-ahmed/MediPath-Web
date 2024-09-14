@@ -3,15 +3,15 @@
 import * as React from 'react';
 import * as popover from '@/components/ui/popover';
 
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
-import { IoCalendar } from 'react-icons/io5';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { IoCalendar } from 'react-icons/io5';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 type TProps = {
-  label: string;
+  label?: string;
   date: Date;
   onDateSelect: (date: Date | undefined) => void;
 };
@@ -19,7 +19,8 @@ type TProps = {
 export function DatePicker({ label, date, onDateSelect }: TProps) {
   return (
     <div className='flex flex-col gap-2'>
-      <Label className='font-semibold'>{label}</Label>
+      {label && <Label className='font-semibold'>{label}</Label>}
+
       <popover.Popover>
         <popover.PopoverTrigger asChild>
           <Button

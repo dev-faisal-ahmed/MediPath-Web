@@ -1,5 +1,6 @@
 const activeLink: Record<string, string[]> = {
   ['/']: ['/'],
+  ['/overview']: ['/overview'],
   ['/bill/add']: ['/bill/add'],
   ['/services']: ['/services'],
   ['/bills']: ['/bills'],

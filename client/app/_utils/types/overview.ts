@@ -7,7 +7,7 @@ export type TOverview = {
   commission: number;
   balance: number;
   commissionToBePaid: number;
-  utilityExpense:number;
+  utilityExpense: number;
   bills: TBill[];
 };
 

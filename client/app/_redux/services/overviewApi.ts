@@ -9,7 +9,12 @@ const overviewApi = baseApi.injectEndpoints({
       query: (type) => `${overview}?type=${type}`,
       providesTags: ['overview'],
     }),
+
+    getDailyOverview: builder.query<TServerResponse<TOverview>, string>({
+      query: (date) => `${overview}/daily?date=${date}`,
+      providesTags: ['overview'],
+    }),
   }),
 });
 
-export const { useGetOverviewQuery } = overviewApi;
+export const { useGetOverviewQuery, useGetDailyOverviewQuery } = overviewApi;
