@@ -1,12 +1,15 @@
 export const generateDateQuery = (type: string | undefined) => {
   if (!type) return null;
 
+
   switch (type.toUpperCase()) {
     case 'DAILY': {
-      // to avoid time conversion using utc method
-      const start = new Date();
+      // to handle bangladesh time
+      const date = new Date()
+      const time = date.getTime() + 21600000
+      const start = new Date(time);
       start.setHours(0, 0, 0, 0);
-      const end = new Date();
+      const end = new Date(time);
       end.setHours(23, 59, 59, 999);
 
       return { $gte: start, $lte: end };
@@ -53,9 +56,10 @@ export const generateDateQuery = (type: string | undefined) => {
 };
 
 export const getDateRangeQuery = (date: Date) => {
-  const startDate = new Date(date);
+  // to convert bangladeshi time zone
+  const startDate = new Date(date.getTime() + 21600000);
   startDate.setHours(0, 0, 0, 0);
-  const endDate = new Date(date);
+  const endDate = new Date(date.getTime() + 21600000);
   endDate.setHours(23, 59, 59, 999);
 
   return { $gte: startDate, $lte: endDate };
