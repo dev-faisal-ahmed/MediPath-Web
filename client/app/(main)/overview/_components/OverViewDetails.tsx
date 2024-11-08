@@ -1,10 +1,10 @@
 'use client';
 
 import { DatePicker } from '@/components/shared/form/DatePicker';
-import { BillTable } from '@/components/shared/BillTable';
 import { useOverviewDetails } from './useOverviewDetails';
 import { Loader } from '@/components/shared/Loader';
 import { OverviewCard } from './OverviewCard';
+import { BillTable } from './BillTable';
 import { format } from 'date-fns';
 
 export const OverviewDetails = () => {

@@ -2,11 +2,10 @@ import * as table from '@/components/ui/table';
 
 import { generateDate } from '@/app/_helpers';
 import { TBill } from '@/app/_utils/types';
-import { Search } from '@/app/(main)/bills/_components/Search';
 
 type TProps = {
   label: string;
-  bills: TBill[];
+  bills: (TBill & { visitedBy: { name: string; designation: string } })[];
 };
 
 export const BillTable = ({ label, bills }: TProps) => {
@@ -24,7 +23,10 @@ export const BillTable = ({ label, bills }: TProps) => {
                 Bill Id
               </table.TableHead>
               <table.TableHead className='font-semibold'>
-                Patient Name
+                Patient Info
+              </table.TableHead>
+              <table.TableHead className='font-semibold'>
+                Visited By
               </table.TableHead>
               <table.TableHead className='font-semibold'>
                 Services
@@ -43,13 +45,37 @@ export const BillTable = ({ label, bills }: TProps) => {
           <table.TableBody>
             {bills.map(
               (
-                { billId, patientInfo, paid, price, discount, services, date },
+                {
+                  billId,
+                  patientInfo,
+                  paid,
+                  price,
+                  discount,
+                  services,
+                  date,
+                  visitedBy,
+                },
                 index,
               ) => (
                 <table.TableRow key={billId}>
                   <table.TableCell>{index + 1}</table.TableCell>
                   <table.TableCell>{billId}</table.TableCell>
-                  <table.TableCell>{patientInfo.name}</table.TableCell>
+                  <table.TableCell>
+                    <div>
+                      <p className='font-semibold'>Name :{patientInfo.name}</p>
+                      <p className='text-xs font-semibold text-muted-foreground'>
+                        Age : {patientInfo.age}
+                      </p>
+                    </div>
+                  </table.TableCell>
+                  <table.TableCell>
+                    <div>
+                      <p className='font-semibold'>{visitedBy.name}</p>
+                      <p className='text-xs font-semibold text-muted-foreground'>
+                        {visitedBy.designation}
+                      </p>
+                    </div>
+                  </table.TableCell>
                   <table.TableCell>
                     {services.map(({ name }) => (
                       <li key={name}>{name}</li>

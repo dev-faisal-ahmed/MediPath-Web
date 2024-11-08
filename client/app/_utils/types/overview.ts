@@ -12,3 +12,7 @@ export type TOverview = {
 };
 
 export type TOverViewType = 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY';
+
+export type TDailyOverview = TOverview & {
+  bills: (TBill & { visitedBy: { name: string; designation: string } })[];
+};

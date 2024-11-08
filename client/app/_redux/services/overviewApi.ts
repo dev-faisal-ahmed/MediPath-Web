@@ -1,4 +1,4 @@
-import { TOverview, TServerResponse } from '@/app/_utils/types';
+import { TDailyOverview, TOverview, TServerResponse } from '@/app/_utils/types';
 import { baseApi } from './baseApi';
 
 const overview = '/overview';
@@ -10,7 +10,7 @@ const overviewApi = baseApi.injectEndpoints({
       providesTags: ['overview'],
     }),
 
-    getDailyOverview: builder.query<TServerResponse<TOverview>, string>({
+    getDailyOverview: builder.query<TServerResponse<TDailyOverview>, string>({
       query: (date) => `${overview}/daily?date=${date}`,
       providesTags: ['overview'],
     }),
