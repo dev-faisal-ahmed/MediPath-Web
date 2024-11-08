@@ -59,6 +59,16 @@ export const getDailyOverview = catchAsync(async (req, res) => {
   const [billInfo] = await Bill.aggregate([
     { $match: dbQuery },
     {
+      $lookup: {
+        from: 'referrers',
+        localField: 'visitedBy',
+        foreignField: '_id',
+        pipeline: [{ $project: { name: 1, designation: 1 } }],
+        as: 'visitedBy',
+      },
+    },
+    { $unwind: { path: '$visitedBy' } },
+    {
       $facet: {
         bills: [
           { $sort: { date: -1 } },
