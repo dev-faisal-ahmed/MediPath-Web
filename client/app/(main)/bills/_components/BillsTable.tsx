@@ -70,7 +70,7 @@ export const BillsTable = () => {
               ) => (
                 <table.TableRow key={billId}>
                   <table.TableCell>
-                    {Number(page) * 20 + index + 1}
+                    {(Number(page) - 1) * 20 + index + 1}
                   </table.TableCell>
                   <table.TableCell>{billId}</table.TableCell>
                   <table.TableCell>{patientInfo.name}</table.TableCell>
