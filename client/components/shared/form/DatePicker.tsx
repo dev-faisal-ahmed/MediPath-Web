@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
 import * as popover from '@/components/ui/popover';
+import * as React from 'react';
 
 import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
@@ -39,6 +39,9 @@ export function DatePicker({ label, date, onDateSelect }: TProps) {
             mode='single'
             selected={date}
             onSelect={onDateSelect}
+            disabled={(date) =>
+              date > new Date() || date < new Date('2024-01-01')
+            }
             initialFocus
           />
         </popover.PopoverContent>

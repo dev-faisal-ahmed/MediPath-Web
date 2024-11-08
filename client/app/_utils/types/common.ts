@@ -5,9 +5,17 @@ export type TLoggedUser = {
   role: string;
 };
 
+type TMeta = {
+  page: number;
+  totalPages: number;
+  limit: number;
+  total: number;
+};
+
 export type TServerResponse<TData> = {
   ok: boolean;
   message: string;
   data?: TData;
+  meta?: TMeta;
   error: any;
 };

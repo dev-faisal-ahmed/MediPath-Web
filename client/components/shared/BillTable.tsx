@@ -2,6 +2,7 @@ import * as table from '@/components/ui/table';
 
 import { generateDate } from '@/app/_helpers';
 import { TBill } from '@/app/_utils/types';
+import { Search } from '@/app/(main)/bills/_components/Search';
 
 type TProps = {
   label: string;
@@ -11,11 +12,14 @@ type TProps = {
 export const BillTable = ({ label, bills }: TProps) => {
   return (
     <>
-      <h1 className='mt-6 text-lg font-semibold'>{label}</h1>
+      <h1 className='mt-6 text-lg font-semibold'>
+        {label} ({bills?.length})
+      </h1>
       <section className='mt-3 w-full overflow-x-auto rounded-md border bg-white p-6 shadow'>
         <table.Table>
           <table.TableHeader>
             <table.TableRow>
+              <table.TableHead className='font-semibold'>SL</table.TableHead>
               <table.TableHead className='font-semibold'>
                 Bill Id
               </table.TableHead>
@@ -38,16 +42,12 @@ export const BillTable = ({ label, bills }: TProps) => {
           </table.TableHeader>
           <table.TableBody>
             {bills.map(
-              ({
-                billId,
-                patientInfo,
-                paid,
-                price,
-                discount,
-                services,
-                date,
-              }) => (
+              (
+                { billId, patientInfo, paid, price, discount, services, date },
+                index,
+              ) => (
                 <table.TableRow key={billId}>
+                  <table.TableCell>{index + 1}</table.TableCell>
                   <table.TableCell>{billId}</table.TableCell>
                   <table.TableCell>{patientInfo.name}</table.TableCell>
                   <table.TableCell>
