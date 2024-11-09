@@ -67,7 +67,6 @@ export const getDailyOverview = catchAsync(async (req, res) => {
         as: 'visitedBy',
       },
     },
-    { $unwind: { path: '$visitedBy' } },
     {
       $facet: {
         bills: [
@@ -128,6 +127,7 @@ export const getDailyOverview = catchAsync(async (req, res) => {
       commission,
       balance: collection - commission - utilityExpense,
       commissionToBePaid,
+      total: bills.length,
       bills,
     },
   });
