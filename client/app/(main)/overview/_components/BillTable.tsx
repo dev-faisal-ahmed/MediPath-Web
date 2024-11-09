@@ -5,7 +5,7 @@ import { TBill } from '@/app/_utils/types';
 
 type TProps = {
   label: string;
-  bills: (TBill & { visitedBy: { name: string; designation: string } })[];
+  bills: (TBill & { visitedBy: [{ name: string; designation: string }] })[];
 };
 
 export const BillTable = ({ label, bills }: TProps) => {
@@ -69,12 +69,16 @@ export const BillTable = ({ label, bills }: TProps) => {
                     </div>
                   </table.TableCell>
                   <table.TableCell>
-                    <div>
-                      <p className='font-semibold'>{visitedBy.name}</p>
-                      <p className='text-xs font-semibold text-muted-foreground'>
-                        {visitedBy.designation}
-                      </p>
-                    </div>
+                    {visitedBy?.[0] ? (
+                      <div>
+                        <p className='font-semibold'>{visitedBy?.[0]?.name}</p>
+                        <p className='text-xs font-semibold text-muted-foreground'>
+                          {visitedBy?.[0]?.designation}
+                        </p>
+                      </div>
+                    ) : (
+                      <p className='font-semibold'>N/A</p>
+                    )}
                   </table.TableCell>
                   <table.TableCell>
                     {services.map(({ name }) => (
