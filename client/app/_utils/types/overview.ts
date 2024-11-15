@@ -13,6 +13,11 @@ export type TOverview = {
 
 export type TOverViewType = 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY';
 
+export type TDailyOverViewBill = TBill & {
+  visitedBy: { name: string; designation: string };
+  referrer: { name: string; designation: string };
+};
+
 export type TDailyOverview = TOverview & {
-  bills: (TBill & { visitedBy: [{ name: string; designation: string }] })[];
+  bills: TDailyOverViewBill[];
 };

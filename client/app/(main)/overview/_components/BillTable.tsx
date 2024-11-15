@@ -1,11 +1,11 @@
 import * as table from '@/components/ui/table';
 
+import { TDailyOverViewBill } from '@/app/_utils/types';
 import { generateDate } from '@/app/_helpers';
-import { TBill } from '@/app/_utils/types';
 
 type TProps = {
   label: string;
-  bills: (TBill & { visitedBy: [{ name: string; designation: string }] })[];
+  bills: TDailyOverViewBill[];
 };
 
 export const BillTable = ({ label, bills }: TProps) => {
@@ -25,9 +25,7 @@ export const BillTable = ({ label, bills }: TProps) => {
               <table.TableHead className='font-semibold'>
                 Patient Info
               </table.TableHead>
-              <table.TableHead className='font-semibold'>
-                Visited By
-              </table.TableHead>
+              <table.TableHead className='font-semibold'>Ref</table.TableHead>
               <table.TableHead className='font-semibold'>
                 Services
               </table.TableHead>
@@ -54,6 +52,7 @@ export const BillTable = ({ label, bills }: TProps) => {
                   services,
                   date,
                   visitedBy,
+                  referrer,
                 },
                 index,
               ) => (
@@ -62,23 +61,40 @@ export const BillTable = ({ label, bills }: TProps) => {
                   <table.TableCell>{billId}</table.TableCell>
                   <table.TableCell>
                     <div>
-                      <p className='font-semibold'>Name :{patientInfo.name}</p>
+                      <p className='font-semibold'>{patientInfo.name}</p>
                       <p className='text-xs font-semibold text-muted-foreground'>
                         Age : {patientInfo.age}
                       </p>
                     </div>
                   </table.TableCell>
                   <table.TableCell>
-                    {visitedBy?.[0] ? (
+                    {visitedBy && (
                       <div>
-                        <p className='font-semibold'>{visitedBy?.[0]?.name}</p>
+                        <p>
+                          Visited By :{' '}
+                          <span className='font-semibold'>
+                            {visitedBy?.name}
+                          </span>
+                        </p>
                         <p className='text-xs font-semibold text-muted-foreground'>
-                          {visitedBy?.[0]?.designation}
+                          {visitedBy?.designation}
                         </p>
                       </div>
-                    ) : (
-                      <p className='font-semibold'>N/A</p>
                     )}
+                    {referrer && (
+                      <div>
+                        <p>
+                          Ref By :{' '}
+                          <span className='font-semibold'>{referrer.name}</span>
+                        </p>
+                        <p className='text-xs font-semibold text-muted-foreground'>
+                          {referrer.designation}
+                        </p>
+                      </div>
+                    )}
+
+                    {!referrer ||
+                      (!visitedBy && <p className='font-semibold'>N/A</p>)}
                   </table.TableCell>
                   <table.TableCell>
                     {services.map(({ name }) => (

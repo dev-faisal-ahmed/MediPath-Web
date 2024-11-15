@@ -68,6 +68,28 @@ export const getDailyOverview = catchAsync(async (req, res) => {
       },
     },
     {
+      $lookup: {
+        from: 'referrers',
+        localField: 'referrer',
+        foreignField: '_id',
+        pipeline: [{ $project: { name: 1, designation: 1 } }],
+        as: 'referrer',
+      },
+    },
+    {
+      $project: {
+        billId: 1,
+        patientInfo: 1,
+        paid: 1,
+        price: 1,
+        discount: 1,
+        services: 1,
+        date: 1,
+        visitedBy: { $arrayElemAt: ['$visitedBy', 0] },
+        referrer: { $arrayElemAt: ['$referrer', 0] },
+      },
+    },
+    {
       $facet: {
         bills: [
           { $sort: { date: -1 } },
@@ -78,17 +100,13 @@ export const getDailyOverview = catchAsync(async (req, res) => {
           {
             $group: {
               _id: null,
-              revenue: {
-                $sum: { $subtract: ['$price', '$discount'] },
-              },
+              revenue: { $sum: { $subtract: ['$price', '$discount'] } },
               due: {
                 $sum: {
                   $subtract: [{ $subtract: ['$price', '$discount'] }, '$paid'],
                 },
               },
-              commissionToBePaid: {
-                $sum: '$commission',
-              },
+              commissionToBePaid: { $sum: '$commission' },
             },
           },
           { $project: { _id: 0, revenue: 1, due: 1, commissionToBePaid: 1 } },
@@ -97,13 +115,9 @@ export const getDailyOverview = catchAsync(async (req, res) => {
     },
     {
       $project: {
-        // Extract bills array from the facet
         bills: { $arrayElemAt: ['$bills.bills', 0] },
-        // Extract demand from the facet
         revenue: { $arrayElemAt: ['$totals.revenue', 0] },
-        // Extract due from the facet
         due: { $arrayElemAt: ['$totals.due', 0] },
-        // Extract commission from the facet
         commissionToBePaid: { $arrayElemAt: ['$totals.commissionToBePaid', 0] },
       },
     },
