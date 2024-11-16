@@ -1,11 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import * as table from '@/components/ui/table';
+
 import { DeleteReferrer } from './DeleteReferrer';
 import { Loader } from '@/components/shared/Loader';
 import { useGetReferrersQuery } from '@/app/_redux/services';
 import { UpdateReferrerForm } from '../_form/UpdateReferrerForm';
 import { GiveCommission } from '../../_components/GiveCommission';
+import { TooltipContainer } from '@/components/ui/tooltip';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 export const ReferrerTable = () => {
   const { data: referrerData, isLoading } = useGetReferrersQuery(null);
@@ -80,6 +84,14 @@ export const ReferrerTable = () => {
                     />
                     <DeleteReferrer referrerId={_id} />
                     <GiveCommission referrerId={_id} />
+                    <TooltipContainer label='See Referrer Details'>
+                      <Link href={`/referrer/${_id}`}>
+                        <FaExternalLinkAlt
+                          className='cursor-pointer text-blue-600'
+                          size={16}
+                        />
+                      </Link>
+                    </TooltipContainer>
                   </div>
                 </table.TableCell>
               </table.TableRow>

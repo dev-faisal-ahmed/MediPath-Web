@@ -48,17 +48,6 @@ const TooltipContainer = React.forwardRef<
 });
 TooltipContainer.displayName = TooltipPrimitive.Trigger.displayName;
 
-// const TooltipContainer = ({ label, children }: TTooltipContainer) => {
-//   return (
-//     <TooltipProvider>
-//       <Tooltip>
-//         <TooltipTrigger>{children}</TooltipTrigger>
-//         <TooltipContent className='font-semibold'>{label}</TooltipContent>
-//       </Tooltip>
-//     </TooltipProvider>
-//   );
-// };
-
 export {
   Tooltip,
   TooltipTrigger,

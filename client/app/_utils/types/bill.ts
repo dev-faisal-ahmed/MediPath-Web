@@ -21,6 +21,7 @@ export type TBill = {
   discount?: number;
   date: Date;
   paid: number;
+  commission?: number;
 };
 
 export type TBillDetails = {
