@@ -1,8 +1,8 @@
-import { addReferrer } from './addReferrer';
-import { deleteReferrer } from './deleteReferrer';
-import { getReferrerById } from './getReferrerById';
-import { getReferrers } from './getReferrers';
 import { updateReferrer } from './updateReferrer';
+import { getReferrerById } from './getReferrerById';
+import { deleteReferrer } from './deleteReferrer';
+import { addReferrer } from './addReferrer';
+import { getReferrers } from './getReferrers';
 
 export const refererController = {
   addReferrer,
