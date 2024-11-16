@@ -10,6 +10,7 @@ import { postRequestHelper } from '@/app/_helpers/apiHelper';
 import { useGiveCommissionMutation } from '@/app/_redux/services';
 import { CustomInput } from '@/components/shared/form/CustomInput';
 import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
+import { TooltipContainer } from '@/components/ui/tooltip';
 
 type TProps = { referrerId: string };
 
@@ -43,7 +44,9 @@ export const GiveCommission = ({ referrerId }: TProps) => {
   return (
     <dialog.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <dialog.DialogTrigger asChild>
-        <GiWallet size={20} className='cursor-pointer text-indigo-600' />
+        <TooltipContainer label='Pay Commission'>
+          <GiWallet size={20} className='cursor-pointer text-indigo-600' />
+        </TooltipContainer>
       </dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>

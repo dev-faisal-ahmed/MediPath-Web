@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useUpdateReferrer } from './useUpdateReferrer';
 import { CustomInput } from '@/components/shared/form/CustomInput';
 import { RiEdit2Fill } from 'react-icons/ri';
+import { TooltipContainer } from '@/components/ui/tooltip';
 
 type TProps = {
   referrerId: string;
@@ -27,7 +28,9 @@ export const UpdateReferrerForm = ({
   return (
     <dialog.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <dialog.DialogTrigger asChild>
-        <RiEdit2Fill className='cursor-pointer text-blue-600' size={20} />
+        <TooltipContainer label='Update Referrer'>
+          <RiEdit2Fill className='cursor-pointer text-blue-600' size={20} />
+        </TooltipContainer>
       </dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { TbTrashFilled } from 'react-icons/tb';
 import { Button } from '@/components/ui/button';
 import { useDeleteReferrerMutation } from '@/app/_redux/services';
+import { TooltipContainer } from '@/components/ui/tooltip';
 
 type TProps = {
   referrerId: string;
@@ -29,7 +30,9 @@ export const DeleteReferrer = ({ referrerId }: TProps) => {
   return (
     <dialog.Dialog open={isOpen} onOpenChange={setIsOpen}>
       <dialog.DialogTrigger asChild>
-        <TbTrashFilled className='cursor-pointer text-red-600' size={20} />
+        <TooltipContainer label='Delete Referrer'>
+          <TbTrashFilled className='cursor-pointer text-red-600' size={20} />
+        </TooltipContainer>
       </dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>
