@@ -3,6 +3,7 @@
 import * as table from '@/components/ui/table';
 import { TBillsInReferrerDetailsPage } from '@/app/_utils/types';
 import { format } from 'date-fns';
+import { UpdateCommission } from './UpdateCommission';
 
 type TProps = {
   bills: TBillsInReferrerDetailsPage[];
@@ -37,8 +38,11 @@ export const ReferredTable = ({ bills, title }: TProps) => {
                 <table.TableHead className='text-center font-semibold'>
                   Commission
                 </table.TableHead>
-                <table.TableHead className='text-right font-semibold'>
+                <table.TableHead className='font-semibold'>
                   Date
+                </table.TableHead>
+                <table.TableHead className='text-center font-semibold'>
+                  Action
                 </table.TableHead>
               </table.TableRow>
             </table.TableHeader>
@@ -78,19 +82,10 @@ export const ReferredTable = ({ bills, title }: TProps) => {
                     <table.TableCell className='text-center'>
                       {commission ? commission : 'N/A'}
                     </table.TableCell>
-                    <table.TableCell className='text-right'>
-                      {format(date, 'PPP')}
-                    </table.TableCell>
+                    <table.TableCell>{format(date, 'PPP')}</table.TableCell>
                     <table.TableCell>
-                      <div className='flex items-center justify-center gap-3'>
-                        {/* <UpdateReferrerForm
-                      referrerId={_id}
-                      name={name}
-                      designation={designation}
-                      type={type}
-                    /> */}
-                        {/* <DeleteReferrer referrerId={_id} /> */}
-                        {/* <GiveCommission referrerId={_id} /> */}
+                      <div className='flex items-center justify-center'>
+                        <UpdateCommission billId={_id} />
                       </div>
                     </table.TableCell>
                   </table.TableRow>
