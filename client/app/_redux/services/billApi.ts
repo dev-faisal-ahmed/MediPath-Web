@@ -4,7 +4,9 @@ import {
   TServerResponse,
   TGenerateBillPayload,
   TTakeDuePayload,
+  TUpdateCommissionPayload,
 } from '@/app/_utils/types';
+
 import { baseApi } from './baseApi';
 import { makeUrl } from '@/app/_helpers';
 
@@ -41,11 +43,24 @@ const billApi = baseApi.injectEndpoints({
     // take due
     takeDue: builder.mutation<TServerResponse<null>, TTakeDuePayload>({
       query: (payload) => ({
-        url: `${bill}/${payload.billId}`,
+        url: `${bill}/${payload.billId}/take-due`,
         method: 'PATCH',
         body: { price: payload.price },
       }),
       invalidatesTags: ['billDetails', 'bills', 'overview'],
+    }),
+
+    // update commission
+    updateCommission: builder.mutation<
+      TServerResponse<null>,
+      TUpdateCommissionPayload
+    >({
+      query: ({ amount, billId }) => ({
+        url: `${bill}/${billId}/commission`,
+        method: 'PATCH',
+        body: { amount },
+      }),
+      invalidatesTags: ['billDetails', 'bills', 'referrerDetails'],
     }),
   }),
 });
@@ -55,4 +70,5 @@ export const {
   useGetBillsQuery,
   useGetBillDetailsQuery,
   useTakeDueMutation,
+  useUpdateCommissionMutation,
 } = billApi;

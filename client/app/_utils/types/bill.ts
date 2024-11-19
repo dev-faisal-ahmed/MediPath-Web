@@ -42,3 +42,8 @@ export type TTakeDuePayload = {
   price: number;
   billId: string;
 };
+
+export type TUpdateCommissionPayload = {
+  amount: string;
+  billId: string;
+};
