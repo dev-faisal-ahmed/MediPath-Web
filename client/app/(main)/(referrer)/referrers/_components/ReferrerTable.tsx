@@ -88,7 +88,7 @@ export const ReferrerTable = () => {
                       <Link href={`/referrer/${_id}`}>
                         <FaExternalLinkAlt
                           className='cursor-pointer text-blue-600'
-                          size={16}
+                          size={14}
                         />
                       </Link>
                     </TooltipContainer>
