@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEffect } from 'react';
 import { ReferredTable } from './ReferredTable';
 import { TransactionTable } from './TransactionTable';
+import { GiveCommission } from '../../../_components/GiveCommission';
+import { Button } from '@/components/ui/button';
 
 type TProps = {
   referrerId: string;
@@ -34,11 +36,13 @@ export const ReferrerDetails = ({ referrerId }: TProps) => {
     visited,
   } = referrerInfo.data;
 
+  const due = (commissionDemand || 0) - (totalCommissionPaid || 0);
+
   return (
     <section>
-      <div className='h-52 rounded-md bg-gradient-to-br from-green-400 to-green-700' />
-      <section className='flex items-end gap-12'>
-        <div className='-mt-16 ml-6'>
+      <div className='h-52 rounded-t-md bg-gradient-to-br from-green-400 to-green-700' />
+      <section className='flex items-end gap-12 rounded-b-md bg-white p-6 shadow'>
+        <div className='-mt-20'>
           <div className='flex size-40 items-center justify-center rounded-full bg-primary text-6xl font-bold text-white'>
             {name[0]}
           </div>
@@ -50,6 +54,20 @@ export const ReferrerDetails = ({ referrerId }: TProps) => {
           )}
           <p className='mt-1 text-muted-foreground'>{type}</p>
         </section>
+        <div className='ml-auto'>
+          <GiveCommission
+            referrerId={referrerId}
+            maxAmount={due}
+            trigger={
+              <Button
+                disabled={due === 0}
+                className={`${due === 0 && 'cursor-not-allowed'}`}
+              >
+                Give Commission
+              </Button>
+            }
+          />
+        </div>
       </section>
 
       <section className='mt-12 flex gap-6'>
@@ -62,10 +80,7 @@ export const ReferrerDetails = ({ referrerId }: TProps) => {
             label='Total Commission Paid'
             amount={totalCommissionPaid || 0}
           />
-          <ReferrerSummaryCard
-            label='Due'
-            amount={(commissionDemand || 0) - (totalCommissionPaid || 0)}
-          />
+          <ReferrerSummaryCard label='Due' amount={due} />
         </section>
       </section>
 

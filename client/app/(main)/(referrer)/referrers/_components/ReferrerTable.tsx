@@ -10,6 +10,8 @@ import { UpdateReferrerForm } from '../_form/UpdateReferrerForm';
 import { GiveCommission } from '../../_components/GiveCommission';
 import { TooltipContainer } from '@/components/ui/tooltip';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import { GiWallet } from 'react-icons/gi';
+import { cn } from '@/lib/utils';
 
 export const ReferrerTable = () => {
   const { data: referrerData, isLoading } = useGetReferrersQuery(null);
@@ -51,51 +53,72 @@ export const ReferrerTable = () => {
         </table.TableHeader>
         <table.TableBody>
           {referrerData.data.map(
-            ({ _id, name, designation, type, commission, paid }, index) => (
-              <table.TableRow key={_id}>
-                <table.TableCell>{index + 1}</table.TableCell>
-                <table.TableCell>
-                  <div>
-                    <p className='font-semibold'>{name}</p>
-                    <p className='text-sm text-muted-foreground'>
-                      {designation}
-                    </p>
-                  </div>
-                </table.TableCell>
-                <table.TableCell className='text-center'>
-                  {commission}
-                </table.TableCell>
-                <table.TableCell className='text-center'>
-                  {paid}
-                </table.TableCell>
-                <table.TableCell className='text-center'>
-                  {commission - paid}
-                </table.TableCell>
-                <table.TableCell className='text-center'>
-                  {type}
-                </table.TableCell>
-                <table.TableCell>
-                  <div className='flex items-center justify-center gap-3'>
-                    <UpdateReferrerForm
-                      referrerId={_id}
-                      name={name}
-                      designation={designation}
-                      type={type}
-                    />
-                    <DeleteReferrer referrerId={_id} />
-                    <GiveCommission referrerId={_id} />
-                    <TooltipContainer label='See Referrer Details'>
-                      <Link href={`/referrer/${_id}`}>
-                        <FaExternalLinkAlt
-                          className='cursor-pointer text-blue-600'
-                          size={14}
-                        />
-                      </Link>
-                    </TooltipContainer>
-                  </div>
-                </table.TableCell>
-              </table.TableRow>
-            ),
+            ({ _id, name, designation, type, commission, paid }, index) => {
+              const discount = commission - paid;
+              return (
+                <table.TableRow key={_id}>
+                  <table.TableCell>{index + 1}</table.TableCell>
+                  <table.TableCell>
+                    <div>
+                      <p className='font-semibold'>{name}</p>
+                      <p className='text-sm text-muted-foreground'>
+                        {designation}
+                      </p>
+                    </div>
+                  </table.TableCell>
+                  <table.TableCell className='text-center'>
+                    {commission}
+                  </table.TableCell>
+                  <table.TableCell className='text-center'>
+                    {paid}
+                  </table.TableCell>
+                  <table.TableCell className='text-center'>
+                    {discount}
+                  </table.TableCell>
+                  <table.TableCell className='text-center'>
+                    {type}
+                  </table.TableCell>
+                  <table.TableCell>
+                    <div className='flex items-center justify-center gap-3'>
+                      <UpdateReferrerForm
+                        referrerId={_id}
+                        name={name}
+                        designation={designation}
+                        type={type}
+                      />
+                      <DeleteReferrer referrerId={_id} />
+                      <GiveCommission
+                        referrerId={_id}
+                        maxAmount={commission - paid}
+                        trigger={
+                          <TooltipContainer
+                            disabled={discount === 0}
+                            label='Pay Commission'
+                          >
+                            <GiWallet
+                              size={20}
+                              className={cn(
+                                'cursor-pointer text-indigo-600',
+                                discount === 0 &&
+                                  'cursor-not-allowed text-indigo-300',
+                              )}
+                            />
+                          </TooltipContainer>
+                        }
+                      />
+                      <TooltipContainer label='See Referrer Details'>
+                        <Link href={`/referrer/${_id}`}>
+                          <FaExternalLinkAlt
+                            className='cursor-pointer text-blue-600'
+                            size={14}
+                          />
+                        </Link>
+                      </TooltipContainer>
+                    </div>
+                  </table.TableCell>
+                </table.TableRow>
+              );
+            },
           )}
         </table.TableBody>
       </table.Table>

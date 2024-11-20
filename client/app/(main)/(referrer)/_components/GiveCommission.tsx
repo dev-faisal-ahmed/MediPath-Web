@@ -3,18 +3,21 @@
 import * as dialog from '@/components/ui/dialog';
 
 import { toast } from 'sonner';
-import { FormEvent, useState } from 'react';
-import { GiWallet } from 'react-icons/gi';
+import { FormEvent, ReactNode, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { postRequestHelper } from '@/app/_helpers/apiHelper';
 import { useGiveCommissionMutation } from '@/app/_redux/services';
 import { CustomInput } from '@/components/shared/form/CustomInput';
 import { CustomTextarea } from '@/components/shared/form/CustomTextArea';
-import { TooltipContainer } from '@/components/ui/tooltip';
 
-type TProps = { referrerId: string };
+type TProps = {
+  referrerId: string;
+  maxAmount: number;
+  trigger: ReactNode;
+  asChild?: boolean;
+};
 
-export const GiveCommission = ({ referrerId }: TProps) => {
+export const GiveCommission = ({ referrerId, maxAmount, trigger }: TProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [giveCommission, { isLoading }] = useGiveCommissionMutation();
 
@@ -43,11 +46,7 @@ export const GiveCommission = ({ referrerId }: TProps) => {
 
   return (
     <dialog.Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <dialog.DialogTrigger asChild>
-        <TooltipContainer label='Pay Commission'>
-          <GiWallet size={20} className='cursor-pointer text-indigo-600' />
-        </TooltipContainer>
-      </dialog.DialogTrigger>
+      <dialog.DialogTrigger asChild>{trigger}</dialog.DialogTrigger>
       <dialog.DialogContent>
         <dialog.DialogHeader>
           <dialog.DialogTitle>Pay Commission</dialog.DialogTitle>
@@ -62,6 +61,7 @@ export const GiveCommission = ({ referrerId }: TProps) => {
             name='amount'
             type='number'
             min={0}
+            max={maxAmount}
           />
 
           <CustomTextarea
