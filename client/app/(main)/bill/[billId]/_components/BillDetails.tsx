@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ServicesInfo } from './ServicesInfo';
 import { PatientInfo } from './PatientInfo';
 import { PaymentInfo } from './PaymentInfo';
@@ -23,7 +23,9 @@ export const BillDetails = ({ billId }: TProps) => {
     documentTitle: `Invoice`,
   });
 
-  console.log(billData);
+  useEffect(() => {
+    document.title = `Medipath | ${billData?.data?.patientInfo?.name ? 'Bill : ' + billData?.data?.patientInfo?.name : 'BillDetails'}`;
+  }, [billData?.data?.patientInfo?.name]);
 
   if (isLoading) return <Loader className='mt-12' />;
 

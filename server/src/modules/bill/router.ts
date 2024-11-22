@@ -8,7 +8,13 @@ export const billsRouter = Router();
 // bill
 billRouter.post('/', authGuard, billController.generateBill);
 billRouter.get('/:billId', authGuard, billController.getBillById);
-billRouter.patch('/:billId', authGuard, billController.takeDue);
+billRouter.patch('/:billId/take-due', authGuard, billController.takeDue);
+
+billRouter.patch(
+  '/:billId/commission',
+  authGuard,
+  billController.updateCommission,
+);
 
 // bills
 billsRouter.get('/', authGuard, billController.getAllBills);

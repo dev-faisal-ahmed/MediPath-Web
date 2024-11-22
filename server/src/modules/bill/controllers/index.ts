@@ -1,3 +1,4 @@
+import { updateCommission } from './updateCommission';
 import { generateBill } from './generateBill';
 import { getAllBills } from './getAllBills';
 import { getBillById } from './getBillById';
@@ -8,4 +9,5 @@ export const billController = {
   getAllBills,
   getBillById,
   takeDue,
+  updateCommission,
 };

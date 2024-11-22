@@ -62,3 +62,7 @@ export const takeDueValidationSchema = z.object({
     .number({ required_error: 'Price is required' })
     .min(0, { message: 'Price can not be negative' }),
 });
+
+export const updateCommissionSchema = z.object({
+  amount: z.number().min(0, { message: 'Commission can not be negative' }),
+});

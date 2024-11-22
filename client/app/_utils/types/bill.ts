@@ -21,6 +21,7 @@ export type TBill = {
   discount?: number;
   date: Date;
   paid: number;
+  commission?: number;
 };
 
 export type TBillDetails = {
@@ -39,5 +40,10 @@ export type TBillDetails = {
 
 export type TTakeDuePayload = {
   price: number;
+  billId: string;
+};
+
+export type TUpdateCommissionPayload = {
+  amount: number;
   billId: string;
 };

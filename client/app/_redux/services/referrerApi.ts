@@ -1,6 +1,7 @@
 import {
   TReferrer,
   TReferrerDetails,
+  TReferrerInfo,
   TServerResponse,
   TUpdateReferrer,
 } from '@/app/_utils/types';
@@ -31,8 +32,8 @@ export const referrerApi = baseApi.injectEndpoints({
     }),
 
     // getReferrerById
-    getReferredById: builder.query<TServerResponse<TReferrer>, string>({
-      query: (referrerId) => `${referrers}/${referrerId}`,
+    getReferrerById: builder.query<TServerResponse<TReferrerInfo>, string>({
+      query: (referrerId) => `${referrer}/${referrerId}`,
       providesTags: ['referrerDetails'],
     }),
 
@@ -60,7 +61,7 @@ export const referrerApi = baseApi.injectEndpoints({
 export const {
   useAddReferrerMutation,
   useGetReferrersQuery,
-  useGetReferredByIdQuery,
+  useGetReferrerByIdQuery,
   useUpdateReferrerMutation,
   useDeleteReferrerMutation,
 } = referrerApi;

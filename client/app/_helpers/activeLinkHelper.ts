@@ -9,5 +9,7 @@ const activeLink: Record<string, string[]> = {
 };
 
 export const isActive = (url: string, pathName: string) => {
-  return activeLink[url]?.includes(pathName);
+  if (activeLink[url]?.includes(pathName)) return true;
+  if (url === '/referrers' && pathName.startsWith('/referrer')) return true;
+  return false;
 };
