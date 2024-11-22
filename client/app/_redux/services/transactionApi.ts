@@ -21,7 +21,7 @@ const transactionApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['referrers', 'overview'],
+      invalidatesTags: ['referrers', 'overview', 'referrerDetails'],
     }),
 
     // add expense
