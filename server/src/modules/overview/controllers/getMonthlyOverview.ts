@@ -1,14 +1,16 @@
-import { sendSuccessResponse } from '../../../helpers';
 import { Transaction } from '../../transactions/model';
+import { sendSuccessResponse } from '../../../helpers';
 import { catchAsync } from '../../../middlewares';
-import { getDateRangeQuery } from '../helper';
+import { getMonthRangeQuery } from '../helper';
 import { Bill } from '../../bill/model';
 
-export const getDailyOverview = catchAsync(async (req, res) => {
-  const date = req.query.date as string;
+export const getMonthlyOverview = catchAsync(async (req, res) => {
+  const date = new Date();
+  const year = Number(req.query.year) || date.getFullYear();
+  const month = Number(req.query.month) ?? date.getMonth();
 
-  const dateQuery = getDateRangeQuery(date ? new Date(date) : new Date());
   const dbQuery: Record<string, any> = {};
+  const dateQuery = getMonthRangeQuery(year, month);
   dbQuery['date'] = dateQuery;
 
   const [transaction] = await Transaction.aggregate([

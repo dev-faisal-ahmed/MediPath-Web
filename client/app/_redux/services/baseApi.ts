@@ -24,7 +24,9 @@ export const baseApi = createApi({
     'patients',
     'bills',
     'billDetails',
-    'overview',
+    'overview-dashboard',
+    'overview-daily',
+    'overview-monthly',
     'expenses',
   ],
 });

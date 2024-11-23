@@ -7,14 +7,27 @@ const overviewApi = baseApi.injectEndpoints({
     // get overview
     getOverview: builder.query<TServerResponse<TOverview>, string>({
       query: (type) => `${overview}?type=${type}`,
-      providesTags: ['overview'],
+      providesTags: ['overview-dashboard'],
     }),
 
     getDailyOverview: builder.query<TServerResponse<TDailyOverview>, string>({
       query: (date) => `${overview}/daily?date=${date}`,
-      providesTags: ['overview'],
+      providesTags: ['overview-daily'],
+    }),
+
+    getMonthlyOverview: builder.query<
+      TServerResponse<TDailyOverview>,
+      { year: string; month: string }
+    >({
+      query: ({ year, month }) =>
+        `${overview}/monthly?year=${year}&month=${month}`,
+      providesTags: ['overview-monthly'],
     }),
   }),
 });
 
-export const { useGetOverviewQuery, useGetDailyOverviewQuery } = overviewApi;
+export const {
+  useGetOverviewQuery,
+  useGetDailyOverviewQuery,
+  useGetMonthlyOverviewQuery,
+} = overviewApi;

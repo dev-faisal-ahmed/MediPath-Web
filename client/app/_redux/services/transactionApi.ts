@@ -21,7 +21,13 @@ const transactionApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['referrers', 'overview', 'referrerDetails'],
+      invalidatesTags: [
+        'referrers',
+        'overview-daily',
+        'overview-dashboard',
+        'overview-monthly',
+        'referrerDetails',
+      ],
     }),
 
     // add expense
@@ -31,7 +37,12 @@ const transactionApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['expenses', 'overview'],
+      invalidatesTags: [
+        'expenses',
+        'overview-daily',
+        'overview-dashboard',
+        'overview-monthly',
+      ],
     }),
 
     // get expenses

@@ -31,6 +31,7 @@ export const getReferrerById = catchAsync(async (req, res) => {
               date: 1,
             },
           },
+          { $sort: { date: -1 } },
         ],
       },
     },
@@ -52,6 +53,7 @@ export const getReferrerById = catchAsync(async (req, res) => {
               date: 1,
             },
           },
+          { $sort: { date: -1 } },
         ],
       },
     },
@@ -88,7 +90,10 @@ export const getReferrerById = catchAsync(async (req, res) => {
             },
           },
         ],
-        transactions: [{ $match: { referrerId: referrerObjectId } }],
+        transactions: [
+          { $match: { referrerId: referrerObjectId } },
+          { $sort: { date: 1 } },
+        ],
       },
     },
     {

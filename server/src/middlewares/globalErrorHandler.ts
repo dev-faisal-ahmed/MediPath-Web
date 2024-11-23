@@ -25,6 +25,8 @@ export const globalErrorHandler: ErrorRequestHandler = (error, _, res, __) => {
     );
   }
 
+  console.log(error);
+
   // handling error for mongoose
   // duplicate key
   if (error.errorResponse?.code === 11000) {
