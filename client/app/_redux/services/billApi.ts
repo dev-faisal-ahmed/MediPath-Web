@@ -25,7 +25,13 @@ const billApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['bills', 'overview'],
+
+      invalidatesTags: [
+        'bills',
+        'overview-daily',
+        'overview-dashboard',
+        'overview-monthly',
+      ],
     }),
 
     // get all bills
@@ -47,7 +53,13 @@ const billApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: { price: payload.price },
       }),
-      invalidatesTags: ['billDetails', 'bills', 'overview'],
+      invalidatesTags: [
+        'billDetails',
+        'bills',
+        'overview-daily',
+        'overview-dashboard',
+        'overview-monthly',
+      ],
     }),
 
     // update commission
