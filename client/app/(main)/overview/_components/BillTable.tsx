@@ -93,8 +93,9 @@ export const BillTable = ({ label, bills }: TProps) => {
                       </div>
                     )}
 
-                    {!referrer ||
-                      (!visitedBy && <p className='font-semibold'>N/A</p>)}
+                    {!referrer && !visitedBy && (
+                      <p className='font-semibold'>N/A</p>
+                    )}
                   </table.TableCell>
                   <table.TableCell>
                     {services.map(({ name }) => (
